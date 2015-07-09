@@ -1,0 +1,53 @@
+signing {
+    sign configurations.archives
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+            repository(url: 'https://oss.sonatype.org/service/local/staging/deploy/maven2') {
+                authentication(userName: sonatypeUsername, password: sonatypePassword)
+            }
+            snapshotRepository(url: 'https://oss.sonatype.org/content/repositories/snapshots/') {
+                authentication(userName: sonatypeUsername, password: sonatypePassword)
+            }
+
+
+            pom.project {
+                name 'jmeter-gradle-plugin'
+                packaging 'jar'
+                description 'Add support for running jmeter tests from gradle'
+                url 'https://github.com/jmeter-gradle-plugin/jmeter-gradle-plugin'
+                inceptionYear '2015'
+				
+                scm {
+                    url 'scm:git@github.com:jmeter-gradle-plugin/jmeter-gradle-plugin.git'
+                    connection 'scm:git@github.com:jmeter-gradle-plugin/jmeter-gradle-plugin.git'
+                    developerConnection 'scm:git@github.com:jmeter-gradle-plugin/jmeter-gradle-plugin.git'
+                }
+
+                licenses {
+                    license {
+                        name 'The Apache Software License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        distribution 'repo'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'foragerr'
+                        name 'Ra Ge'
+                        url 'https://github.com/jmeter-gradle-plugin/jmeter-gradle-plugin'
+                        email 'foragerr@gmail.com'
+                        roles { role 'Developer' }
+                    }
+                }
+
+            }
+        }
+    }
+}

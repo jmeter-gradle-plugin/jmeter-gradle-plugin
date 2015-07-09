@@ -1,0 +1,126 @@
+apply plugin: 'groovy'
+apply plugin: 'idea'
+apply plugin: 'signing'
+apply plugin:  'maven'
+
+group = 'net.foragerr'
+archivesBaseName = 'jmeter-gradle-plugin'
+/**
+ * Currently supports JMeter versions 2.9, 2.10, 2.11, 2.12, 2.13
+ */
+ext.jmeterVersion = "2.13"
+ext.pluginVersion = "1.2.1"
+version = "0.1.0-$jmeterVersion-SNAPSHOT"
+
+sourceCompatibility=JavaVersion.VERSION_1_6
+targetCompatibility=JavaVersion.VERSION_1_6
+
+def bootClasspathStr = "${System.env.'JAVA_HOME'}/jre/lib/rt.jar"
+project.tasks.withType(AbstractCompile, { AbstractCompile ac ->
+    ac.options.bootClasspath = bootClasspathStr // options is always there but not defined on AbstractCompile so going to hit it anyway
+})
+
+repositories {
+    mavenCentral()
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.3'
+}
+
+configurations {
+	//workaround for jmeter defect 57555 (https://bz.apache.org/bugzilla/show_bug.cgi?id=57555)
+	if (jmeterVersion == '2.12'){
+		compile.exclude group: 'excalibur-fortress', module: 'excalibur-fortress-container-api'
+		compile.exclude group: 'excalibur-fortress', module: 'excalibur-fortress-meta'
+ 	
+	}
+	//workaround for jmeter defect 57748 (https://bz.apache.org/bugzilla/show_bug.cgi?id=57748)
+	if (jmeterVersion == '2.13'){
+		compile.exclude group: 'commons-math3', module: 'commons-math3'
+		compile.exclude group: 'commons-pool2', module: 'commons-pool2'
+	}
+}
+
+dependencies {
+	
+	//common to all supported versions
+	compile gradleApi(),
+		localGroovy(),
+        "kg.apc:jmeter-plugins:${pluginVersion}",
+        "kg.apc:jmeter-plugins-standard:${pluginVersion}",
+        "kg.apc:jmeter-plugins-extras:${pluginVersion}",
+        "kg.apc:jmeter-plugins-common:${pluginVersion}",
+		"org.apache.ant:ant:1.8.4",
+		"org.beanshell:bsh-core:2.0b4",
+		"org.apache.jmeter:ApacheJMeter_http:${jmeterVersion}",
+		"org.apache.jmeter:ApacheJMeter_junit:${jmeterVersion}",
+		"org.apache.jmeter:ApacheJMeter_java:${jmeterVersion}",
+		"org.apache.jmeter:ApacheJMeter_jdbc:${jmeterVersion}",
+		"org.apache.jmeter:ApacheJMeter_tcp:${jmeterVersion}",
+		"org.apache.jmeter:ApacheJMeter_mail:${jmeterVersion}",
+		"org.apache.jmeter:ApacheJMeter_ldap:${jmeterVersion}",
+		"org.apache.jmeter:ApacheJMeter_ftp:${jmeterVersion}",
+		"org.apache.jmeter:ApacheJMeter_functions:${jmeterVersion}",
+		"org.apache.jmeter:ApacheJMeter_monitors:${jmeterVersion}",
+		"org.apache.jmeter:ApacheJMeter_jms:${jmeterVersion}",
+		"org.apache.jmeter:ApacheJMeter:${jmeterVersion}",
+		"org.apache.jmeter:ApacheJMeter_components:${jmeterVersion}",
+		"org.apache.jmeter:ApacheJMeter_config:${jmeterVersion}",
+		"org.apache.jmeter:ApacheJMeter_core:${jmeterVersion}",
+		"org.apache.jmeter:ApacheJMeter_junit:${jmeterVersion}"
+		
+
+	//version specific dependencies
+    if (jmeterVersion > '2.7') {
+        compile "org.apache.jmeter:ApacheJMeter_native:${jmeterVersion}"
+    }
+	if (jmeterVersion > '2.9'){
+		compile "org.apache.jmeter:ApacheJMeter_mongodb:${jmeterVersion}"
+	}
+	if (jmeterVersion < '2.13'){
+		compile	"org.apache.jmeter:ApacheJMeter_report:${jmeterVersion}"
+	}
+	if (jmeterVersion > '2.9'){
+		compile	"org.apache.jmeter:ApacheJMeter_components:${jmeterVersion}",
+		"org.apache.jmeter:ApacheJMeter_config:${jmeterVersion}",
+		"org.apache.jmeter:ApacheJMeter_junit-test:${jmeterVersion}",
+		"org.apache.jmeter:ApacheJMeter_mongodb:${jmeterVersion}"
+	}
+	if (jmeterVersion == '2.13'){
+		compile "org.apache.commons:commons-math3:3.4.1",
+			"org.apache.commons:commons-pool2:2.3"
+	} 
+	testCompile "junit:junit:4.11"
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from 'build/docs/javadoc'
+}
+
+task sourcesJar(type: Jar) {
+    from sourceSets.main.allSource
+    classifier = 'sources'
+}
+
+artifacts {
+    archives jar
+    archives sourcesJar
+    archives javadocJar
+}
+
+processResources.doLast {
+    ant.replace(
+            file: "${project.buildDir}/resources/main/jmeter-plugin.properties",
+            token: "@jmeter.version@",
+            value: "$jmeterVersion"
+    )
+    ant.replace(
+            file: "${project.buildDir}/resources/main/jmeter-plugin.properties",
+            token: "@plugin.version@",
+            value: "$pluginVersion"
+    )
+}
+
+
