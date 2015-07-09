@@ -9,8 +9,9 @@ archivesBaseName = 'jmeter-gradle-plugin'
  * Currently supports JMeter versions 2.9, 2.10, 2.11, 2.12, 2.13
  */
 ext.jmeterVersion = "2.13"
-ext.pluginVersion = "1.2.1"
-version = "0.1.0-$jmeterVersion-SNAPSHOT"
+ext.pluginVersion = "1.2.1" //jmeter-plugin version
+ext.thisPluginVersion="0.1.0"
+version = "$thisPluginVersion-$jmeterVersion-SNAPSHOT"
 
 sourceCompatibility=JavaVersion.VERSION_1_6
 targetCompatibility=JavaVersion.VERSION_1_6
