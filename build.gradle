@@ -3,7 +3,7 @@ apply plugin: 'idea'
 apply plugin: 'signing'
 apply plugin:  'maven'
 
-group = 'net.foragerr'
+group = 'net.foragerr.jmeter'
 archivesBaseName = 'jmeter-gradle-plugin'
 /**
  * Currently supports JMeter versions 2.9, 2.10, 2.11, 2.12, 2.13
