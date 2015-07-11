@@ -1,20 +1,24 @@
+plugins {
+    id "com.jfrog.bintray" version "1.2"
+}
+
 apply plugin: 'groovy'
-apply plugin: 'idea'
 apply plugin: 'signing'
-apply plugin:  'maven'
+apply plugin: 'maven-publish'
 
 group = 'net.foragerr.jmeter'
 archivesBaseName = 'jmeter-gradle-plugin'
-/**
- * Currently supports JMeter versions 2.9, 2.10, 2.11, 2.12, 2.13
- */
+
+//--- versioning information ---
+ext.thisPluginVersion="0.1.0"
 ext.jmeterVersion = "2.13"
 ext.pluginVersion = "1.2.1" //jmeter-plugin version
-ext.thisPluginVersion="0.1.0"
-version = "$thisPluginVersion-$jmeterVersion-SNAPSHOT"
+version = "$thisPluginVersion-$jmeterVersion"
 
-sourceCompatibility=JavaVersion.VERSION_1_6
-targetCompatibility=JavaVersion.VERSION_1_6
+compileGroovy {
+    sourceCompatibility = '1.6'
+    targetCompatibility = '1.6'
+}
 
 def bootClasspathStr = "${System.env.'JAVA_HOME'}/jre/lib/rt.jar"
 project.tasks.withType(AbstractCompile, { AbstractCompile ac ->
@@ -124,4 +128,76 @@ processResources.doLast {
     )
 }
 
+//--- mvn-publish ---
+def pomConfig = {
+	scm {
+		url 'scm:git@github.com:jmeter-gradle-plugin/jmeter-gradle-plugin.git'
+		connection 'scm:git@github.com:jmeter-gradle-plugin/jmeter-gradle-plugin.git'
+		developerConnection 'scm:git@github.com:jmeter-gradle-plugin/jmeter-gradle-plugin.git'
+	}
+	licenses {
+		license {
+			name 'The Apache Software License, Version 2.0'
+			url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+			distribution 'repo'
+		}
+	}
+	developers {
+		developer {
+			id 'foragerr'
+			name 'Ra Ge'
+			url 'https://github.com/jmeter-gradle-plugin/jmeter-gradle-plugin'
+			email 'foragerr@gmail.com'
+			roles { role 'Developer' }
+		}
+	}
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            artifact sourcesJar
+            artifact javadocJar
+
+            pom.withXml {
+                def root = asNode()
+                root.appendNode('description', 'A gradle plugin for publishing to Bintray')
+                root.children().last() + pomConfig
+            }
+        }
+    }
+}
+
+//--- bintray publishing ---
+bintray {
+	user=System.getenv('bintray_user')
+	key=System.getenv('bintray_api_key')
+	
+    publications = ['mavenJava'] //When uploading Maven-based publication files
+    publish = true //If version should be auto published after an upload
+    pkg {
+        repo = "jmeter"
+        name = "$archivesBaseName"
+        userOrg = "$archivesBaseName" 
+        licenses = ['Apache-2.0']
+        publicDownloadNumbers = true
+        websiteUrl = 'http://foragerr.net/jmeter'
+        issueTrackerUrl = 'https://github.com/jmeter-gradle-plugin/jmeter-gradle-plugin/issues'
+        vcsUrl = 'https://github.com/jmeter-gradle-plugin/jmeter-gradle-plugin.git'
+
+        version {
+            name = "$version" //Bintray logical version name
+            gpg { sign = true }
+            
+			//Optional configuration for Maven Central sync of the version
+            mavenCentralSync {
+                sync = false //true by default
+                user = 'userToken' //OSS user token
+                password = 'paasword' //OSS user password
+                close = '0' //Optional property. By default the staging repository is closed and artifacts are released to Maven Central. You can optionally turn this behaviour off (by puting 0 as value) and release the version manually.
+            }            
+        }
+    }
+}
 

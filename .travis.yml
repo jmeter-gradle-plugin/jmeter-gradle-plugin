@@ -1,5 +1,9 @@
 language: groovy
 
+branches: 
+  only:
+    master
+
 deploy:
   provider: s3
   access_key_id: $ARTIFACTS_KEY
@@ -9,3 +13,6 @@ deploy:
   acl: public_read
   local_dir: build/libs
   upload-dir: travis-builds
+  
+ after_success:
+   gradle bintrayupload
