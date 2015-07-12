@@ -1,4 +1,4 @@
-package net.foragerr.gradle.plugins.jmeter;
+package net.foragerr.jmeter.gradle.plugins;
 
 import java.util.Arrays;
 import java.util.List;

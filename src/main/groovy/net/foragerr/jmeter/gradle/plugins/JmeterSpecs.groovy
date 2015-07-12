@@ -1,4 +1,4 @@
-package net.foragerr.gradle.plugins.jmeter
+package net.foragerr.jmeter.gradle.plugins
 
 
 class JmeterSpecs implements Serializable{

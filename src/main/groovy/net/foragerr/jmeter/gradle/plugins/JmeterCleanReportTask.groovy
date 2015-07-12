@@ -1,6 +1,6 @@
-package net.foragerr.gradle.plugins.jmeter
+package net.foragerr.jmeter.gradle.plugins
 
-import net.foragerr.gradle.plugins.jmeter.helper.FileUtils;
+import net.foragerr.jmeter.gradle.plugins.helper.FileUtils;
 
 public class JmeterCleanReportTask extends JmeterAbstractTask {
 

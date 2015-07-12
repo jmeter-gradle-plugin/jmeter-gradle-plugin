@@ -1,4 +1,4 @@
-package net.foragerr.gradle.plugins.jmeter;
+package net.foragerr.jmeter.gradle.plugins;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -15,7 +15,7 @@ import java.util.List;
 
 import javax.xml.transform.TransformerException;
 
-import net.foragerr.gradle.plugins.jmeter.worker.JMeterRunner;
+import net.foragerr.jmeter.gradle.plugins.worker.JMeterRunner;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.tools.ant.DirectoryScanner;

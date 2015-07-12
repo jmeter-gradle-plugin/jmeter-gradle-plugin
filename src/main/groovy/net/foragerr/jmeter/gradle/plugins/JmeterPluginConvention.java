@@ -1,6 +1,6 @@
-package net.foragerr.gradle.plugins.jmeter;
+package net.foragerr.jmeter.gradle.plugins;
 
-import net.foragerr.gradle.plugins.jmeter.helper.JMeterPluginProperties;
+import net.foragerr.jmeter.gradle.plugins.helper.JMeterPluginProperties;
 
 import org.apache.commons.lang3.StringUtils;
 import org.gradle.api.Project;

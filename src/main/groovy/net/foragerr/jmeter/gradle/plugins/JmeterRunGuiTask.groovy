@@ -1,6 +1,6 @@
-package net.foragerr.gradle.plugins.jmeter
+package net.foragerr.jmeter.gradle.plugins
 
-import net.foragerr.gradle.plugins.jmeter.worker.JMeterRunner;
+import net.foragerr.jmeter.gradle.plugins.worker.JMeterRunner;
 
 import org.gradle.api.GradleException
 

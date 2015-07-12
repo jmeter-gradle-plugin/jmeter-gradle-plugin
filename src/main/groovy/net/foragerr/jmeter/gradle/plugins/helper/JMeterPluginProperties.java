@@ -1,4 +1,4 @@
-package net.foragerr.gradle.plugins.jmeter.helper;
+package net.foragerr.jmeter.gradle.plugins.helper;
 
 import org.gradle.api.GradleException;
 import org.gradle.api.logging.Logger;
