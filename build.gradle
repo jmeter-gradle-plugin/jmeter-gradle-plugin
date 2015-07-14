@@ -145,7 +145,7 @@ def pomConfig = {
 	developers {
 		developer {
 			id 'foragerr'
-			name 'Ra Ge'
+			name 'RaGe'
 			url 'https://github.com/jmeter-gradle-plugin/jmeter-gradle-plugin'
 			email 'foragerr@gmail.com'
 			roles { role 'Developer' }
@@ -156,15 +156,33 @@ def pomConfig = {
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            from components.java
-            artifact sourcesJar
-            artifact javadocJar
-
-            pom.withXml {
-                def root = asNode()
-                root.appendNode('description', 'A gradle plugin for publishing to Bintray')
-                root.children().last() + pomConfig
-            }
+			//since maven-publish refuses to propogate exclusions to pom, DIY. :(
+			from(components.java)
+			def dependencies =  project.configurations[JavaPlugin.COMPILE_CONFIGURATION_NAME].getAllDependencies()
+			def xmlExclusionList = project.configurations[JavaPlugin.COMPILE_CONFIGURATION_NAME].getExcludeRules()
+			pom.withXml{
+				asNode().dependencies.dependency.each{ xmlDep ->
+					//delete scope tag
+					def xmlScope = xmlDep.get("scope")	
+					if (xmlScope) xmlDep.remove(xmlScope)
+					//insert exclusions
+					def xmlExclusions = xmlDep.exclusions[0]
+					if (!xmlExclusions) xmlExclusions = xmlDep.appendNode('exclusions')
+					xmlExclusionList.each{ ExcludeRule exRule ->
+						def xmlExclusion = xmlExclusions.appendNode('exclusion')
+						xmlExclusion.appendNode('groupId', exRule.group)
+						xmlExclusion.appendNode('artifactId', exRule.module)
+					}	
+				}
+				
+			}
+			pom.withXml {
+				def root = asNode()
+				root.appendNode('description', 'A gradle plugin for running jmeter tests')
+				root.children().last() + pomConfig
+			}
+			artifact sourcesJar
+			artifact javadocJar
         }
     }
 }
