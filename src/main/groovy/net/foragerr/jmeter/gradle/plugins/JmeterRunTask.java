@@ -124,12 +124,12 @@ public class JmeterRunTask extends JmeterAbstractTask {
             results.add(executeJmeterTest(file));
         }
 
-//        if (this.enableReports != null) {
-//            makeReport(results);
-//        }
-//        if (this.enableExtendedReports != null) {
-//            makeExtendedReport(results);
-//        }
+        if (this.enableReports) {
+            makeHTMLReport(results);
+        }
+        if (this.enableExtendedReports) {
+            makeExtendedReport(results);
+        }
         checkForErrors(results);
 
     }
@@ -183,7 +183,7 @@ public class JmeterRunTask extends JmeterAbstractTask {
     }
 
 
-    private void makeReport(List<String> results) {
+    private void makeHTMLReport(List<String> results) {
         try {
             ReportTransformer transformer;
             transformer = new ReportTransformer(getXslt());

@@ -17,7 +17,7 @@ import org.apache.log.Logger;
  * 
  * The {@link JmeterRunTask} will invoke this as a separate process with the proper path configured.
  */
-public class CreateReport {
+public class CreateExtendedReport {
     private static final Logger log = LoggingManager.getLoggerForClass();
     public static final List<String> pluginTypes = Arrays.asList(
             "ResponseTimesOverTime",

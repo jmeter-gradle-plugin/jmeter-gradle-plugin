@@ -1,16 +1,17 @@
 plugins {
     id "com.jfrog.bintray" version "1.2"
+	id "com.jfrog.artifactory" version "3.1.1"
+	id "com.gradle.plugin-publish" version "0.9.1"
 }
 
 apply plugin: 'groovy'
-apply plugin: 'signing'
 apply plugin: 'maven-publish'
 
 group = 'net.foragerr.jmeter'
 archivesBaseName = 'jmeter-gradle-plugin'
 
 //--- versioning information ---
-ext.thisPluginVersion="0.1.1"
+ext.thisPluginVersion="0.1.2"
 ext.jmeterVersion = "2.13"
 ext.pluginVersion = "1.2.1" //jmeter-plugin version
 version = "$thisPluginVersion-$jmeterVersion"
@@ -219,3 +220,20 @@ bintray {
     }
 }
 
+//--- oss.jfrog artifactory publishing ---
+
+
+//--- gradle publishing ---
+pluginBundle {
+	website = 'http://foragerr.net/jmeter'
+	vcsUrl = 'https://github.com/jmeter-gradle-plugin/jmeter-gradle-plugin.git'
+	description = 'A gradle plugin for running jmeter tests'
+	tags = ['jmeter', 'performance']
+  
+	plugins {
+	  greetingsPlugin {
+		id = 'net.foragerr.jmeter'
+		displayName = 'JMeter Gradle Plugin'
+	  }
+	}
+  }
