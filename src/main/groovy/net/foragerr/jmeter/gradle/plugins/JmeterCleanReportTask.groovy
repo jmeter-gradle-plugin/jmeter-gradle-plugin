@@ -29,10 +29,6 @@ public class JmeterCleanReportTask extends JmeterAbstractTask {
         return FileUtils.delete(getReportDir(),  new FilenameFilter() {
             @Override
             public boolean accept(File dir, String name) {
-                if(name.lastIndexOf('.jpg')>0 || name.lastIndexOf('.xsl')>0)
-                {
-                   return false;
-                }
                 return true;
             }
         });
