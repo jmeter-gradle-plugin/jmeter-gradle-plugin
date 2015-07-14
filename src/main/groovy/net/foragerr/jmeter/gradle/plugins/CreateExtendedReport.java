@@ -1,5 +1,6 @@
 package net.foragerr.jmeter.gradle.plugins;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
@@ -15,7 +16,6 @@ import org.apache.log.Logger;
  * A Simple wrapper around the reporter tool that will generate the graphs for all the plugin types.
  * It will configure the reporter tool so that it generates a csv and png.
  * 
- * The {@link JmeterRunTask} will invoke this as a separate process with the proper path configured.
  */
 public class CreateExtendedReport {
     private static final Logger log = LoggingManager.getLoggerForClass();
@@ -32,11 +32,10 @@ public class CreateExtendedReport {
             "TimesVsThreads",
             "ThroughputVsThreads"
     );
-
-    public static void main(String args[]) {
-        String resultFile = args[0];
-        String name = FilenameUtils.removeExtension(resultFile);
-        initializeJMeter(name);
+    
+    public static void createExtendedReport(String resultFile, File jmProps, File jmHome){
+    	String name = FilenameUtils.removeExtension(resultFile);
+        initializeJMeter(name,jmProps,jmHome);
 
         PluginsCMDWorker worker = new PluginsCMDWorker();
         for (String plugin : pluginTypes) {
@@ -54,10 +53,10 @@ public class CreateExtendedReport {
         }
     }
 
-    private static void initializeJMeter(String name) {
-        // Initialize the JMeter settings..
-        JMeterUtils.setJMeterHome(System.getProperty("jmeter.home"));
-        JMeterUtils.loadJMeterProperties(System.getProperty("jmeter.properties"));
+    private static void initializeJMeter(String name, File jmProps, File jmHome) {
+        // Initialize JMeter settings..
+        JMeterUtils.setJMeterHome(jmHome.getAbsolutePath());
+        JMeterUtils.loadJMeterProperties(jmProps.getAbsolutePath());
         JMeterUtils.setProperty("log_file", name + ".log");
         JMeterUtils.initLogging();
         JMeterUtils.initLocale();

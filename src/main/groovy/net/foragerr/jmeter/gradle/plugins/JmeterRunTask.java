@@ -166,16 +166,10 @@ public class JmeterRunTask extends JmeterAbstractTask {
     }
 
     private void makeExtendedReport(List<String> results) throws IOException {
-        String jMeterHome = getWorkDir().getAbsolutePath();
-        JmeterSpecs specs = new JmeterSpecs();
-        specs.getSystemProperties().put("jmeter.home", jMeterHome);
-        specs.getSystemProperties().put("jmeter.properties", getJmeterPropertyFile().getCanonicalPath());
-        specs.getSystemProperties().put("saveservice_properties", System.getProperty("saveservice_properties"));
-        specs.setMaxHeapSize(maxHeapSize);
         for (String resultFile : results) {
             try {
-                specs.setJmeterProperties(Arrays.asList(resultFile));
-                new JMeterRunner().executeCreateReport(specs, jMeterHome);
+            	log.info("Creating Extended Reports");
+                CreateExtendedReport.createExtendedReport(resultFile,getJmeterPropsFile(),getWorkDir());
             } catch (Throwable e) {
                 log.error("Failed to create extended report for " + resultFile, e);
             }
@@ -187,7 +181,7 @@ public class JmeterRunTask extends JmeterAbstractTask {
         try {
             ReportTransformer transformer;
             transformer = new ReportTransformer(getXslt());
-            log.info("Building JMeter Report.");
+            log.info("Building HTML Report.");
             for (String resultFile : results) {
                 final String outputFile = toOutputFileName(resultFile);
                 log.info("transforming: " + resultFile + " to " + outputFile);
@@ -238,22 +232,8 @@ public class JmeterRunTask extends JmeterAbstractTask {
                      "-t", testFile.getCanonicalPath(),
                      "-l", resultFile.getCanonicalPath()
                      ));
-            File propsInSrcDir = new File(srcDir,"jmeter.properties");
             args.add("-p");
-            
-            //1. Is jmeterPropertyFile defined?
-            if (getJmeterPropertyFile() != null) 
-            	args.add(getJmeterPropertyFile().getCanonicalPath());
-            
-            //2. Does jmeter.properties exist in $srcDir/test/jmeter
-            else if (propsInSrcDir.exists()) 
-            	args.add(propsInSrcDir.getCanonicalPath());
-            
-            //3. If neither, use the default jmeter.properties
-            else{
-            	File defPropsFile = new File(workDir + System.getProperty("default_jm_properties"));
-            	args.add(defPropsFile.getCanonicalPath());
-            }
+            args.add(getJmeterPropsFile().getCanonicalPath());
             
             if(jmeterUserPropertiesFiles!=null)
             {
@@ -289,6 +269,25 @@ public class JmeterRunTask extends JmeterAbstractTask {
             throw new GradleException("Can't execute test", e);
         }
     }
+
+private File getJmeterPropsFile() {
+	File propsInSrcDir = new File(srcDir,"jmeter.properties");
+	
+    //1. Is jmeterPropertyFile defined?
+    if (getJmeterPropertyFile() != null) 
+    	return getJmeterPropertyFile();
+    
+    //2. Does jmeter.properties exist in $srcDir/test/jmeter
+    else if (propsInSrcDir.exists()) 
+    	return propsInSrcDir;
+    
+    //3. If neither, use the default jmeter.properties
+    else{
+    	File defPropsFile = new File(workDir + System.getProperty("default_jm_properties"));
+    	return defPropsFile;
+    }
+}
+
 
 private File getResultFile(File testFile) {
     	
