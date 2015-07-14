@@ -1,5 +1,7 @@
 package net.foragerr.jmeter.gradle.plugins
 
+import java.io.File;
+
 import net.foragerr.jmeter.gradle.plugins.worker.JMeterRunner;
 
 import org.gradle.api.GradleException
@@ -28,7 +30,7 @@ class JmeterRunGuiTask extends JmeterAbstractTask{
 
             List<String> args = new ArrayList<String>();
             args.addAll(Arrays.asList(
-                    "-p", getJmeterPropertyFile().getCanonicalPath()));
+                    "-p", getJmeterPropsFile().getCanonicalPath()));
 
             if (editFile != null) {
                 args.addAll(Arrays.asList(
@@ -64,6 +66,24 @@ class JmeterRunGuiTask extends JmeterAbstractTask{
             throw new GradleException("Can't execute test", e);
         }
     }
+	
+	private File getJmeterPropsFile() {
+		File propsInSrcDir = new File(srcDir,"jmeter.properties");
+		
+		//1. Is jmeterPropertyFile defined?
+		if (getJmeterPropertyFile() != null)
+			return getJmeterPropertyFile();
+		
+		//2. Does jmeter.properties exist in $srcDir/test/jmeter
+		else if (propsInSrcDir.exists())
+			return propsInSrcDir;
+		
+		//3. If neither, use the default jmeter.properties
+		else{
+			File defPropsFile = new File(workDir + System.getProperty("default_jm_properties"));
+			return defPropsFile;
+		}
+	}
 
     public File getJmeterEditFile() {
         return jmeterEditFile;
