@@ -299,10 +299,10 @@ private File getResultFile(File testFile) {
     	if (resultFilenameTimestamp.equals("none"))
     		return new File(reportDir, testFile.getName() + ".xml");
     	
-    	
     	//else if resultFilenameTimestamp is "useSaveServiceFormat" use saveservice.format
     	if (resultFilenameTimestamp.equals("useSaveServiceFormat")){
     		String saveServiceFormat =  System.getProperty("jmeter.save.saveservice.timestamp_format");
+    		if (saveServiceFormat.equals("none")) return new File(reportDir, testFile.getName() + ".xml");
     		try
     		{
     		    fmt = new SimpleDateFormat(saveServiceFormat);
