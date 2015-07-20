@@ -1,5 +1,4 @@
-This is a gradle plugin that enables running JMeter tests. This repo is a hard-fork from [this now-dormant repo](https://github.com/kulya/jmeter-gradle-plugin).
-Development is still active, and stability is beta. The repo is integrated with travis and bintray for auto-builds.
+This is a gradle plugin that enables running JMeter tests. This repo is based on [this now-dormant repo](https://github.com/kulya/jmeter-gradle-plugin), significant redevelopment has occured since version 0.5.0 Development is still active, and stability is beta. The repo is integrated with travis and bintray for auto-builds.
 
 Getting Started 
 ===============
@@ -20,19 +19,18 @@ Create a build.gradle file and include the jmeter plugin as follows:
 	        classpath "net.foragerr.jmeter:jmeter-gradle-plugin:latest.release"
 	        
 	        //for specific version use:
-	        //classpath "net.foragerr.jmeter:jmeter-gradle-plugin:0.1.3-2.13"
+	        //classpath "net.foragerr.jmeter:jmeter-gradle-plugin:0.5.0-2.13"
 	    }
 	}
 
 ## Configure JMeter
 ### Simple configuration
 
-include the following in your build.gradle:
+include the following in your build.gradle (Optional - if this section is not declared, default configuration is used):
 
-	jmeterRun.configure {
-	    jmeterTestFiles = [file("src/test/jmeter/test2.jmx")] //if jmx file is not in the default location
-	    jmeterUserPropertiesFiles = [file("src/test/jmeter/user.properties")] //to add additional user properties
-	    enableReports = true //produce HTML reports - this can be resource intensive
+	jmeter {
+	    jmTestFiles = [file("src/test/jmeter/test2.jmx")] //if jmx file is not in the default location
+	    jmUserPropertiesFiles = [file("src/test/jmeter/user.properties")] //to add additional user properties
 		 enableExtendedReports = true //produce Graphical and CSV reports
 	}
 
@@ -44,12 +42,20 @@ This section is under construction
 
 By default the plugin will search for *.jmx files in `src/test/jmeter`. You can launch the UI end edit your files by running:
 
-`gradle jmeterEditor`
+`gradle jmGui`
 
 ### Run the tests
 
 You can run the tests by executing 
 
-`gradle jmeterRun`
+`gradle jmRun`
 
-The results of the tests will can be found in `build/jmeter-report`
+### Create Reports
+
+You can run the tests by executing 
+
+`gradle jmReport`
+
+By default, extended reports are turned on and HTML reports are turned off
+
+The results of the tests will can be found in(default location, can be overridden) `build/jmeter-report`
