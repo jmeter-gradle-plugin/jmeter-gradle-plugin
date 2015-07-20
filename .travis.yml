@@ -12,3 +12,7 @@ deploy:
   
 after_success:
   gradle bintrayupload
+ 
+branches:
+  only:
+    - master
