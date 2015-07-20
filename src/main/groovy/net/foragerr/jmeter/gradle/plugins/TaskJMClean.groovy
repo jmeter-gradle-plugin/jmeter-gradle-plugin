@@ -17,7 +17,9 @@ public class TaskJMClean extends DefaultTask {
 
 	@TaskAction
     jmClean() throws IOException{
-        log.info("Cleaning out folder: " + project.jmeter.reportDir)
-		project.jmeter.reportDir.deleteDir()
+		File reportDir = project.jmeter.reportDir ?: new File(project.getBuildDir(), "jmeter-report")
+		log.info("Cleaning out folder: " + reportDir)
+		reportDir.deleteDir()
+		reportDir.mkdirs()
     }
 }

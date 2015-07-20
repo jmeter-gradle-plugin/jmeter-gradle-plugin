@@ -16,8 +16,7 @@ class JMPluginExtension {
     Boolean enableReports = false
     Boolean enableExtendedReports = true
 
-    List<File> jmTestFiles = null
-    List<File> jmResultFiles = null
+	List<File> jmTestFiles = null
     List<File> jmUserPropertiesFiles = null
     List<String> jmPluginJars = null
     List<String> jmUserProperties = null
@@ -32,5 +31,6 @@ class JMPluginExtension {
 	//For internal use, Not user settable:
 	File workDir = null 
 	File reportDir = null
+	List<File> jmResultFiles = null
 
 }
