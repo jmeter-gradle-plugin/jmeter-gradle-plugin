@@ -1,6 +1,6 @@
 package net.foragerr.jmeter.gradle.plugins.worker
 
-import net.foragerr.jmeter.gradle.plugins.JmeterSpecs;
+import net.foragerr.jmeter.gradle.plugins.JMSpecs;
 
 import org.gradle.api.GradleException
 import org.gradle.api.logging.Logger
@@ -20,12 +20,12 @@ class JMeterRunner {
         }
     }
 
-    void executeJmeterCommand(JmeterSpecs specs, String workingDirectory) {
+    void executeJmeterCommand(JMSpecs specs, String workingDirectory) {
         ProcessBuilder processBuilder = new ProcessBuilder(createArgumentList(specs, workingDirectory, "org.apache.jmeter.NewDriver")).inheritIO()
         launchProcess(processBuilder, workingDirectory);
     }
 
-    private String[] createArgumentList(JmeterSpecs specs, String workDir, String launchClass) {
+    private String[] createArgumentList(JMSpecs specs, String workDir, String launchClass) {
         String javaRuntime = "java"
 
         List<String> argumentsList = new ArrayList<>()

@@ -1,4 +1,4 @@
-package net.foragerr.jmeter.gradle.plugins
+package net.foragerr.jmeter.gradle.plugins.utils
 
 import org.apache.tools.ant.DirectoryScanner
 import org.gradle.api.Project

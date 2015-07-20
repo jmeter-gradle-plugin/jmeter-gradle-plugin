@@ -1,4 +1,4 @@
-package net.foragerr.jmeter.gradle.plugins.helper
+package net.foragerr.jmeter.gradle.plugins.utils
 
 class FileUtils {
 

@@ -1,6 +1,8 @@
 package net.foragerr.jmeter.gradle.plugins
 
+import net.foragerr.jmeter.gradle.plugins.utils.JMUtils;
 import net.foragerr.jmeter.gradle.plugins.worker.JMeterRunner
+
 import org.gradle.api.DefaultTask;
 import org.gradle.api.GradleException
 import org.gradle.api.logging.Logger
@@ -34,7 +36,7 @@ class TaskJMGui extends DefaultTask{
 
             log.debug("JMeter is called with the following command line arguments: " + args.toString());
 
-            JmeterSpecs specs = new JmeterSpecs();
+            JMSpecs specs = new JMSpecs();
             specs.getSystemProperties().put("search_paths", System.getProperty("search_paths"));
             specs.getSystemProperties().put("jmeter.home", project.jmeter.workDir.getAbsolutePath());
             specs.getSystemProperties().put("saveservice_properties", System.getProperty("saveservice_properties"));

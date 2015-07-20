@@ -1,19 +1,23 @@
 package net.foragerr.jmeter.gradle.plugins
 
 import kg.apc.jmeter.PluginsCMDWorker
+import net.foragerr.jmeter.gradle.plugins.utils.JMUtils;
+import net.foragerr.jmeter.gradle.plugins.utils.ReportTransformer;
+
 import org.apache.commons.io.FilenameUtils
 import org.apache.commons.io.IOUtils
 import org.apache.jmeter.util.JMeterUtils
 import org.gradle.api.DefaultTask
 import org.gradle.api.GradleException
 import org.gradle.api.logging.Logging
+import org.gradle.api.logging.Logger
 import org.gradle.api.tasks.TaskAction
 
 import javax.xml.transform.TransformerException
 
-public class TaskJMCreateReports extends DefaultTask {
+public class TaskJMReports extends DefaultTask {
 
-    protected final org.gradle.api.logging.Logger log = Logging.getLogger(getClass())
+    protected final Logger log = Logging.getLogger(getClass())
 
     public static final List<String> pluginTypes = Arrays.asList(
             "ResponseTimesOverTime",
@@ -32,12 +36,24 @@ public class TaskJMCreateReports extends DefaultTask {
     @TaskAction
     jmCreateReport(){
         if (project.jmeter.enableReports == true)makeHTMLReport(project.jmeter.jmResultFiles)
-        if (project.jmeter.enableExtendedReports == true)makeHTMLReport(project.jmeter.jmResultFiles)
+        //if (project.jmeter.enableExtendedReports == true) makeExtendedReports(project.jmeter.jmResultFiles)
+		
     }
+	
+	private void makeExtendedReports(List<File> results) throws IOException {
+		for (File resultFile : results) {
+			try {
+				log.info("Creating Extended Reports " + resultFile.getName());
+				createExtendedReport(resultFile);
+			} catch (Throwable e) {
+				log.error("Failed to create extended report for " + resultFile, e);
+			}
+		}
+	}
 
-    public  void createExtendedReport(String resultFile, File jmProps, File jmHome){
-        String name = FilenameUtils.removeExtension(resultFile);
-        initializeJMeter(name,jmProps,jmHome);
+    private  void createExtendedReport(File resultFile){
+        String name = FilenameUtils.removeExtension(resultFile.getAbsolutePath());
+        initializeJMeter(name, JMUtils.getJmeterPropsFile(project), project.jmeter.workDir);
 
         PluginsCMDWorker worker = new PluginsCMDWorker();
         for (String plugin : pluginTypes) {
@@ -47,10 +63,10 @@ public class TaskJMCreateReports extends DefaultTask {
                 worker.setOutputPNGFile(name + "-" + plugin + ".png");
                 worker.addExportMode(PluginsCMDWorker.EXPORT_CSV);
                 worker.setOutputCSVFile(name + "-" + plugin + ".csv");
-                worker.setInputFile(resultFile);
+                worker.setInputFile(resultFile.getAbsolutePath());
                 worker.doJob();
             } catch (Exception e) {
-                log.fatalError("Failed to create report: " + plugin + " for " + name + " due to: ", e);
+                log.error("Failed to create report: " + plugin + " for " + name + " due to: ", e);
             }
         }
     }
@@ -64,13 +80,13 @@ public class TaskJMCreateReports extends DefaultTask {
         JMeterUtils.initLocale();
     }
 
-    private void makeHTMLReport(List<String> results) {
+    private void makeHTMLReport(List<File> results) {
         try {
             ReportTransformer transformer;
             transformer = new ReportTransformer(getXslt());
             log.info("Building HTML Report.");
-            for (String resultFile : results) {
-                final String outputFile = toOutputFileName(resultFile);
+            for (File resultFile : results) {
+                final File outputFile = new File(toOutputFileName(resultFile.getAbsolutePath()));
                 log.info("transforming: " + resultFile + " to " + outputFile);
                 transformer.transform(resultFile, outputFile);
             }
@@ -90,20 +106,9 @@ public class TaskJMCreateReports extends DefaultTask {
 
     private String toOutputFileName(String fileName) {
         if (fileName.endsWith(".xml")) {
-            return fileName.replace(".xml", project.jmeter.reportPostfix);
+            return fileName.replace(".xml", project.jmeter.reportPostfix + ".html");
         } else {
             return fileName + project.jmeter.reportPostfix;
-        }
-    }
-
-    private void makeExtendedReport(List<String> results) throws IOException {
-        for (String resultFile : results) {
-            try {
-                log.info("Creating Extended Reports");
-                TaskJMCreateExReport.createExtendedReport(resultFile, getJmeterPropsFile(), project.jmeter.workDir);
-            } catch (Throwable e) {
-                log.error("Failed to create extended report for " + resultFile, e);
-            }
         }
     }
 

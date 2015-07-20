@@ -1,7 +1,7 @@
 package net.foragerr.jmeter.gradle.plugins
 
 
-class JmeterSpecs implements Serializable{
+class JMSpecs implements Serializable{
 
     private String maxHeapSize
 

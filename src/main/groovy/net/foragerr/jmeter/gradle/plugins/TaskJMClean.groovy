@@ -1,6 +1,6 @@
 package net.foragerr.jmeter.gradle.plugins
 
-import net.foragerr.jmeter.gradle.plugins.helper.FileUtils
+import net.foragerr.jmeter.gradle.plugins.utils.FileUtils
 
 import org.gradle.api.DefaultTask
 import org.gradle.api.logging.Logger
