@@ -68,7 +68,12 @@ class TaskJMInit extends DefaultTask{
         File defaultJmeterProperties = new File(project.jmeter.workDir, "jmeter.properties");
         System.setProperty("default_jm_properties", "/" + defaultJmeterProperties.getName());
         tempProperties.add(defaultJmeterProperties);
+		
+		File jmPluginProperties = new File(project.jmeter.workDir, "jmeter-plugin.properties");
+		System.setProperty("default_jm_properties", "/" + jmPluginProperties.getName());
+		tempProperties.add(jmPluginProperties);
 
+		//Copy files from jar to workDir
         for (File f : tempProperties) {
             try {
                 FileWriter writer = new FileWriter(f);
@@ -117,7 +122,6 @@ class TaskJMInit extends DefaultTask{
                 log.error ("Error fetching jmeter version")
                 throw new GradleException("Error fetching jmeter version")
             }
-            Thread.sleep(100)
             Properties pluginProps = new Properties()
             pluginProps.load(is)
             jmeterVersion = pluginProps.getProperty("jmeter.version", null)

@@ -5,8 +5,6 @@ package net.foragerr.jmeter.gradle.plugins
  */
 class JMPluginExtension {
 
-    File workDir = null //not user settable
-    File reportDir = null
     File jmLog = null
     File testFileDir = null
     File jmPropertyFile = null
@@ -30,5 +28,9 @@ class JMPluginExtension {
     String reportPostfix
     String reportXslt
     String maxHeapSize
+	
+	//For internal use, Not user settable:
+	File workDir = null 
+	File reportDir = null
 
 }

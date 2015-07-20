@@ -17,7 +17,7 @@ class JMPlugin implements Plugin<Project>{
         project.extensions.create("jmeter", JMPluginExtension)
 
         project.task('jmInit', type:TaskJMInit){
-            group TASK_GROUP_NAME
+            group null //hide this task
             description 'Init task - pointless to run by itself'
         }
 
@@ -31,14 +31,14 @@ class JMPlugin implements Plugin<Project>{
             description 'Launch JMeter GUI to edit tests'
         }
 
-        project.task('jmReport', type:TaskJMCreateReports,dependsOn: 'jmRun' ){
+        project.task('jmReport', type:TaskJMCreateReports,dependsOn: 'jmRun'){
             group TASK_GROUP_NAME
-            description 'Create JMeter Reports'
+            description 'Create JMeter test Reports'
         }
 
-        project.task('jmClean', type:TaskJMClean){
+        project.task('jmClean', type:TaskJMClean, dependsOn: 'jmInit'){
             group TASK_GROUP_NAME
-            description 'Clean JMeter test reports'
+            description 'Clean JMeter test Reports'
         }
     }
 }
