@@ -31,7 +31,7 @@ class JMPlugin implements Plugin<Project>{
             description 'Launch JMeter GUI to edit tests'
         }
 
-        project.task('jmReport', type:TaskJMReports,dependsOn: 'jmRun'){
+        project.task('jmReport', type:TaskJMReports,dependsOn: 'jmInit'){
             group TASK_GROUP_NAME
             description 'Create JMeter test Reports'
         }

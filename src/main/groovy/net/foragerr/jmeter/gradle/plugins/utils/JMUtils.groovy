@@ -27,10 +27,10 @@ class JMUtils {
     }
 
 
-    static  List<File> scanTestFileDir(Project project, String pattern) {
+    static  List<File> scanDir(Project project, String pattern, File baseDir) {
         List<File> scanResults = new ArrayList<File>()
         DirectoryScanner scanner = new DirectoryScanner()
-        scanner.setBasedir(project.jmeter.testFileDir)
+        scanner.setBasedir(baseDir)
         scanner.setIncludes(pattern)
         scanner.scan()
         for (String result : scanner.getIncludedFiles()) {

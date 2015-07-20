@@ -31,7 +31,7 @@ public class TaskJMRun extends DefaultTask {
                 }
             }
         } else {
-            testFiles.addAll(JMUtils.scanTestFileDir(project, "**/*.jmx"));
+            testFiles.addAll(JMUtils.scanDir(project, "**/*.jmx", project.jmeter.testFileDir));
             log.info(testFiles.size() + " test files found in folder scan")
         }
 

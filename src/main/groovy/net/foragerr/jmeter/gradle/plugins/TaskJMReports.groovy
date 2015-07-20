@@ -33,10 +33,20 @@ public class TaskJMReports extends DefaultTask {
             "ThroughputVsThreads"
     );
 
+//	TODO: createReports should only kick-in if there are new jtl files to process.
+//	@InputDirectory
+//	def File project.jmeter.reportDir
+
     @TaskAction
     jmCreateReport(){
-        if (project.jmeter.enableReports == true)makeHTMLReport(project.jmeter.jmResultFiles)
-        //if (project.jmeter.enableExtendedReports == true) makeExtendedReports(project.jmeter.jmResultFiles)
+		//Get List of resultFiles
+		List<File> jmResultFiles = new ArrayList<File>()
+		jmResultFiles.addAll(JMUtils.scanDir(project, "**/*.xml", project.jmeter.reportDir));
+		
+		if (jmResultFiles.size()==0) log.warn("There are no results file to create reports from")
+		
+        if (project.jmeter.enableReports == true)makeHTMLReport(jmResultFiles)
+        if (project.jmeter.enableExtendedReports == true) makeExtendedReports(jmResultFiles)
 		
     }
 	
