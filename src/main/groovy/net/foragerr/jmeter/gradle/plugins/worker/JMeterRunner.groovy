@@ -10,11 +10,6 @@ class JMeterRunner {
 
     private final static Logger LOGGER = Logging.getLogger(JMeterRunner.class)
 
-    void executeCreateReport(JmeterSpecs specs, String workingDirectory) {
-        ProcessBuilder processBuilder = new ProcessBuilder(createArgumentList(specs, workingDirectory, "net.foragerr.jmeter.gradle.plugins.CreateExtendedReport")).inheritIO()
-        launchProcess(processBuilder, workingDirectory)
-    }
-
     private void launchProcess(ProcessBuilder processBuilder, String workingDirectory) {
         processBuilder.redirectErrorStream(true)
         processBuilder.directory(new File(workingDirectory))

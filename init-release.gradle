@@ -1,8 +1,0 @@
-addListener(new ApplyPluginListener())
-
-class ApplyPluginListener extends BuildAdapter {
-    public void projectsEvaluated(Gradle gradle) {
-        gradle.rootProject.allprojects { apply plugin: 'maven' }
-        gradle.rootProject.allprojects { apply from: "release.gradle" }
-    }
-}

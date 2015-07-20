@@ -11,15 +11,15 @@ group = 'net.foragerr.jmeter'
 archivesBaseName = 'jmeter-gradle-plugin'
 
 //--- versioning information ---
-ext.thisPluginVersion="0.1.6"
-ext.jmeterVersion = "2.13"
-ext.pluginVersion = "1.2.1" //jmeter-plugin version
-version = "$thisPluginVersion-$jmeterVersion"
+ext.thisPluginVersion="0.5.0"
+ext.jmVersion = "2.13"
+ext.jmPluginVersion = "1.2.1" //jmeter-plugin version
+version = "$thisPluginVersion-$jmVersion"
 
-compileGroovy {
-    sourceCompatibility = '1.6'
-    targetCompatibility = '1.6'
-}
+//compileGroovy {
+//    sourceCompatibility = '1.6'
+//    targetCompatibility = '1.6'
+//}
 
 def bootClasspathStr = "${System.env.'JAVA_HOME'}/jre/lib/rt.jar"
 project.tasks.withType(AbstractCompile, { AbstractCompile ac ->
@@ -36,13 +36,13 @@ task wrapper(type: Wrapper) {
 
 configurations {
 	//workaround for jmeter defect 57555 (https://bz.apache.org/bugzilla/show_bug.cgi?id=57555)
-	if (jmeterVersion == '2.12'){
+	if (jmVersion == '2.12'){
 		compile.exclude group: 'excalibur-fortress', module: 'excalibur-fortress-container-api'
 		compile.exclude group: 'excalibur-fortress', module: 'excalibur-fortress-meta'
  	
 	}
 	//workaround for jmeter defect 57748 (https://bz.apache.org/bugzilla/show_bug.cgi?id=57748)
-	if (jmeterVersion == '2.13'){
+	if (jmVersion == '2.13'){
 		compile.exclude group: 'commons-math3', module: 'commons-math3'
 		compile.exclude group: 'commons-pool2', module: 'commons-pool2'
 	}
@@ -53,47 +53,47 @@ dependencies {
 	//common to all supported versions
 	compile gradleApi(),
 		localGroovy(),
-        "kg.apc:jmeter-plugins:${pluginVersion}",
-        "kg.apc:jmeter-plugins-standard:${pluginVersion}",
-        "kg.apc:jmeter-plugins-extras:${pluginVersion}",
-        "kg.apc:jmeter-plugins-common:${pluginVersion}",
+        "kg.apc:jmeter-plugins:${jmPluginVersion}",
+        "kg.apc:jmeter-plugins-standard:${jmPluginVersion}",
+        "kg.apc:jmeter-plugins-extras:${jmPluginVersion}",
+        "kg.apc:jmeter-plugins-common:${jmPluginVersion}",
 		"org.apache.ant:ant:1.8.4",
 		"org.beanshell:bsh-core:2.0b4",
-		"org.apache.jmeter:ApacheJMeter_http:${jmeterVersion}",
-		"org.apache.jmeter:ApacheJMeter_junit:${jmeterVersion}",
-		"org.apache.jmeter:ApacheJMeter_java:${jmeterVersion}",
-		"org.apache.jmeter:ApacheJMeter_jdbc:${jmeterVersion}",
-		"org.apache.jmeter:ApacheJMeter_tcp:${jmeterVersion}",
-		"org.apache.jmeter:ApacheJMeter_mail:${jmeterVersion}",
-		"org.apache.jmeter:ApacheJMeter_ldap:${jmeterVersion}",
-		"org.apache.jmeter:ApacheJMeter_ftp:${jmeterVersion}",
-		"org.apache.jmeter:ApacheJMeter_functions:${jmeterVersion}",
-		"org.apache.jmeter:ApacheJMeter_monitors:${jmeterVersion}",
-		"org.apache.jmeter:ApacheJMeter_jms:${jmeterVersion}",
-		"org.apache.jmeter:ApacheJMeter:${jmeterVersion}",
-		"org.apache.jmeter:ApacheJMeter_components:${jmeterVersion}",
-		"org.apache.jmeter:ApacheJMeter_config:${jmeterVersion}",
-		"org.apache.jmeter:ApacheJMeter_core:${jmeterVersion}",
-		"org.apache.jmeter:ApacheJMeter_junit:${jmeterVersion}"
+		"org.apache.jmeter:ApacheJMeter_http:${jmVersion}",
+		"org.apache.jmeter:ApacheJMeter_junit:${jmVersion}",
+		"org.apache.jmeter:ApacheJMeter_java:${jmVersion}",
+		"org.apache.jmeter:ApacheJMeter_jdbc:${jmVersion}",
+		"org.apache.jmeter:ApacheJMeter_tcp:${jmVersion}",
+		"org.apache.jmeter:ApacheJMeter_mail:${jmVersion}",
+		"org.apache.jmeter:ApacheJMeter_ldap:${jmVersion}",
+		"org.apache.jmeter:ApacheJMeter_ftp:${jmVersion}",
+		"org.apache.jmeter:ApacheJMeter_functions:${jmVersion}",
+		"org.apache.jmeter:ApacheJMeter_monitors:${jmVersion}",
+		"org.apache.jmeter:ApacheJMeter_jms:${jmVersion}",
+		"org.apache.jmeter:ApacheJMeter:${jmVersion}",
+		"org.apache.jmeter:ApacheJMeter_components:${jmVersion}",
+		"org.apache.jmeter:ApacheJMeter_config:${jmVersion}",
+		"org.apache.jmeter:ApacheJMeter_core:${jmVersion}",
+		"org.apache.jmeter:ApacheJMeter_junit:${jmVersion}"
 		
 
 	//version specific dependencies
-    if (jmeterVersion > '2.7') {
-        compile "org.apache.jmeter:ApacheJMeter_native:${jmeterVersion}"
+    if (jmVersion > '2.7') {
+        compile "org.apache.jmeter:ApacheJMeter_native:${jmVersion}"
     }
-	if (jmeterVersion > '2.9'){
-		compile "org.apache.jmeter:ApacheJMeter_mongodb:${jmeterVersion}"
+	if (jmVersion > '2.9'){
+		compile "org.apache.jmeter:ApacheJMeter_mongodb:${jmVersion}"
 	}
-	if (jmeterVersion < '2.13'){
-		compile	"org.apache.jmeter:ApacheJMeter_report:${jmeterVersion}"
+	if (jmVersion < '2.13'){
+		compile	"org.apache.jmeter:ApacheJMeter_report:${jmVersion}"
 	}
-	if (jmeterVersion > '2.9'){
-		compile	"org.apache.jmeter:ApacheJMeter_components:${jmeterVersion}",
-		"org.apache.jmeter:ApacheJMeter_config:${jmeterVersion}",
-		"org.apache.jmeter:ApacheJMeter_junit-test:${jmeterVersion}",
-		"org.apache.jmeter:ApacheJMeter_mongodb:${jmeterVersion}"
+	if (jmVersion > '2.9'){
+		compile	"org.apache.jmeter:ApacheJMeter_components:${jmVersion}",
+		"org.apache.jmeter:ApacheJMeter_config:${jmVersion}",
+		"org.apache.jmeter:ApacheJMeter_junit-test:${jmVersion}",
+		"org.apache.jmeter:ApacheJMeter_mongodb:${jmVersion}"
 	}
-	if (jmeterVersion == '2.13'){
+	if (jmVersion == '2.13'){
 		compile "org.apache.commons:commons-math3:3.4.1",
 			"org.apache.commons:commons-pool2:2.3"
 	} 
@@ -120,12 +120,12 @@ processResources.doLast {
     ant.replace(
             file: "${project.buildDir}/resources/main/jmeter-plugin.properties",
             token: "@jmeter.version@",
-            value: "$jmeterVersion"
+            value: "$jmVersion"
     )
     ant.replace(
             file: "${project.buildDir}/resources/main/jmeter-plugin.properties",
             token: "@plugin.version@",
-            value: "$pluginVersion"
+            value: "$jmPluginVersion"
     )
 }
 
