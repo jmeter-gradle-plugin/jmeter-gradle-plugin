@@ -11,7 +11,7 @@ group = 'net.foragerr.jmeter'
 archivesBaseName = 'jmeter-gradle-plugin'
 
 //--- versioning information ---
-ext.thisPluginVersion="0.5.0"
+ext.thisPluginVersion="0.5.1"
 ext.jmVersion = "2.13"
 ext.jmPluginVersion = "1.2.1" //jmeter-plugin version
 version = "$thisPluginVersion-$jmVersion"
