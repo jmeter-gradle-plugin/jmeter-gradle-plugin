@@ -31,12 +31,12 @@ class JMPlugin implements Plugin<Project>{
             description 'Launch JMeter GUI to edit tests'
         }
 
-        project.task('jmReport', type:TaskJMReports){
+        project.task('jmReport', type:TaskJMReports, dependsOn: 'jmInit'){
             group TASK_GROUP_NAME
             description 'Create JMeter test Reports'
         }
 
-        project.task('jmClean', type:TaskJMClean, dependsOn: 'jmInit'){
+        project.task('jmClean', type:TaskJMClean){
             group TASK_GROUP_NAME
             description 'Clean JMeter test Reports'
         }
