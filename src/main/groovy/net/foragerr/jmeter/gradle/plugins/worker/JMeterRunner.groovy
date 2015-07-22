@@ -1,10 +1,13 @@
 package net.foragerr.jmeter.gradle.plugins.worker
 
-import net.foragerr.jmeter.gradle.plugins.JMSpecs;
-
+import net.foragerr.jmeter.gradle.plugins.JMSpecs
 import org.gradle.api.GradleException
 import org.gradle.api.logging.Logger
 import org.gradle.api.logging.Logging
+
+import java.util.jar.Attributes
+import java.util.jar.JarOutputStream
+import java.util.jar.Manifest
 
 class JMeterRunner {
 
@@ -38,20 +41,28 @@ class JMeterRunner {
         argumentsList.add("-cp")
         argumentsList.add(workDir + File.separator + "lib" + System.getProperty("path.separator") +
                 workDir + File.separator + "lib" + File.separator + "ext" + System.getProperty("path.separator") +
-                getCurrentClassPath())
+                generatePatherJar(workDir).getAbsolutePath())
         argumentsList.add(launchClass)
         argumentsList.addAll(specs.jmeterProperties)
         LOGGER.debug("Command to run is $argumentsList")
         argumentsList.toArray(new String[argumentsList.size()])
     }
 
-    private String getCurrentClassPath() {
-        StringBuilder builder = new StringBuilder();
+    private File generatePatherJar(String workDir){
+        File patherJar = new File(new File(workDir), "pather.jar")
+        if (patherJar.exists()) patherJar.delete()
+        Manifest manifest = new Manifest();
+        manifest.getMainAttributes().put(Attributes.Name.MANIFEST_VERSION, "1.0");
+
+        StringBuilder cpBuilder = new StringBuilder();
         URL[] classPath = ((URLClassLoader)this.getClass().getClassLoader()).getURLs()
         classPath.each {u ->
-            builder.append(u.getPath())
-            builder.append(System.getProperty("path.separator"))
+            cpBuilder.append(u.getPath())
+            cpBuilder.append(" ")
         }
-        builder.substring(0, builder.size() - 1)
+        manifest.getMainAttributes().put(Attributes.Name.CLASS_PATH, cpBuilder.substring(0, cpBuilder.size() - 1) )
+        JarOutputStream target = new JarOutputStream(new FileOutputStream(patherJar.getCanonicalPath()), manifest);
+        target.close();
+        return patherJar
     }
 }
