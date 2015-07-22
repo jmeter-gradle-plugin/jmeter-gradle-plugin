@@ -27,6 +27,7 @@ class JMPluginExtension {
     String reportPostfix
     String reportXslt
     String maxHeapSize
+	String reportTitle = null
 	
 	//For internal use, Not user settable:
 	File workDir = null 

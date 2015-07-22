@@ -24,8 +24,9 @@ public class ReportTransformer {
 		this.transformer = tFactory.newTransformer(new StreamSource(xsl));
 	}
 
-	public void transform(File inputFile, File outputFile) throws FileNotFoundException, TransformerException {
-        transformer.transform(
+	public void transform(File inputFile, File outputFile, String reportTitle) throws FileNotFoundException, TransformerException {
+        transformer.setParameter("reportTitle", reportTitle);
+		transformer.transform(
         new StreamSource(inputFile),
         new StreamResult(new FileOutputStream(outputFile)));
 	}

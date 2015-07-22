@@ -36,8 +36,8 @@ class TaskJMInit extends DefaultTask{
         File testFileDir =  new File(project.getProjectDir(), "src/test/jmeter");
         project.jmeter.testFileDir =  testFileDir
 		
-		project.jmeter.enableReports = project.jmeter.enableReports ?: false
-        project.jmeter.enableExtendedReports = project.jmeter.enableExtendedReports ?: true
+		project.jmeter.enableReports = project.jmeter.enableReports==null ? false : project.jmeter.enableReports
+        project.jmeter.enableExtendedReports = project.jmeter.enableExtendedReports==null ? true : project.jmeter.enableExtendedReports
         project.jmeter.jmVersion = loadJMeterVersion();
 
         //Create required folders

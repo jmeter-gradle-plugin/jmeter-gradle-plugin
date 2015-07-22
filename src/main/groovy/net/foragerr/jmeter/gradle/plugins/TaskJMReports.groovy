@@ -95,10 +95,11 @@ public class TaskJMReports extends DefaultTask {
             ReportTransformer transformer;
             transformer = new ReportTransformer(getXslt());
             log.info("Building HTML Report.");
-            for (File resultFile : results) {
+			for (File resultFile : results) {
+				String reportTitle = project.jmeter.reportTitle ?: "Generated from: " + resultFile.getName();
                 final File outputFile = new File(toOutputFileName(resultFile.getAbsolutePath()));
                 log.info("transforming: " + resultFile + " to " + outputFile);
-                transformer.transform(resultFile, outputFile);
+                transformer.transform(resultFile, outputFile, reportTitle);
             }
         } catch (FileNotFoundException e) {
             log.error("Can't transform result", e);
