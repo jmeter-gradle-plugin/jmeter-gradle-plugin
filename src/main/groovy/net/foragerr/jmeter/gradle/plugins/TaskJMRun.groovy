@@ -30,6 +30,9 @@ public class TaskJMRun extends DefaultTask {
                     throw new GradleException("Test file " + file.getCanonicalPath() + " does not exists");
                 }
             }
+        } else if (project.jmeter.srcDir != null) {
+            testFiles.addAll(JMUtils.scanDir(project, "**/*.jmx", new File(project.getProjectDir(), project.jmeter.srcDir)));
+            log.info(testFiles.size() + " test files found in folder scan")
         } else {
             testFiles.addAll(JMUtils.scanDir(project, "**/*.jmx", project.jmeter.testFileDir));
             log.info(testFiles.size() + " test files found in folder scan")
