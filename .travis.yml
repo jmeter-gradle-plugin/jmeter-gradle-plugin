@@ -1,18 +1,10 @@
 language: groovy
 
-deploy:
-  provider: s3
-  access_key_id: $ARTIFACTS_KEY
-  secret_access_key: $ARTIFACTS_SECRET
-  bucket: $ARTIFACTS_BUCKET
-  skip_cleanup: true
-  acl: public_read
-  local_dir: build/libs
-  upload-dir: travis-builds
-  
-after_success:
-  gradle bintrayupload
+install: ./shscripts/env.sh
+
+after_success: ./shscripts/deploy.sh
  
 branches:
   only:
     - master
+    - release

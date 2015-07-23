@@ -14,7 +14,7 @@ archivesBaseName = 'jmeter-gradle-plugin'
 ext.thisPluginVersion="0.6.0"
 ext.jmVersion = "2.13"
 ext.jmPluginVersion = "1.3.0"
-version = "$thisPluginVersion-$jmVersion"
+version = "$thisPluginVersion-$jmVersion-SNAPSHOT"
 
 def bootClasspathStr = "${System.env.'JAVA_HOME'}/jre/lib/rt.jar"
 project.tasks.withType(AbstractCompile, { AbstractCompile ac ->
@@ -23,10 +23,6 @@ project.tasks.withType(AbstractCompile, { AbstractCompile ac ->
 
 repositories {
     mavenCentral()
-}
-
-task wrapper(type: Wrapper) {
-    gradleVersion = '2.3'
 }
 
 configurations {
@@ -70,14 +66,24 @@ dependencies {
 	testCompile "junit:junit:4.11"
 }
 
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.3'
+}
+
 task javadocJar(type: Jar, dependsOn: javadoc) {
     classifier = 'javadoc'
     from 'build/docs/javadoc'
 }
 
 task sourcesJar(type: Jar) {
-    from sourceSets.main.allSource
     classifier = 'sources'
+	from sourceSets.main.allSource
+}
+
+task releaseInit(type: Exec){
+    description 'Create and upload a release to bintray and gradle-plugins'
+    version -= ~/-SNAPSHOT$/     //trim trailing -SNAPSHOT from version
+    println "## Publishing Version $version ##"
 }
 
 artifacts {
@@ -159,9 +165,13 @@ publishing {
 }
 
 //--- bintray publishing ---
+//       for Releases
+bintrayUpload {
+    dependsOn 'releaseInit'
+}
 bintray {
-	user=System.getenv('bintray_user')
-	key=System.getenv('bintray_api_key')
+	user = System.getenv('bintray_user')
+	key = System.getenv('bintray_api_key')
 	
     publications = ['mavenJava'] //When uploading Maven-based publication files
     publish = true //If version should be auto published after an upload
@@ -177,6 +187,8 @@ bintray {
 
         version {
             name = "$version" //Bintray logical version name
+            released = new Date()
+            vcsTag = "$version"
             gpg { sign = true }
             
 			//Optional configuration for Maven Central sync of the version
@@ -190,20 +202,41 @@ bintray {
     }
 }
 
-//--- oss.jfrog artifactory publishing ---
-
-
 //--- gradle publishing ---
+//       for Releases
+publishPlugins{
+    dependsOn 'releaseInit'
+}
 pluginBundle {
-	website = 'http://foragerr.net/jmeter'
-	vcsUrl = 'https://github.com/jmeter-gradle-plugin/jmeter-gradle-plugin.git'
-	description = 'A gradle plugin for running jmeter tests'
-	tags = ['jmeter', 'performance']
-  
-	plugins {
-	  greetingsPlugin {
-		id = 'net.foragerr.jmeter'
-		displayName = 'JMeter Gradle Plugin'
-	  }
+    website = 'http://foragerr.net/jmeter'
+    vcsUrl = 'https://github.com/jmeter-gradle-plugin/jmeter-gradle-plugin.git'
+    description = 'A gradle plugin for running jmeter tests'
+    tags = ['jmeter', 'performance']
+
+    plugins {
+        jmeterPlugin {
+          id = 'net.foragerr.jmeter'
+          displayName = 'JMeter Gradle Plugin'
+      }
+    }
+}
+
+//--- oss.jfrog artifactory publishing ---
+//         For SNAPSHOT publishing
+artifactory {
+	contextUrl = 'https://oss.jfrog.org/artifactory'
+	publish {
+		repository {
+			repoKey = 'oss-snapshot-local'
+			username = System.getenv('bintray_user')
+			password = System.getenv('bintray_api_key')
+		}
 	}
-  }
+	resolve {
+		repository {
+			repoKey = 'oss-snapshot-local'
+			username = System.getenv('bintray_user')
+			password = System.getenv('bintray_api_key')
+		}
+	}
+}
