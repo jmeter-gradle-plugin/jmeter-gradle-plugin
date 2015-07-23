@@ -1,6 +1,8 @@
 language: groovy
 
-install: ./shscripts/env.sh
+install:
+  - chmod +x shscripts/*
+  - shscripts/env.sh
 
 after_success: ./shscripts/deploy.sh
  
