@@ -17,7 +17,6 @@ class JMPluginExtension {
     Boolean enableExtendedReports = true
 
 	List<File> jmTestFiles = null
-        String srcDir = null
     List<File> jmUserPropertiesFiles = null
     List<String> jmPluginJars = null
     List<String> jmUserProperties = null
