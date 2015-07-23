@@ -27,11 +27,12 @@ class JMUtils {
     }
 
 
-    static  List<File> scanDir(Project project, String pattern, File baseDir) {
+    static  List<File> scanDir(Project project, String[] includes, String[] excludes, File baseDir) {
         List<File> scanResults = new ArrayList<File>()
         DirectoryScanner scanner = new DirectoryScanner()
         scanner.setBasedir(baseDir)
-        scanner.setIncludes(pattern)
+        scanner.setIncludes(includes)
+        scanner.setExcludes(excludes)
         scanner.scan()
         for (String result : scanner.getIncludedFiles()) {
             scanResults.add(new File(scanner.getBasedir(), result))

@@ -20,6 +20,8 @@ class JMPluginExtension {
     List<File> jmUserPropertiesFiles = null
     List<String> jmPluginJars = null
     List<String> jmUserProperties = null
+    List<String> includes = null
+    List<String> excludes = null 
 
     String jmVersion
     String jmPluginVersion

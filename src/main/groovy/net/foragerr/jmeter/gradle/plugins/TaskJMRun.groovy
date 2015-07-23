@@ -31,7 +31,11 @@ public class TaskJMRun extends DefaultTask {
                 }
             }
         } else {
-            testFiles.addAll(JMUtils.scanDir(project, "**/*.jmx", project.jmeter.testFileDir));
+            String[] excludes = project.jmeter.excludes == null ?  [] as String[] : project.jmeter.excludes as String[];
+            String[] includes = project.jmeter.includes == null ? ["**/*.jmx"] as String[] : project.jmeter.includes as String[];
+            log.info("includes: " + includes)
+            log.info("excludes: " + excludes)
+            testFiles.addAll(JMUtils.scanDir(project, includes, excludes, project.jmeter.testFileDir));
             log.info(testFiles.size() + " test files found in folder scan")
         }
 
