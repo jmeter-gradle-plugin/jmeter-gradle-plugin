@@ -180,9 +180,8 @@ bintray {
         vcsUrl = 'https://github.com/jmeter-gradle-plugin/jmeter-gradle-plugin.git'
 
         version {
-            name = "$version" //Bintray logical version name
+            name = project.version //Bintray logical version name
             released = new Date()
-            vcsTag = "$version"
             gpg { sign = true }
             
 			//Optional configuration for Maven Central sync of the version
