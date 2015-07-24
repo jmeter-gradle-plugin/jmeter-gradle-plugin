@@ -41,7 +41,7 @@ public class TaskJMReports extends DefaultTask {
     jmCreateReport(){
 		//Get List of resultFiles
 		List<File> jmResultFiles = new ArrayList<File>()
-		jmResultFiles.addAll(JMUtils.scanDir(project, "**/*.xml", project.jmeter.reportDir));
+		jmResultFiles.addAll(JMUtils.scanDir(project, ["**/*.xml"] as String[], [] as String[], project.jmeter.reportDir));
 		
 		if (jmResultFiles.size()==0) log.warn("There are no results file to create reports from")
 		
