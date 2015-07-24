@@ -40,8 +40,8 @@ class JMeterRunner {
         }
         argumentsList.add("-cp")
         argumentsList.add(workDir + File.separator + "lib" + System.getProperty("path.separator") +
-                workDir + File.separator + "lib" + File.separator + "ext" + System.getProperty("path.separator") +
-                generatePatherJar(workDir).getAbsolutePath())
+            workDir + File.separator + "lib" + File.separator + "ext" + System.getProperty("path.separator") +
+            generatePatherJar(workDir).getAbsolutePath())
         argumentsList.add(launchClass)
         argumentsList.addAll(specs.jmeterProperties)
         LOGGER.debug("Command to run is $argumentsList")
