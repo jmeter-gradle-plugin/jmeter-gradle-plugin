@@ -80,12 +80,6 @@ task sourcesJar(type: Jar) {
 	from sourceSets.main.allSource
 }
 
-task releaseInit(type: Exec){
-    description 'Create and upload a release to bintray and gradle-plugins'
-    version -= ~/-SNAPSHOT$/     //trim trailing -SNAPSHOT from version
-    println "## Publishing Version $version ##"
-}
-
 artifacts {
     archives jar
     archives sourcesJar
@@ -166,8 +160,8 @@ publishing {
 
 //--- bintray publishing ---
 //       for Releases
-bintrayUpload {
-    dependsOn 'releaseInit'
+bintrayUpload.onlyIf {
+	!(version ==~ /.*SNAPSHOT/)
 }
 bintray {
 	user = System.getenv('bintray_user')
@@ -204,13 +198,13 @@ bintray {
 
 //--- gradle publishing ---
 //       for Releases
-publishPlugins{
-    dependsOn 'releaseInit'
+publishPlugins.onlyIf {
+	!(version ==~ /.*SNAPSHOT/)
 }
 pluginBundle {
     website = 'http://foragerr.net/jmeter'
     vcsUrl = 'https://github.com/jmeter-gradle-plugin/jmeter-gradle-plugin.git'
-    description = 'A gradle plugin for running jmeter tests'
+    description = 'A Gradle plugin for running JMeter tests'
     tags = ['jmeter', 'performance']
 
     plugins {
@@ -230,6 +224,10 @@ artifactory {
 			repoKey = 'oss-snapshot-local'
 			username = System.getenv('bintray_user')
 			password = System.getenv('bintray_api_key')
+		}
+
+		defaults {
+			publications('mavenJava')
 		}
 	}
 	resolve {

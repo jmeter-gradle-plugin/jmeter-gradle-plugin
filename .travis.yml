@@ -4,9 +4,11 @@ install:
   - chmod +x shscripts/*
   - shscripts/env.sh
 
-after_success: ./shscripts/deploy.sh
+after_success:
+  - gradle artifactoryPublish
+  - gradle bintrayUpload
+  - gradle publishPlugins
  
 branches:
   only:
     - master
-    - release
