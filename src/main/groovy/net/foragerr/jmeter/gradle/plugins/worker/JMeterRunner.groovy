@@ -40,14 +40,20 @@ class JMeterRunner {
         }
         argumentsList.add("-cp")
         argumentsList.add(workDir + File.separator + "lib" + System.getProperty("path.separator") +
-                workDir + File.separator + "lib" + File.separator + "ext" + System.getProperty("path.separator") +
-                generatePatherJar(workDir).getAbsolutePath())
+            workDir + File.separator + "lib" + File.separator + "ext" + System.getProperty("path.separator") +
+            generatePatherJar(workDir).getAbsolutePath())
         argumentsList.add(launchClass)
         argumentsList.addAll(specs.jmeterProperties)
         LOGGER.debug("Command to run is $argumentsList")
         argumentsList.toArray(new String[argumentsList.size()])
     }
 
+    /**
+     * As a workaround for the command argument length being too long for Windows, more than 8K chars, generate
+     *   a tmp .jar as a path container for the long classpath.
+     *
+     * @param workDir working directory of executed build
+    */
     private File generatePatherJar(String workDir){
         File patherJar = new File(new File(workDir), "pather.jar")
         if (patherJar.exists()) patherJar.delete()

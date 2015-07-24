@@ -38,6 +38,18 @@ include the following in your build.gradle (Optional - if this section is not de
 
 This section is under construction
 
+**Changing default path**
+
+In order to use a custom directory for jmx files (default is `src/test/jmeter`) you can set the property *testFileDir*.
+* E.g. testFileDir = file("src/main/resources/jmeter")
+
+**Include and exclude files**
+
+When working with the default or custom path to scan for jmx files, you can include or exclude specific files with the *ïncludes* and *excludes* properties.
+* E.g. excludes = ["excludeThisTest.jmx"]
+
+(Note that you should provide a list of patterns, not just a String) 
+
 ### Edit JMeter files
 
 By default the plugin will search for *.jmx files in `src/test/jmeter`. You can launch the UI end edit your files by running:
