@@ -59,20 +59,29 @@ public class TaskJMReports extends DefaultTask {
 				log.error("Failed to create extended report for " + resultFile, e);
 			}
 		}
+        makeHTMLExtendedReport()
 	}
 
     private  void createExtendedReport(File resultFile){
-        String name = FilenameUtils.removeExtension(resultFile.getAbsolutePath());
-        initializeJMeter(name, JMUtils.getJmeterPropsFile(project), project.jmeter.workDir);
+        File workDir = project.jmeter.workDir
+        File reportDir = project.jmeter.reportDir
+
+        String name = FilenameUtils.removeExtension(resultFile.getName());
+        initializeJMeter(name, JMUtils.getJmeterPropsFile(project), workDir , reportDir);
+
+        File imgDir = new File(reportDir, "extReport-img")
+        File csvDir = new File(reportDir, "extReport-csv")
+        imgDir.mkdirs()
+        csvDir.mkdirs()
 
         PluginsCMDWorker worker = new PluginsCMDWorker();
         for (String plugin : pluginTypes) {
             try {
                 worker.setPluginType(plugin);
                 worker.addExportMode(PluginsCMDWorker.EXPORT_PNG);
-                worker.setOutputPNGFile(name + "-" + plugin + ".png");
+                worker.setOutputPNGFile(imgDir.getCanonicalPath() + File.separator + name + "-" + plugin + ".png");
                 worker.addExportMode(PluginsCMDWorker.EXPORT_CSV);
-                worker.setOutputCSVFile(name + "-" + plugin + ".csv");
+                worker.setOutputCSVFile(csvDir.getCanonicalPath() + File.separator + name + "-" + plugin + ".csv");
                 worker.setInputFile(resultFile.getAbsolutePath());
                 worker.doJob();
             } catch (Exception e) {
@@ -81,11 +90,11 @@ public class TaskJMReports extends DefaultTask {
         }
     }
 
-    private static void initializeJMeter(String name, File jmProps, File jmHome) {
+    private static void initializeJMeter(String name, File jmProps, File jmHome, File reportBaseDir) {
         // Initialize JMeter settings..
         JMeterUtils.setJMeterHome(jmHome.getAbsolutePath());
         JMeterUtils.loadJMeterProperties(jmProps.getAbsolutePath());
-        JMeterUtils.setProperty("log_file", name + ".log");
+        JMeterUtils.setProperty("log_file", reportBaseDir.getCanonicalPath() + File.separator + name + ".log");
         JMeterUtils.initLogging();
         JMeterUtils.initLocale();
     }
@@ -135,4 +144,9 @@ public class TaskJMReports extends DefaultTask {
             return new FileInputStream(project.jmeter.reportXslt);
         }
     }
+
+    private makeHTMLExtendedReport(){
+
+    }
+
 }
