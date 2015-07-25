@@ -61,7 +61,8 @@ dependencies {
 		"org.apache.jmeter:ApacheJMeter_mongodb:${jmVersion}",
 		"org.apache.jmeter:ApacheJMeter_native:${jmVersion}",
 		"org.apache.commons:commons-math3:3.4.1",
-		"org.apache.commons:commons-pool2:2.3"
+		"org.apache.commons:commons-pool2:2.3",
+		"org.rendersnake:rendersnake:1.8"
 
 	testCompile "junit:junit:4.11"
 }
