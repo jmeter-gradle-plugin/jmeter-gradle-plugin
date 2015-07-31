@@ -11,6 +11,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 public class ReportTransformer {
 
@@ -26,6 +28,7 @@ public class ReportTransformer {
 
 	public void transform(File inputFile, File outputFile, String reportTitle) throws FileNotFoundException, TransformerException {
         transformer.setParameter("reportTitle", reportTitle);
+        transformer.setParameter("dateReport", new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(Calendar.getInstance().getTime()));
 		transformer.transform(
         new StreamSource(inputFile),
         new StreamResult(new FileOutputStream(outputFile)));
