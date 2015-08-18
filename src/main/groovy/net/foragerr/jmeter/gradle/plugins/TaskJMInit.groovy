@@ -90,7 +90,7 @@ class TaskJMInit extends DefaultTask{
         StringBuilder cp = new StringBuilder()
         URL[] classPath = ((URLClassLoader)this.getClass().getClassLoader()).getURLs()
         String jmeterVersionPattern = project.jmeter.jmVersion.replaceAll("[.]", "[.]")
-        String pathSeparator = File.pathSeparator;
+        String pathSeparator = ';';
         for (URL dep : classPath) {
             if (dep.getPath().matches("^.*org[./]apache[./]jmeter[/]ApacheJMeter.*" +
                     jmeterVersionPattern + ".jar\$")) {
