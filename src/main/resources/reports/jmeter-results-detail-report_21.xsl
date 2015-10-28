@@ -145,7 +145,7 @@
 	<table width="100%">
 		<tr>
 			<td align="left">Generated at <xsl:value-of select="$dateReport" /></td>
-			<td align="right">By <a href="http://foragerr.net/jmeter/">jmeter-gradle-plugin</a>.</td>
+			<td align="right">By <a href="http://jmeter.foragerr.net">jmeter-gradle-plugin</a>.</td>
 		</tr>
 	</table>
 	<hr size="1" />

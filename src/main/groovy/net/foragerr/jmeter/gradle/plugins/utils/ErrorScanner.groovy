@@ -11,7 +11,6 @@ class ErrorScanner {
     private static final String PAT_FAILURE = "<failure>true</failure>"
 
     def ignoreErrors
-
     def ignoreFailures
 
     /**

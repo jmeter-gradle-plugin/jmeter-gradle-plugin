@@ -13,8 +13,8 @@ class JMPluginExtension {
     Boolean ignoreErrors = null
     Boolean ignoreFailures = null
     Boolean remote = false
-    Boolean enableReports = false
-    Boolean enableExtendedReports = true
+    Boolean enableReports = null
+    Boolean enableExtendedReports = null
 
 	List<File> jmTestFiles = null
     List<File> jmUserPropertiesFiles = null //maps to -S, --systemPropertyFile
@@ -27,7 +27,7 @@ class JMPluginExtension {
     String jmPluginVersion
     String resultFilenameTimestamp
     String reportPostfix
-    String reportXslt
+    String reportXslt = null
     String maxHeapSize
 	String reportTitle = null
 	
