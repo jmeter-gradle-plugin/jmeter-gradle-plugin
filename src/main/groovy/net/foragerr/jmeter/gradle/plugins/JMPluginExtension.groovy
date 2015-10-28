@@ -10,8 +10,8 @@ class JMPluginExtension {
     File jmPropertyFile = null //maps to -p, --propfile
     File customReportXslt
 
-    Boolean ignoreErrors = true
-    Boolean ignoreFailures = true
+    Boolean ignoreErrors = null
+    Boolean ignoreFailures = null
     Boolean remote = false
     Boolean enableReports = false
     Boolean enableExtendedReports = true

@@ -34,8 +34,10 @@ class TaskJMInit extends DefaultTask{
         project.jmeter.jmLog =  jmLog
 
         project.jmeter.testFileDir = project.jmeter.testFileDir==null ? new File(project.getProjectDir(), "src/test/jmeter") : project.jmeter.testFileDir;
-		
-		project.jmeter.enableReports = project.jmeter.enableReports==null ? false : project.jmeter.enableReports
+
+        project.jmeter.ignoreErrors = project.jmeter.ignoreErrors==null ? true : project.jmeter.ignoreErrors
+        project.jmeter.ignoreFailures = project.jmeter.ignoreFailures==null ? true : project.jmeter.ignoreFailures
+        project.jmeter.enableReports = project.jmeter.enableReports==null ? false : project.jmeter.enableReports
         project.jmeter.enableExtendedReports = project.jmeter.enableExtendedReports==null ? true : project.jmeter.enableExtendedReports
         project.jmeter.jmVersion = loadJMeterVersion();
 
