@@ -38,7 +38,6 @@ class TaskJMInit extends DefaultTask{
         project.jmeter.ignoreErrors = project.jmeter.ignoreErrors==null ? true : project.jmeter.ignoreErrors
         project.jmeter.ignoreFailures = project.jmeter.ignoreFailures==null ? true : project.jmeter.ignoreFailures
         project.jmeter.enableReports = project.jmeter.enableReports==null ? false : project.jmeter.enableReports
-        project.jmeter.reportXslt = project.jmeter.reportXslt==null ? false : project.jmeter.reportXslt
         project.jmeter.enableExtendedReports = project.jmeter.enableExtendedReports==null ? true : project.jmeter.enableExtendedReports
         project.jmeter.jmVersion = loadJMeterVersion();
 
