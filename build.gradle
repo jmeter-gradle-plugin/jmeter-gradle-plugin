@@ -277,7 +277,7 @@ publishPlugins.onlyIf {
 	!(version ==~ /.*SNAPSHOT/)
 }
 pluginBundle {
-    website = 'http://foragerr.net/jmeter'
+    website = 'http://jmeter.foragerr.net'
     vcsUrl = 'https://github.com/jmeter-gradle-plugin/jmeter-gradle-plugin.git'
     description = 'A Gradle plugin for running JMeter tests'
     tags = ['jmeter', 'performance']
