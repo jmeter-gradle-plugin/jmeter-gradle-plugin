@@ -17,11 +17,13 @@ class JMPluginExtension {
     Boolean enableExtendedReports = null
 
 	List<File> jmTestFiles = null
-    List<File> jmUserPropertiesFiles = null //maps to -S, --systemPropertyFile
+    List<File> jmSystemPropertiesFiles = null //maps to -S, --systemPropertyFile
+
+	List<String> jmSystemProperties = null //maps to -D, --systemproperty
     List<String> jmPluginJars = null
     List<String> jmUserProperties = null //maps to -J, --jmeterproperty
     List<String> includes = null
-    List<String> excludes = null 
+    List<String> excludes = null
 
     String jmVersion
     String jmPluginVersion

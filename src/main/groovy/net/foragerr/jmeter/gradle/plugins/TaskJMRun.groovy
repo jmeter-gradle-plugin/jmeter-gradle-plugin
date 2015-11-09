@@ -78,17 +78,26 @@ public class TaskJMRun extends DefaultTask {
                     "-p", JMUtils.getJmeterPropsFile(project).getCanonicalPath()
             ));
 
-            if(project.jmeter.jmUserPropertiesFiles!=null)
+            if(project.jmeter.jmSystemPropertiesFiles!=null)
             {
-                for(File userPropertyFile: project.jmeter.jmUserPropertiesFiles)
+                for(File systemPropertyFile: project.jmeter.jmSystemPropertiesFiles)
                 {
-                    if(userPropertyFile.exists() && userPropertyFile.isFile())
+                    if(systemPropertyFile.exists() && systemPropertyFile.isFile())
                     {
-                        args.addAll(Arrays.asList("-S", userPropertyFile.getCanonicalPath()));
+                        args.addAll(Arrays.asList("-S", systemPropertyFile.getCanonicalPath()));
                     }
                 }
             }
-
+			
+			if(project.jmeter.jmSystemProperties!=null)
+			{
+				for(String systemProperty: project.jmeter.jmSystemProperties)
+				{
+					args.addAll(Arrays.asList("-D"+systemProperty));
+					log.info(systemProperty);
+				}
+			}
+			
             initUserProperties(args);
 
             if (project.jmeter.remote) {

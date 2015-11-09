@@ -12,7 +12,7 @@ import org.gradle.api.tasks.TaskAction
 class TaskJMGui extends DefaultTask{
 
     protected final Logger log = Logging.getLogger(getClass());
-    private List<File> jmeterUserPropertiesFiles = project.jmeter.jmUserPropertiesFiles;
+    private List<File> jmeterSystemPropertiesFiles = project.jmeter.jmSystemPropertiesFiles;
 
     @TaskAction
     jmGui() throws IOException{
@@ -21,16 +21,24 @@ class TaskJMGui extends DefaultTask{
             args.addAll(Arrays.asList(
                     "-p", JMUtils.getJmeterPropsFile(project).getCanonicalPath()));
 
-            if(jmeterUserPropertiesFiles!=null)
+            if(jmeterSystemPropertiesFiles!=null)
             {
-                for(File userPropertyFile: jmeterUserPropertiesFiles)
+                for(File PropertyFile: jmeterSystemPropertiesFiles)
                 {
-                    if(userPropertyFile.exists() && userPropertyFile.isFile())
+                    if(PropertyFile.exists() && PropertyFile.isFile())
                     {
-                        args.addAll(Arrays.asList("-S", userPropertyFile.getCanonicalPath()));
+                        args.addAll(Arrays.asList("-S", PropertyFile.getCanonicalPath()));
                     }
                 }
             }
+			
+			if(project.jmeter.jmSystemProperties!=null)
+			{
+				for(String systemProperty: project.jmeter.jmSystemProperties)
+				{
+					args.addAll(Arrays.asList("-D"+systemProperty));
+				}
+			}
 
             initUserProperties(args);
 
