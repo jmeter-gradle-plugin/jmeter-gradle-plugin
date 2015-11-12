@@ -26,7 +26,7 @@ class JMUtils {
 
         //3. If neither, use the default jmeter.properties
         else{
-            File defPropsFile = new File(project.jmeter.workDir + System.getProperty("default_jm_properties"));
+            File defPropsFile = new File(project.jmeter.workDir, System.getProperty("default_jm_properties"));
             return defPropsFile;
         }
     }
