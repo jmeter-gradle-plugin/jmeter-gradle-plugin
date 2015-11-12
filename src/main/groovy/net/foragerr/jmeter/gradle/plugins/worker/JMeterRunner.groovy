@@ -35,6 +35,7 @@ class JMeterRunner {
         argumentsList.add(javaRuntime)
         argumentsList.add("-Xms${specs.maxHeapSize}".toString())
         argumentsList.add("-Xmx${specs.maxHeapSize}".toString())
+        argumentsList.addAll(specs.getUserSystemProperties())
         specs.getSystemProperties().each {k,v ->
             argumentsList.add("-D$k=$v".toString())
         }

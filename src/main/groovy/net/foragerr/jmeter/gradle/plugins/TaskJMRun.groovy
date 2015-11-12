@@ -78,13 +78,15 @@ public class TaskJMRun extends DefaultTask {
                     "-p", JMUtils.getJmeterPropsFile(project).getCanonicalPath()
             ));
 
+            //User provided sysprops
+            List<String> userSysProps = new ArrayList<String>()
             if(project.jmeter.jmSystemPropertiesFiles!=null)
             {
                 for(File systemPropertyFile: project.jmeter.jmSystemPropertiesFiles)
                 {
                     if(systemPropertyFile.exists() && systemPropertyFile.isFile())
                     {
-                        args.addAll(Arrays.asList("-S", systemPropertyFile.getCanonicalPath()));
+                        userSysProps.addAll(Arrays.asList("-S", systemPropertyFile.getCanonicalPath()));
                     }
                 }
             }
@@ -93,7 +95,7 @@ public class TaskJMRun extends DefaultTask {
 			{
 				for(String systemProperty: project.jmeter.jmSystemProperties)
 				{
-					args.addAll(Arrays.asList("-D"+systemProperty));
+                    userSysProps.addAll(Arrays.asList(systemProperty));
 					log.info(systemProperty);
 				}
 			}
@@ -106,6 +108,7 @@ public class TaskJMRun extends DefaultTask {
 
             log.info("JMeter is called with the following command line arguments: " + args.toString());
             JMSpecs specs = new JMSpecs();
+            specs.getUserSystemProperties().addAll(userSysProps);
             specs.getSystemProperties().put("search_paths", System.getProperty("search_paths"));
             specs.getSystemProperties().put("jmeter.home", project.jmeter.workDir.getAbsolutePath());
             specs.getSystemProperties().put("saveservice_properties", System.getProperty("saveservice_properties"));
