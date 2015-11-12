@@ -11,10 +11,10 @@ group = 'net.foragerr.jmeter'
 archivesBaseName = 'jmeter-gradle-plugin'
 
 //--- versioning information ---
-ext.thisPluginVersion="1.0.1"
+ext.thisPluginVersion="1.0.2"
 ext.jmVersion = "2.13"
 ext.jmPluginVersion = "1.3.0"
-version = "$thisPluginVersion-$jmVersion"
+version = "$thisPluginVersion-$jmVersion-SNAPSHOT"
 
 def bootClasspathStr = "${System.env.'JAVA_HOME'}/jre/lib/rt.jar"
 project.tasks.withType(AbstractCompile, { AbstractCompile ac ->
