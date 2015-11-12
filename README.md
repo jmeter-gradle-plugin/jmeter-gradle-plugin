@@ -1,6 +1,7 @@
 ##Gradle plugin to execute JMeter tests. 
 
-For usage see: http://jmeter.foragerr.net/
+For usage see: http://jmeter.foragerr.net/  
+or [wiki](https://github.com/jmeter-gradle-plugin/jmeter-gradle-plugin/wiki/Getting-Started)
 
 ##News
 **11/6/2015**
