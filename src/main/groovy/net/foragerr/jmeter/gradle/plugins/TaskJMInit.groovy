@@ -16,6 +16,10 @@ class TaskJMInit extends DefaultTask{
 
     protected final Logger log = Logging.getLogger(getClass());
 
+    private String thisPluginVersion
+    private String jmeterVersion
+    private String jmeterPluginsVersion
+
     @TaskAction
     jmInit(){
 
@@ -39,7 +43,8 @@ class TaskJMInit extends DefaultTask{
         project.jmeter.ignoreFailures = project.jmeter.ignoreFailures==null ? true : project.jmeter.ignoreFailures
         project.jmeter.enableReports = project.jmeter.enableReports==null ? false : project.jmeter.enableReports
         project.jmeter.enableExtendedReports = project.jmeter.enableExtendedReports==null ? true : project.jmeter.enableExtendedReports
-        project.jmeter.jmVersion = loadJMeterVersion();
+        LoadPluginProperties()
+        project.jmeter.jmVersion = this.jmeterVersion
 
         //Create required folders
         def jmeterJUnitFolder = new File(workDir, "lib/junit")
@@ -52,6 +57,13 @@ class TaskJMInit extends DefaultTask{
         initTempProperties()
         resolveJmeterSearchPath()
 
+        //print info
+        log.info("------------------------")
+        log.info("Using")
+        log.info("   jmeter-gradle-plugin version:" + this.thisPluginVersion);
+        log.info("   jmeter version:" + this.jmeterVersion);
+        log.info("   jmeter jp@gc plugins version:" + this.jmeterPluginsVersion);
+        log.info("------------------------")
     }
 
     protected void initTempProperties() throws IOException {
@@ -115,8 +127,7 @@ class TaskJMInit extends DefaultTask{
         log.debug("Search path is set to " + System.getProperty("search_paths"))
     }
 
-    private String loadJMeterVersion() {
-        String jmeterVersion
+    private void LoadPluginProperties() {
         try {
             InputStream is = this.getClass().getClassLoader().getResourceAsStream("jmeter-plugin.properties")
             if (is==null) {
@@ -125,16 +136,13 @@ class TaskJMInit extends DefaultTask{
             }
             Properties pluginProps = new Properties()
             pluginProps.load(is)
-            jmeterVersion = pluginProps.getProperty("jmeter.version", null)
-            if (jmeterVersion == null) {
-                throw new GradleException("You should set correct jmeter.version at jmeter-plugin.properies file")
-            }
+
+            this.thisPluginVersion = pluginProps.getProperty("thisPlugin.version")
+            this.jmeterVersion = pluginProps.getProperty("jmeter.version")
+            this.jmeterPluginsVersion = pluginProps.getProperty("plugin.version")
         } catch (Exception e) {
             log.error("Can't load JMeter version, build will stop", e)
             throw new GradleException("Can't load JMeter version, build will stop", e)
         }
-
-        return jmeterVersion;
     }
-
 }

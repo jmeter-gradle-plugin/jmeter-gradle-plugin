@@ -18,7 +18,7 @@ version = "$thisPluginVersion-$jmVersion-SNAPSHOT"
 
 def bootClasspathStr = "${System.env.'JAVA_HOME'}/jre/lib/rt.jar"
 project.tasks.withType(AbstractCompile, { AbstractCompile ac ->
-    ac.options.bootClasspath = bootClasspathStr // options is always there but not defined on AbstractCompile so going to hit it anyway
+    ac.options.bootClasspath = bootClasspathStr
 })
 
 repositories {
@@ -173,6 +173,11 @@ processResources.doLast {
             token: "@plugin.version@",
             value: "$jmPluginVersion"
     )
+	ant.replace(
+			file: "${project.buildDir}/resources/main/jmeter-plugin.properties",
+			token: "@thisPlugin.version@",
+			value: "$version"
+	)
 }
 
 //--- mvn-publish ---
@@ -193,7 +198,7 @@ def pomConfig = {
 		developer {
 			id 'foragerr'
 			name 'RaGe'
-			url 'https://github.com/jmeter-gradle-plugin/jmeter-gradle-plugin'
+			url 'http://jmeter.foragerr.net'
 			email 'foragerr@gmail.com'
 			roles { role 'Developer' }
 		}
@@ -251,7 +256,7 @@ bintray {
         userOrg = "$archivesBaseName" 
         licenses = ['Apache-2.0']
         publicDownloadNumbers = true
-        websiteUrl = 'http://foragerr.net/jmeter'
+        websiteUrl = 'http://jmeter.foragerr.net'
         issueTrackerUrl = 'https://github.com/jmeter-gradle-plugin/jmeter-gradle-plugin/issues'
         vcsUrl = 'https://github.com/jmeter-gradle-plugin/jmeter-gradle-plugin.git'
 
