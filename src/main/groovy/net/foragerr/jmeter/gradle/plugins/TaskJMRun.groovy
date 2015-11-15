@@ -1,17 +1,13 @@
 package net.foragerr.jmeter.gradle.plugins
 
-import net.foragerr.jmeter.gradle.plugins.utils.ErrorScanner;
-import net.foragerr.jmeter.gradle.plugins.utils.JMUtils;
+import net.foragerr.jmeter.gradle.plugins.utils.ErrorScanner
+import net.foragerr.jmeter.gradle.plugins.utils.JMUtils
 import net.foragerr.jmeter.gradle.plugins.worker.JMeterRunner
-
 import org.gradle.api.DefaultTask
 import org.gradle.api.GradleException
 import org.gradle.api.logging.Logger
 import org.gradle.api.logging.Logging
 import org.gradle.api.tasks.TaskAction
-
-import java.text.DateFormat
-import java.text.SimpleDateFormat
 
 public class TaskJMRun extends DefaultTask {
 

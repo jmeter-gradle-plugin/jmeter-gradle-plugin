@@ -1,9 +1,8 @@
 package net.foragerr.jmeter.gradle.plugins
 
-import net.foragerr.jmeter.gradle.plugins.utils.JMUtils;
+import net.foragerr.jmeter.gradle.plugins.utils.JMUtils
 import net.foragerr.jmeter.gradle.plugins.worker.JMeterRunner
-
-import org.gradle.api.DefaultTask;
+import org.gradle.api.DefaultTask
 import org.gradle.api.GradleException
 import org.gradle.api.logging.Logger
 import org.gradle.api.logging.Logging
@@ -59,9 +58,8 @@ class TaskJMGui extends DefaultTask{
             specs.setMaxHeapSize(project.jmeter.maxHeapSize.toString());
             new JMeterRunner().executeJmeterCommand(specs, project.jmeter.workDir.getAbsolutePath());
 
-
         } catch (IOException e) {
-            throw new GradleException("Error Executing Test", e);
+            throw new GradleException("Error Launching JMeter GUI", e);
         }
     }
 

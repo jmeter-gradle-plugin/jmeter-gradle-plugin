@@ -1,11 +1,11 @@
 package net.foragerr.jmeter.gradle.plugins.utils
 
-import java.io.File;
-import java.text.DateFormat
-import java.text.SimpleDateFormat
+import groovy.util.logging.Slf4j
 import org.apache.tools.ant.DirectoryScanner
 import org.gradle.api.Project
-import groovy.util.logging.Slf4j
+
+import java.text.DateFormat
+import java.text.SimpleDateFormat
 
 /**
  * Created by foragerr@gmail.com on 7/19/2015.
