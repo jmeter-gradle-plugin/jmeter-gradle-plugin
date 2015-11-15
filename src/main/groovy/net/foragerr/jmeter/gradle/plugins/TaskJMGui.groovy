@@ -53,6 +53,8 @@ class TaskJMGui extends DefaultTask{
             specs.getSystemProperties().put("saveservice_properties", System.getProperty("saveservice_properties"));
             specs.getSystemProperties().put("upgrade_properties", System.getProperty("upgrade_properties"));
             specs.getSystemProperties().put("log_file", project.jmeter.jmLog);
+            specs.getSystemProperties().put("keytool.directory", System.getProperty("java.home")+ File.separator +"bin");
+            specs.getSystemProperties().put("proxy.cert.directory", project.jmeter.workDir.getAbsolutePath());
             specs.getJmeterProperties().addAll(args);
             specs.setMaxHeapSize(project.jmeter.maxHeapSize.toString());
             new JMeterRunner().executeJmeterCommand(specs, project.jmeter.workDir.getAbsolutePath());
