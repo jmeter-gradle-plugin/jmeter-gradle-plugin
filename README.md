@@ -1,4 +1,4 @@
-##Gradle plugin to execute JMeter tests. 
+##Gradle plugin to execute JMeter tests.  [![Build Status](https://travis-ci.org/jmeter-gradle-plugin/jmeter-gradle-plugin.svg?branch=master)](https://travis-ci.org/jmeter-gradle-plugin/jmeter-gradle-plugin)
 
 For usage see: http://jmeter.foragerr.net/  
 or [wiki](https://github.com/jmeter-gradle-plugin/jmeter-gradle-plugin/wiki/Getting-Started)
