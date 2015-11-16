@@ -104,7 +104,7 @@ class TaskJMInit extends DefaultTask{
         StringBuilder cp = new StringBuilder()
         URL[] classPath = ((URLClassLoader)this.getClass().getClassLoader()).getURLs()
         String jmeterVersionPattern = project.jmeter.jmVersion.replaceAll("[.]", "[.]")
-        String pathSeparator = ';';
+        String pathSeparator = ';'; //intentionally not File.PathSeparator - JMeter parses for ; on all platforms
         for (URL dep : classPath) {
             if (dep.getPath().matches("^.*org[./]apache[./]jmeter[/]ApacheJMeter.*" +
                     jmeterVersionPattern + ".jar\$")) {
@@ -113,19 +113,16 @@ class TaskJMInit extends DefaultTask{
             } else if (dep.getPath().matches("^.*bsh.*[.]jar\$")) {
                 cp.append(dep.getPath())
                 cp.append(pathSeparator)
-            } else if (project.jmeter.jmPluginJars != null){
-                for (String plugin: project.jmeter.jmPluginJars) {
-                    if(dep.getPath().matches("^.*" + plugin + "\$")) {
-                        cp.append(dep.getPath())
-                        cp.append(pathSeparator)
-                    }
-                }
+            //add jp@gc plugins to search_path
+            } else if(dep.getPath().matches("^.*jmeter-plugins.*\$")) {
+                cp.append(dep.getPath())
+                cp.append(pathSeparator)
             }
         }
         cp.append(new File(project.jmeter.workDir, "lib" + File.separator + "ext").getCanonicalPath())
         System.setProperty("search_paths", cp.toString());
         log.debug("Search path is set to " + System.getProperty("search_paths"))
-    }
+   }
 
     private void LoadPluginProperties() {
         try {
