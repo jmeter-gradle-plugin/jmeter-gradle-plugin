@@ -4,6 +4,11 @@ For usage see: http://jmeter.foragerr.net/
 or [wiki](https://github.com/jmeter-gradle-plugin/jmeter-gradle-plugin/wiki/Getting-Started)
 
 ##News
+**12/12/2015**
+* Version 1.0.3 released
+* #39 support for commandline option `-q` added
+* #40 Fixed, jmeter GUI now launches with testfile loaded when available
+
 **11/15/2015**
 * Stable version 1.0.2 released.
 * Added out of box support for jp@gc plugins for both test execution and gui mode
