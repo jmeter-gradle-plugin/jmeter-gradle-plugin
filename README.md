@@ -6,8 +6,8 @@ or [wiki](https://github.com/jmeter-gradle-plugin/jmeter-gradle-plugin/wiki/Gett
 ##News
 **12/12/2015**
 * Version 1.0.3 released
-* #39 support for commandline option `-q` added
-* #40 Fixed, jmeter GUI now launches with testfile loaded when available
+* [#39](https://github.com/jmeter-gradle-plugin/jmeter-gradle-plugin/issues/39) support for commandline option `-q` added
+* [#40](https://github.com/jmeter-gradle-plugin/jmeter-gradle-plugin/issues/40) Fixed, jmeter GUI now launches with testfile loaded when available
 
 **11/15/2015**
 * Stable version 1.0.2 released.
