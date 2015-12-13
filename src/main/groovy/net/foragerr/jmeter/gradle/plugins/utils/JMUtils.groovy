@@ -2,6 +2,7 @@ package net.foragerr.jmeter.gradle.plugins.utils
 
 import groovy.util.logging.Slf4j
 import org.apache.tools.ant.DirectoryScanner
+import org.gradle.api.GradleException
 import org.gradle.api.Project
 
 import java.text.DateFormat
@@ -12,6 +13,28 @@ import java.text.SimpleDateFormat
  */
 @Slf4j
 class JMUtils {
+
+    static List<File> getListOfTestFiles(Project project){
+        List<File> testFiles = new ArrayList<File>();
+        if (project.jmeter.jmTestFiles != null) {
+            project.jmeter.jmTestFiles.each { File file ->
+                if (file.exists() && file.isFile()) {
+                    testFiles.add(file);
+                } else {
+                    throw new GradleException("Test file " + file.getCanonicalPath() + " does not exists");
+                }
+            }
+        } else {
+            String[] excludes = project.jmeter.excludes == null ?  [] as String[] : project.jmeter.excludes as String[];
+            String[] includes = project.jmeter.includes == null ? ["**/*.jmx"] as String[] : project.jmeter.includes as String[];
+            log.info("includes: " + includes)
+            log.info("excludes: " + excludes)
+            testFiles.addAll(JMUtils.scanDir(project, includes, excludes, project.jmeter.testFileDir));
+            log.info(testFiles.size() + " test files found in folder scan")
+        }
+
+        return testFiles;
+    }
 
     static File getJmeterPropsFile(Project project) {
         File propsInSrcDir = new File(project.jmeter.testFileDir,"jmeter.properties");

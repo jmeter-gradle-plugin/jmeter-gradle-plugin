@@ -16,29 +16,12 @@ public class TaskJMRun extends DefaultTask {
     @TaskAction
     jmRun(){
 
-         //Get List of test files to run
-        List<File> testFiles = new ArrayList<File>();
-        if (project.jmeter.jmTestFiles != null) {
-            project.jmeter.jmTestFiles.each { File file ->
-                if (file.exists() && file.isFile()) {
-                    testFiles.add(file);
-                } else {
-                    throw new GradleException("Test file " + file.getCanonicalPath() + " does not exists");
-                }
-            }
-        } else {
-            String[] excludes = project.jmeter.excludes == null ?  [] as String[] : project.jmeter.excludes as String[];
-            String[] includes = project.jmeter.includes == null ? ["**/*.jmx"] as String[] : project.jmeter.includes as String[];
-            log.info("includes: " + includes)
-            log.info("excludes: " + excludes)
-            testFiles.addAll(JMUtils.scanDir(project, includes, excludes, project.jmeter.testFileDir));
-            log.info(testFiles.size() + " test files found in folder scan")
-        }
+        //Get List of test files to run
+        List<File> testFiles = JMUtils.getListOfTestFiles(project)
 
         //Run Tests
         List<File> resultList = new ArrayList<File>();
         for (File testFile : testFiles) resultList.add(executeJmeterTest(testFile))
-
 
         //Scan for errors
         checkForErrors(resultList);

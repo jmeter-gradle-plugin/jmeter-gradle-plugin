@@ -18,7 +18,11 @@ class TaskJMGui extends DefaultTask{
         try {
             List<String> args = new ArrayList<String>();
             args.addAll(Arrays.asList(
-                    "-p", JMUtils.getJmeterPropsFile(project).getCanonicalPath()));
+                    "-p", JMUtils.getJmeterPropsFile(project).getCanonicalPath()
+            ));
+
+            List<File> testFiles = JMUtils.getListOfTestFiles(project)
+            if (testFiles.size()>0) args.addAll(Arrays.asList("-t", testFiles[0].getCanonicalPath()));
 
             //User provided sysprops
             List<String> userSysProps = new ArrayList<String>()

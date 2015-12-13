@@ -8,7 +8,7 @@ class JMPluginExtension {
     File jmLog = null
     File testFileDir = null
     File jmPropertyFile = null //maps to -p, --propfile
-    File jmAddProp = null //maps to -q, --addprop
+    File jmAddProp = null      //maps to -q, --addprop
     File customReportXslt
 
     Boolean ignoreErrors = null
@@ -17,12 +17,12 @@ class JMPluginExtension {
     Boolean enableReports = null
     Boolean enableExtendedReports = null
 
-	List<File> jmTestFiles = null //maps to -t, --testfile
+	List<File> jmTestFiles = null             //maps to -t, --testfile
     List<File> jmSystemPropertiesFiles = null //maps to -S, --systemPropertyFile
 
-	List<String> jmSystemProperties = null //maps to -D, --systemproperty
+	List<String> jmSystemProperties = null    //maps to -D, --systemproperty
     List<String> jmPluginJars = null
-    List<String> jmUserProperties = null //maps to -J, --jmeterproperty
+    List<String> jmUserProperties = null      //maps to -J, --jmeterproperty
     List<String> includes = null
     List<String> excludes = null
 
