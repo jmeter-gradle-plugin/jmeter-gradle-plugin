@@ -57,7 +57,7 @@ class TaskJMInit extends DefaultTask{
         initTempProperties()
         resolveJmeterSearchPath()
 
-        //print info
+        //print version info
         log.info("------------------------")
         log.info("Using")
         log.info("   jmeter-gradle-plugin version:" + this.thisPluginVersion);

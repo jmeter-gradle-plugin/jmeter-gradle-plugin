@@ -42,7 +42,6 @@ public class TaskJMRun extends DefaultTask {
 
         //Scan for errors
         checkForErrors(resultList);
-
         project.jmeter.jmResultFiles=resultList;
 
     }
@@ -73,6 +72,9 @@ public class TaskJMRun extends DefaultTask {
                     "-l", resultFile.getCanonicalPath(),
                     "-p", JMUtils.getJmeterPropsFile(project).getCanonicalPath()
             ));
+
+            if (project.jmeter.jmAddProp)
+                args.addAll(Arrays.asList("-q", project.jmeter.jmAddProp))
 
             //User provided sysprops
             List<String> userSysProps = new ArrayList<String>()

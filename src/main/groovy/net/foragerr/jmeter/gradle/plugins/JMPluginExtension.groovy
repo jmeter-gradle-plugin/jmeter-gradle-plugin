@@ -8,6 +8,7 @@ class JMPluginExtension {
     File jmLog = null
     File testFileDir = null
     File jmPropertyFile = null //maps to -p, --propfile
+    File jmAddProp = null //maps to -q, --addprop
     File customReportXslt
 
     Boolean ignoreErrors = null
@@ -16,7 +17,7 @@ class JMPluginExtension {
     Boolean enableReports = null
     Boolean enableExtendedReports = null
 
-	List<File> jmTestFiles = null
+	List<File> jmTestFiles = null //maps to -t, --testfile
     List<File> jmSystemPropertiesFiles = null //maps to -S, --systemPropertyFile
 
 	List<String> jmSystemProperties = null //maps to -D, --systemproperty
@@ -25,8 +26,6 @@ class JMPluginExtension {
     List<String> includes = null
     List<String> excludes = null
 
-    String jmVersion
-    String jmPluginVersion
     String resultFilenameTimestamp
     String reportPostfix
     String reportXslt = null
@@ -34,6 +33,9 @@ class JMPluginExtension {
 	String reportTitle = null
 	
 	//For internal use, Not user settable:
+    String jmVersion
+    String jmPluginVersion
+
 	File workDir = null 
 	File reportDir = null
 	List<File> jmResultFiles = null
