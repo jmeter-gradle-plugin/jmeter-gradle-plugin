@@ -11,3 +11,6 @@ src/main/groovy/org/veil/gradle/plugins/.DS_Store
 bin/
 .settings/
 *.bak
+gradlew
+gradlew.bat
+gradle/wrapper/
