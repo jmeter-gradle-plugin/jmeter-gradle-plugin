@@ -21,6 +21,9 @@ class TaskJMGui extends DefaultTask{
                     "-p", JMUtils.getJmeterPropsFile(project).getCanonicalPath()
             ));
 
+            if (project.jmeter.jmAddProp)
+                args.addAll(Arrays.asList("-q", project.jmeter.jmAddProp.getCanonicalPath()))
+
             List<File> testFiles = JMUtils.getListOfTestFiles(project)
             if (testFiles.size()>0) args.addAll(Arrays.asList("-t", testFiles[0].getCanonicalPath()));
 

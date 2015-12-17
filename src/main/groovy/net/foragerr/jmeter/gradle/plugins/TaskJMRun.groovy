@@ -57,7 +57,7 @@ public class TaskJMRun extends DefaultTask {
             ));
 
             if (project.jmeter.jmAddProp)
-                args.addAll(Arrays.asList("-q", project.jmeter.jmAddProp))
+                args.addAll(Arrays.asList("-q", project.jmeter.jmAddProp.getCanonicalPath()))
 
             //User provided sysprops
             List<String> userSysProps = new ArrayList<String>()
