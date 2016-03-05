@@ -1,3 +1,4 @@
+//--- Plugins ---
 plugins {
     id "com.jfrog.bintray" version "1.2"
 	id "com.jfrog.artifactory" version "3.1.1"
@@ -7,138 +8,142 @@ plugins {
 apply plugin: 'groovy'
 apply plugin: 'maven-publish'
 
+
+//--- Project information ---
 group = 'net.foragerr.jmeter'
 archivesBaseName = 'jmeter-gradle-plugin'
 
-//--- versioning information ---
 ext.thisPluginVersion="1.0.4"
 ext.jmVersion = "2.13"
 ext.jmPluginVersion = "1.3.0"
 version = "$thisPluginVersion-$jmVersion-SNAPSHOT"
 
+//--- Repositories ---
 repositories {
     mavenCentral()
 }
 
+//--- Dependencies ---
 dependencies {
-	compile gradleApi(),
-		localGroovy(),
-		"org.apache.commons:commons-math3:3.4.1",
-		"org.apache.commons:commons-pool2:2.3",
-		"org.apache.ant:ant:1.8.4",
-		"org.rendersnake:rendersnake:1.8",
-		"org.beanshell:bsh-core:2.0b4"
+	compile gradleApi()
+    compile	localGroovy()
+    compile	'org.apache.commons:commons-math3:3.4.1'
+    compile	'org.apache.commons:commons-pool2:2.3'
+    compile	'org.apache.ant:ant:1.8.4'
+    compile	'org.rendersnake:rendersnake:1.8'
+    compile	'org.beanshell:bsh-core:2.0b4'
 		
-		//jm-plugins dependencies
-        compile("kg.apc:jmeter-plugins:${jmPluginVersion}"){
-			exclude group: 'commons-math3', module: 'commons-math3'
-			exclude group: 'commons-pool2', module: 'commons-pool2'
-		}
-        compile("kg.apc:jmeter-plugins-standard:${jmPluginVersion}"){
-			exclude group: 'commons-math3', module: 'commons-math3'
-			exclude group: 'commons-pool2', module: 'commons-pool2'
-		}
-        compile("kg.apc:jmeter-plugins-extras:${jmPluginVersion}"){
-			exclude group: 'commons-math3', module: 'commons-math3'
-			exclude group: 'commons-pool2', module: 'commons-pool2'
-		}
-        compile("kg.apc:jmeter-plugins-common:${jmPluginVersion}"){
-			exclude group: 'commons-math3', module: 'commons-math3'
-			exclude group: 'commons-pool2', module: 'commons-pool2'
-		}
+    //jm-plugins dependencies
+    compile("kg.apc:jmeter-plugins:${jmPluginVersion}"){
+        exclude group: 'commons-math3', module: 'commons-math3'
+        exclude group: 'commons-pool2', module: 'commons-pool2'
+    }
+    compile("kg.apc:jmeter-plugins-standard:${jmPluginVersion}"){
+        exclude group: 'commons-math3', module: 'commons-math3'
+        exclude group: 'commons-pool2', module: 'commons-pool2'
+    }
+    compile("kg.apc:jmeter-plugins-extras:${jmPluginVersion}"){
+        exclude group: 'commons-math3', module: 'commons-math3'
+        exclude group: 'commons-pool2', module: 'commons-pool2'
+    }
+    compile("kg.apc:jmeter-plugins-common:${jmPluginVersion}"){
+        exclude group: 'commons-math3', module: 'commons-math3'
+        exclude group: 'commons-pool2', module: 'commons-pool2'
+    }
 
-		//jm dependencies
-		compile("org.apache.jmeter:ApacheJMeter_components:${jmVersion}"){
-			exclude group: 'commons-math3', module: 'commons-math3'
-			exclude group: 'commons-pool2', module: 'commons-pool2'
-		}
-		compile("org.apache.jmeter:ApacheJMeter_http:${jmVersion}"){
-			exclude group: 'commons-math3', module: 'commons-math3'
-			exclude group: 'commons-pool2', module: 'commons-pool2'
-		}
-		compile("org.apache.jmeter:ApacheJMeter_jdbc:${jmVersion}"){
-			exclude group: 'commons-math3', module: 'commons-math3'
-			exclude group: 'commons-pool2', module: 'commons-pool2'
-		}
-		compile("org.apache.jmeter:ApacheJMeter_core:${jmVersion}"){
-			exclude group: 'commons-math3', module: 'commons-math3'
-			exclude group: 'commons-pool2', module: 'commons-pool2'
-		}
-		compile("org.apache.jmeter:ApacheJMeter_tcp:${jmVersion}"){
-			exclude group: 'commons-math3', module: 'commons-math3'
-			exclude group: 'commons-pool2', module: 'commons-pool2'
-		}
-		
-		compile("org.apache.jmeter:ApacheJMeter_junit:${jmVersion}"){
-			exclude group: 'commons-math3', module: 'commons-math3'
-			exclude group: 'commons-pool2', module: 'commons-pool2'
-		}
-		compile("org.apache.jmeter:ApacheJMeter_java:${jmVersion}"){
-			exclude group: 'commons-math3', module: 'commons-math3'
-			exclude group: 'commons-pool2', module: 'commons-pool2'
-		}
-		compile("org.apache.jmeter:ApacheJMeter_mail:${jmVersion}"){
-			exclude group: 'commons-math3', module: 'commons-math3'
-			exclude group: 'commons-pool2', module: 'commons-pool2'
-		}
-		compile("org.apache.jmeter:ApacheJMeter_ldap:${jmVersion}"){
-			exclude group: 'commons-math3', module: 'commons-math3'
-			exclude group: 'commons-pool2', module: 'commons-pool2'
-		}
-		compile("org.apache.jmeter:ApacheJMeter_ftp:${jmVersion}"){
-			exclude group: 'commons-math3', module: 'commons-math3'
-			exclude group: 'commons-pool2', module: 'commons-pool2'
-		}
-		compile("org.apache.jmeter:ApacheJMeter_functions:${jmVersion}"){
-			exclude group: 'commons-math3', module: 'commons-math3'
-			exclude group: 'commons-pool2', module: 'commons-pool2'
-		}
-		compile("org.apache.jmeter:ApacheJMeter_monitors:${jmVersion}"){
-			exclude group: 'commons-math3', module: 'commons-math3'
-			exclude group: 'commons-pool2', module: 'commons-pool2'
-		}
-		compile("org.apache.jmeter:ApacheJMeter_jms:${jmVersion}"){
-			exclude group: 'commons-math3', module: 'commons-math3'
-			exclude group: 'commons-pool2', module: 'commons-pool2'
-		}
-		compile("org.apache.jmeter:ApacheJMeter_config:${jmVersion}"){
-			exclude group: 'commons-math3', module: 'commons-math3'
-			exclude group: 'commons-pool2', module: 'commons-pool2'
-		}
-		compile("org.apache.jmeter:ApacheJMeter_junit:${jmVersion}"){
-			exclude group: 'commons-math3', module: 'commons-math3'
-			exclude group: 'commons-pool2', module: 'commons-pool2'
-		}
-		compile("org.apache.jmeter:ApacheJMeter_components:${jmVersion}"){
-			exclude group: 'commons-math3', module: 'commons-math3'
-			exclude group: 'commons-pool2', module: 'commons-pool2'
-		}
-		compile("org.apache.jmeter:ApacheJMeter_config:${jmVersion}"){
-			exclude group: 'commons-math3', module: 'commons-math3'
-			exclude group: 'commons-pool2', module: 'commons-pool2'
-		}
-		compile("org.apache.jmeter:ApacheJMeter_junit-test:${jmVersion}"){
-			exclude group: 'commons-math3', module: 'commons-math3'
-			exclude group: 'commons-pool2', module: 'commons-pool2'
-		}
-		compile("org.apache.jmeter:ApacheJMeter_mongodb:${jmVersion}"){
-			exclude group: 'commons-math3', module: 'commons-math3'
-			exclude group: 'commons-pool2', module: 'commons-pool2'
-		}
-		compile("org.apache.jmeter:ApacheJMeter_native:${jmVersion}"){
-			exclude group: 'commons-math3', module: 'commons-math3'
-			exclude group: 'commons-pool2', module: 'commons-pool2'
-		}
-		compile("org.apache.jmeter:ApacheJMeter:${jmVersion}"){
-			exclude group: 'commons-math3', module: 'commons-math3'
-			exclude group: 'commons-pool2', module: 'commons-pool2'
-		}
+    //jm dependencies
+    compile("org.apache.jmeter:ApacheJMeter_components:${jmVersion}"){
+        exclude group: 'commons-math3', module: 'commons-math3'
+        exclude group: 'commons-pool2', module: 'commons-pool2'
+    }
+    compile("org.apache.jmeter:ApacheJMeter_http:${jmVersion}"){
+        exclude group: 'commons-math3', module: 'commons-math3'
+        exclude group: 'commons-pool2', module: 'commons-pool2'
+    }
+    compile("org.apache.jmeter:ApacheJMeter_jdbc:${jmVersion}"){
+        exclude group: 'commons-math3', module: 'commons-math3'
+        exclude group: 'commons-pool2', module: 'commons-pool2'
+    }
+    compile("org.apache.jmeter:ApacheJMeter_core:${jmVersion}"){
+        exclude group: 'commons-math3', module: 'commons-math3'
+        exclude group: 'commons-pool2', module: 'commons-pool2'
+    }
+    compile("org.apache.jmeter:ApacheJMeter_tcp:${jmVersion}"){
+        exclude group: 'commons-math3', module: 'commons-math3'
+        exclude group: 'commons-pool2', module: 'commons-pool2'
+    }
+    compile("org.apache.jmeter:ApacheJMeter_junit:${jmVersion}"){
+        exclude group: 'commons-math3', module: 'commons-math3'
+        exclude group: 'commons-pool2', module: 'commons-pool2'
+    }
+    compile("org.apache.jmeter:ApacheJMeter_java:${jmVersion}"){
+        exclude group: 'commons-math3', module: 'commons-math3'
+        exclude group: 'commons-pool2', module: 'commons-pool2'
+    }
+    compile("org.apache.jmeter:ApacheJMeter_mail:${jmVersion}"){
+        exclude group: 'commons-math3', module: 'commons-math3'
+        exclude group: 'commons-pool2', module: 'commons-pool2'
+    }
+    compile("org.apache.jmeter:ApacheJMeter_ldap:${jmVersion}"){
+        exclude group: 'commons-math3', module: 'commons-math3'
+        exclude group: 'commons-pool2', module: 'commons-pool2'
+    }
+    compile("org.apache.jmeter:ApacheJMeter_ftp:${jmVersion}"){
+        exclude group: 'commons-math3', module: 'commons-math3'
+        exclude group: 'commons-pool2', module: 'commons-pool2'
+    }
+    compile("org.apache.jmeter:ApacheJMeter_functions:${jmVersion}"){
+        exclude group: 'commons-math3', module: 'commons-math3'
+        exclude group: 'commons-pool2', module: 'commons-pool2'
+    }
+    compile("org.apache.jmeter:ApacheJMeter_monitors:${jmVersion}"){
+        exclude group: 'commons-math3', module: 'commons-math3'
+        exclude group: 'commons-pool2', module: 'commons-pool2'
+    }
+    compile("org.apache.jmeter:ApacheJMeter_jms:${jmVersion}"){
+        exclude group: 'commons-math3', module: 'commons-math3'
+        exclude group: 'commons-pool2', module: 'commons-pool2'
+    }
+    compile("org.apache.jmeter:ApacheJMeter_config:${jmVersion}"){
+        exclude group: 'commons-math3', module: 'commons-math3'
+        exclude group: 'commons-pool2', module: 'commons-pool2'
+    }
+    compile("org.apache.jmeter:ApacheJMeter_junit:${jmVersion}"){
+        exclude group: 'commons-math3', module: 'commons-math3'
+        exclude group: 'commons-pool2', module: 'commons-pool2'
+    }
+    compile("org.apache.jmeter:ApacheJMeter_components:${jmVersion}"){
+        exclude group: 'commons-math3', module: 'commons-math3'
+        exclude group: 'commons-pool2', module: 'commons-pool2'
+    }
+    compile("org.apache.jmeter:ApacheJMeter_config:${jmVersion}"){
+        exclude group: 'commons-math3', module: 'commons-math3'
+        exclude group: 'commons-pool2', module: 'commons-pool2'
+    }
+    compile("org.apache.jmeter:ApacheJMeter_junit-test:${jmVersion}"){
+        exclude group: 'commons-math3', module: 'commons-math3'
+        exclude group: 'commons-pool2', module: 'commons-pool2'
+    }
+    compile("org.apache.jmeter:ApacheJMeter_mongodb:${jmVersion}"){
+        exclude group: 'commons-math3', module: 'commons-math3'
+        exclude group: 'commons-pool2', module: 'commons-pool2'
+    }
+    compile("org.apache.jmeter:ApacheJMeter_native:${jmVersion}"){
+        exclude group: 'commons-math3', module: 'commons-math3'
+        exclude group: 'commons-pool2', module: 'commons-pool2'
+    }
+    compile("org.apache.jmeter:ApacheJMeter:${jmVersion}"){
+        exclude group: 'commons-math3', module: 'commons-math3'
+        exclude group: 'commons-pool2', module: 'commons-pool2'
+    }
 
 	testCompile "junit:junit:4.11"
 }
 
+
+//--- Tasks ---
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.3'
+    gradleVersion = '2.11'
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
@@ -203,7 +208,8 @@ def pomConfig = {
 publishing {
     publications {
         mavenJava(MavenPublication) {
-			//since maven-publish refuses to propogate exclusions to pom, DIY. :(
+			//Workaround for gradle plugin-publish defect: https://issues.gradle.org/browse/GRADLE-3274
+            //since maven-publish refuses to propogate exclusions to pom, DIY. :(
 			from(components.java)
 			def dependencies =  project.configurations[JavaPlugin.COMPILE_CONFIGURATION_NAME].getAllDependencies()
 			def xmlExclusionList = project.configurations[JavaPlugin.COMPILE_CONFIGURATION_NAME].getExcludeRules()
