@@ -20,6 +20,14 @@ repositories {
     mavenCentral()
 }
 
+configurations {
+	all {
+		resolutionStrategy {
+			force 'xml-apis:xml-apis:1.4.01'
+		}
+	}
+}
+
 dependencies {
 	compile gradleApi(),
 		localGroovy(),
