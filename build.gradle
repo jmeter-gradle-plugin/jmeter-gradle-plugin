@@ -29,6 +29,7 @@ dependencies {
     compile	localGroovy()
     compile	'org.apache.commons:commons-math3:3.4.1'
     compile	'org.apache.commons:commons-pool2:2.3'
+    compile 'xml-apis:xml-apis:1.4.01'
     compile	'org.apache.ant:ant:1.8.4'
     compile	'org.rendersnake:rendersnake:1.8'
     compile	'org.beanshell:bsh-core:2.0b4'
@@ -37,104 +38,129 @@ dependencies {
     compile("kg.apc:jmeter-plugins:${jmPluginVersion}"){
         exclude group: 'commons-math3', module: 'commons-math3'
         exclude group: 'commons-pool2', module: 'commons-pool2'
+        exclude group: 'xml-apis', module: 'xml-apis'
     }
     compile("kg.apc:jmeter-plugins-standard:${jmPluginVersion}"){
         exclude group: 'commons-math3', module: 'commons-math3'
         exclude group: 'commons-pool2', module: 'commons-pool2'
+        exclude group: 'xml-apis', module: 'xml-apis'
     }
     compile("kg.apc:jmeter-plugins-extras:${jmPluginVersion}"){
         exclude group: 'commons-math3', module: 'commons-math3'
         exclude group: 'commons-pool2', module: 'commons-pool2'
+        exclude group: 'xml-apis', module: 'xml-apis'
     }
     compile("kg.apc:jmeter-plugins-common:${jmPluginVersion}"){
         exclude group: 'commons-math3', module: 'commons-math3'
         exclude group: 'commons-pool2', module: 'commons-pool2'
+        exclude group: 'xml-apis', module: 'xml-apis'
     }
 
     //jm dependencies
     compile("org.apache.jmeter:ApacheJMeter_components:${jmVersion}"){
         exclude group: 'commons-math3', module: 'commons-math3'
         exclude group: 'commons-pool2', module: 'commons-pool2'
+        exclude group: 'xml-apis', module: 'xml-apis'
     }
     compile("org.apache.jmeter:ApacheJMeter_http:${jmVersion}"){
         exclude group: 'commons-math3', module: 'commons-math3'
         exclude group: 'commons-pool2', module: 'commons-pool2'
+        exclude group: 'xml-apis', module: 'xml-apis'
     }
     compile("org.apache.jmeter:ApacheJMeter_jdbc:${jmVersion}"){
         exclude group: 'commons-math3', module: 'commons-math3'
         exclude group: 'commons-pool2', module: 'commons-pool2'
+        exclude group: 'xml-apis', module: 'xml-apis'
     }
     compile("org.apache.jmeter:ApacheJMeter_core:${jmVersion}"){
         exclude group: 'commons-math3', module: 'commons-math3'
         exclude group: 'commons-pool2', module: 'commons-pool2'
+        exclude group: 'xml-apis', module: 'xml-apis'
     }
     compile("org.apache.jmeter:ApacheJMeter_tcp:${jmVersion}"){
         exclude group: 'commons-math3', module: 'commons-math3'
         exclude group: 'commons-pool2', module: 'commons-pool2'
+        exclude group: 'xml-apis', module: 'xml-apis'
     }
     compile("org.apache.jmeter:ApacheJMeter_junit:${jmVersion}"){
         exclude group: 'commons-math3', module: 'commons-math3'
         exclude group: 'commons-pool2', module: 'commons-pool2'
+        exclude group: 'xml-apis', module: 'xml-apis'
     }
     compile("org.apache.jmeter:ApacheJMeter_java:${jmVersion}"){
         exclude group: 'commons-math3', module: 'commons-math3'
         exclude group: 'commons-pool2', module: 'commons-pool2'
+        exclude group: 'xml-apis', module: 'xml-apis'
     }
     compile("org.apache.jmeter:ApacheJMeter_mail:${jmVersion}"){
         exclude group: 'commons-math3', module: 'commons-math3'
         exclude group: 'commons-pool2', module: 'commons-pool2'
+        exclude group: 'xml-apis', module: 'xml-apis'
     }
     compile("org.apache.jmeter:ApacheJMeter_ldap:${jmVersion}"){
         exclude group: 'commons-math3', module: 'commons-math3'
         exclude group: 'commons-pool2', module: 'commons-pool2'
+        exclude group: 'xml-apis', module: 'xml-apis'
     }
     compile("org.apache.jmeter:ApacheJMeter_ftp:${jmVersion}"){
         exclude group: 'commons-math3', module: 'commons-math3'
         exclude group: 'commons-pool2', module: 'commons-pool2'
+        exclude group: 'xml-apis', module: 'xml-apis'
     }
     compile("org.apache.jmeter:ApacheJMeter_functions:${jmVersion}"){
         exclude group: 'commons-math3', module: 'commons-math3'
         exclude group: 'commons-pool2', module: 'commons-pool2'
+        exclude group: 'xml-apis', module: 'xml-apis'
     }
     compile("org.apache.jmeter:ApacheJMeter_monitors:${jmVersion}"){
         exclude group: 'commons-math3', module: 'commons-math3'
         exclude group: 'commons-pool2', module: 'commons-pool2'
+        exclude group: 'xml-apis', module: 'xml-apis'
     }
     compile("org.apache.jmeter:ApacheJMeter_jms:${jmVersion}"){
         exclude group: 'commons-math3', module: 'commons-math3'
         exclude group: 'commons-pool2', module: 'commons-pool2'
+        exclude group: 'xml-apis', module: 'xml-apis'
     }
     compile("org.apache.jmeter:ApacheJMeter_config:${jmVersion}"){
         exclude group: 'commons-math3', module: 'commons-math3'
         exclude group: 'commons-pool2', module: 'commons-pool2'
+        exclude group: 'xml-apis', module: 'xml-apis'
     }
     compile("org.apache.jmeter:ApacheJMeter_junit:${jmVersion}"){
         exclude group: 'commons-math3', module: 'commons-math3'
         exclude group: 'commons-pool2', module: 'commons-pool2'
+        exclude group: 'xml-apis', module: 'xml-apis'
     }
     compile("org.apache.jmeter:ApacheJMeter_components:${jmVersion}"){
         exclude group: 'commons-math3', module: 'commons-math3'
         exclude group: 'commons-pool2', module: 'commons-pool2'
+        exclude group: 'xml-apis', module: 'xml-apis'
     }
     compile("org.apache.jmeter:ApacheJMeter_config:${jmVersion}"){
         exclude group: 'commons-math3', module: 'commons-math3'
         exclude group: 'commons-pool2', module: 'commons-pool2'
+        exclude group: 'xml-apis', module: 'xml-apis'
     }
     compile("org.apache.jmeter:ApacheJMeter_junit-test:${jmVersion}"){
         exclude group: 'commons-math3', module: 'commons-math3'
         exclude group: 'commons-pool2', module: 'commons-pool2'
+        exclude group: 'xml-apis', module: 'xml-apis'
     }
     compile("org.apache.jmeter:ApacheJMeter_mongodb:${jmVersion}"){
         exclude group: 'commons-math3', module: 'commons-math3'
         exclude group: 'commons-pool2', module: 'commons-pool2'
+        exclude group: 'xml-apis', module: 'xml-apis'
     }
     compile("org.apache.jmeter:ApacheJMeter_native:${jmVersion}"){
         exclude group: 'commons-math3', module: 'commons-math3'
         exclude group: 'commons-pool2', module: 'commons-pool2'
+        exclude group: 'xml-apis', module: 'xml-apis'
     }
     compile("org.apache.jmeter:ApacheJMeter:${jmVersion}"){
         exclude group: 'commons-math3', module: 'commons-math3'
         exclude group: 'commons-pool2', module: 'commons-pool2'
+        exclude group: 'xml-apis', module: 'xml-apis'
     }
 
 	testCompile "junit:junit:4.11"
