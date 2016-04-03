@@ -6,10 +6,10 @@ or [wiki](https://github.com/jmeter-gradle-plugin/jmeter-gradle-plugin/wiki/Gett
 ##News
 **4/2/2016**
 * Version 1.0.4 released
-* [#47 and #49] Fixed. These are related issues that cause a test failure when using xpath extractor
+* [#47](https://github.com/jmeter-gradle-plugin/jmeter-gradle-plugin/issues/47) and [#49](https://github.com/jmeter-gradle-plugin/jmeter-gradle-plugin/issues/49) Fixed. These are related issues that cause a test failure when using xpath extractor
 * Gradle wrapper upgraded to 2.11
-* [#41] Fixed
-* [#42] Fixed
+* [#41](https://github.com/jmeter-gradle-plugin/jmeter-gradle-plugin/issues/41) Fixed
+* [#42](https://github.com/jmeter-gradle-plugin/jmeter-gradle-plugin/issues/42) Fixed
 
 **12/12/2015**
 * Version 1.0.3 released
