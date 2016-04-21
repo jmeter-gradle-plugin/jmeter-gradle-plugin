@@ -1,8 +1,5 @@
 package net.foragerr.jmeter.gradle.plugins
 
-/**
- * Created by @author foragerr@gmail.com on 7/17/2015.
- */
 class JMPluginExtension {
 
     File jmLog = null
@@ -17,10 +14,10 @@ class JMPluginExtension {
     Boolean enableReports = null
     Boolean enableExtendedReports = null
 
-	List<File> jmTestFiles = null             //maps to -t, --testfile
+    List<File> jmTestFiles = null             //maps to -t, --testfile
     List<File> jmSystemPropertiesFiles = null //maps to -S, --systemPropertyFile
 
-	List<String> jmSystemProperties = null    //maps to -D, --systemproperty
+    List<String> jmSystemProperties = null    //maps to -D, --systemproperty
     List<String> jmPluginJars = null
     List<String> jmUserProperties = null      //maps to -J, --jmeterproperty
     List<String> includes = null
@@ -30,14 +27,14 @@ class JMPluginExtension {
     String reportPostfix
     String reportXslt = null
     String maxHeapSize
-	String reportTitle = null
-	
-	//For internal use, Not user settable:
+    String reportTitle = null
+
+    //For internal use, Not user settable:
     String jmVersion
     String jmPluginVersion
 
-	File workDir = null 
-	File reportDir = null
-	List<File> jmResultFiles = null
+    File workDir = null
+    File reportDir = null
+    List<File> jmResultFiles = null
 
 }
