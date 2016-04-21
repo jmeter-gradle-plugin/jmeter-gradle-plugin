@@ -4,6 +4,7 @@ package net.foragerr.jmeter.gradle.plugins
 class JMSpecs implements Serializable{
 
     private String maxHeapSize
+    private String minHeapSize
     private List<String> jmeterProperties = new ArrayList<>()
     private Map<String, String> systemProperties = new HashMap<>()
     private List<String> userSystemProperties = new ArrayList<>()
@@ -22,6 +23,14 @@ class JMSpecs implements Serializable{
 
     void setMaxHeapSize(String maxHeapSize) {
         this.maxHeapSize = maxHeapSize
+    }
+
+    String getMinHeapSize() {
+        return minHeapSize
+    }
+
+    void setMinHeapSize(String minHeapSize) {
+        this.minHeapSize = minHeapSize
     }
 
     List<String> getJmeterProperties() {

@@ -58,6 +58,7 @@ class TaskJMGui extends DefaultTask {
             specs.getSystemProperties().put("proxy.cert.directory", project.jmeter.workDir.getAbsolutePath());
             specs.getJmeterProperties().addAll(args);
             specs.setMaxHeapSize(project.jmeter.maxHeapSize.toString());
+            specs.setMinHeapSize(project.jmeter.minHeapSize.toString());
             new JMeterRunner().executeJmeterCommand(specs, project.jmeter.workDir.getAbsolutePath());
 
         } catch (IOException e) {

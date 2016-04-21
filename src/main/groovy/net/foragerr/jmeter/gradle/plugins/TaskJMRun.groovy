@@ -93,6 +93,7 @@ public class TaskJMRun extends DefaultTask {
             specs.getSystemProperties().put("jmeter.save.saveservice.output_format", "xml");
             specs.getJmeterProperties().addAll(args);
             specs.setMaxHeapSize(project.jmeter.maxHeapSize.toString());
+            specs.setMinHeapSize(project.jmeter.minHeapSize.toString());
             new JMeterRunner().executeJmeterCommand(specs, project.jmeter.workDir.getAbsolutePath());
             return resultFile;
         } catch (IOException e) {
