@@ -35,7 +35,7 @@ class TaskJMGui extends DefaultTask{
                 {
                     if(PropertyFile.exists() && PropertyFile.isFile())
                     {
-                        userSysProps.addAll(Arrays.asList("-S", PropertyFile.getCanonicalPath()));
+                        args.addAll(Arrays.asList("-S", PropertyFile.getCanonicalPath()));
                     }
                 }
             }
