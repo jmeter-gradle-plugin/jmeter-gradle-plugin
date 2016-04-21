@@ -55,6 +55,16 @@ dependencies {
         exclude group: 'commons-pool2', module: 'commons-pool2'
         exclude group: 'xml-apis', module: 'xml-apis'
     }
+    compile("kg.apc:jmeter-plugins-extras-libs:${jmPluginVersion}"){
+        exclude group: 'commons-math3', module: 'commons-math3'
+        exclude group: 'commons-pool2', module: 'commons-pool2'
+        exclude group: 'xml-apis', module: 'xml-apis'
+    }
+    compile("kg.apc:jmeter-plugins-webdriver:${jmPluginVersion}"){
+        exclude group: 'commons-math3', module: 'commons-math3'
+        exclude group: 'commons-pool2', module: 'commons-pool2'
+        exclude group: 'xml-apis', module: 'xml-apis'
+    }
 
     //jm dependencies
     compile("org.apache.jmeter:ApacheJMeter_components:${jmVersion}"){
