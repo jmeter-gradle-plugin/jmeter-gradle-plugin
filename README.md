@@ -4,6 +4,13 @@ For usage see: http://jmeter.foragerr.net/
 or [wiki](https://github.com/jmeter-gradle-plugin/jmeter-gradle-plugin/wiki/Getting-Started)
 
 ##News
+**4/21/2016**
+Version 1.0.5 released
+* added support for minHeapSize [#56](https://github.com/jmeter-gradle-plugin/jmeter-gradle-plugin/issues/56)
+* added additional jmeter-plugin and webdriver jars to classpath [#57](https://github.com/jmeter-gradle-plugin/jmeter-gradle-plugin/issues/57)
+* Fixed [#55](https://github.com/jmeter-gradle-plugin/jmeter-gradle-plugin/issues/55) issue with jmSystemPropertiesFiles
+* Reformatted a few code files
+
 **4/2/2016**
 * Version 1.0.4 released
 * [#47](https://github.com/jmeter-gradle-plugin/jmeter-gradle-plugin/issues/47) and [#49](https://github.com/jmeter-gradle-plugin/jmeter-gradle-plugin/issues/49) Fixed. These are related issues that cause a test failure when using xpath extractor
