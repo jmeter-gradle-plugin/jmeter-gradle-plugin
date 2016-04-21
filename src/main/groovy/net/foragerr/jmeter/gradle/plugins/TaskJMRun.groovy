@@ -67,7 +67,7 @@ public class TaskJMRun extends DefaultTask {
                 {
                     if(systemPropertyFile.exists() && systemPropertyFile.isFile())
                     {
-                        userSysProps.addAll(Arrays.asList("-S", systemPropertyFile.getCanonicalPath()));
+                        args.addAll(Arrays.asList("-S", systemPropertyFile.getCanonicalPath()));
                     }
                 }
             }
