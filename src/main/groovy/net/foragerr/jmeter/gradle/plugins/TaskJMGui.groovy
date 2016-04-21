@@ -8,13 +8,13 @@ import org.gradle.api.logging.Logger
 import org.gradle.api.logging.Logging
 import org.gradle.api.tasks.TaskAction
 
-class TaskJMGui extends DefaultTask{
+class TaskJMGui extends DefaultTask {
 
     protected final Logger log = Logging.getLogger(getClass());
     private List<File> jmeterSystemPropertiesFiles = project.jmeter.jmSystemPropertiesFiles;
 
     @TaskAction
-    jmGui() throws IOException{
+    jmGui() throws IOException {
         try {
             List<String> args = new ArrayList<String>();
             args.addAll(Arrays.asList(
@@ -25,28 +25,23 @@ class TaskJMGui extends DefaultTask{
                 args.addAll(Arrays.asList("-q", project.jmeter.jmAddProp.getCanonicalPath()))
 
             List<File> testFiles = JMUtils.getListOfTestFiles(project)
-            if (testFiles.size()>0) args.addAll(Arrays.asList("-t", testFiles[0].getCanonicalPath()));
+            if (testFiles.size() > 0) args.addAll(Arrays.asList("-t", testFiles[0].getCanonicalPath()));
 
             //User provided sysprops
             List<String> userSysProps = new ArrayList<String>()
-            if(jmeterSystemPropertiesFiles!=null)
-            {
-                for(File PropertyFile: jmeterSystemPropertiesFiles)
-                {
-                    if(PropertyFile.exists() && PropertyFile.isFile())
-                    {
+            if (jmeterSystemPropertiesFiles != null) {
+                for (File PropertyFile : jmeterSystemPropertiesFiles) {
+                    if (PropertyFile.exists() && PropertyFile.isFile()) {
                         args.addAll(Arrays.asList("-S", PropertyFile.getCanonicalPath()));
                     }
                 }
             }
-			
-			if(project.jmeter.jmSystemProperties!=null)
-			{
-				for(String systemProperty: project.jmeter.jmSystemProperties)
-				{
+
+            if (project.jmeter.jmSystemProperties != null) {
+                for (String systemProperty : project.jmeter.jmSystemProperties) {
                     userSysProps.addAll(Arrays.asList(systemProperty));
-				}
-			}
+                }
+            }
 
             initUserProperties(args);
 
@@ -59,7 +54,7 @@ class TaskJMGui extends DefaultTask{
             specs.getSystemProperties().put("saveservice_properties", System.getProperty("saveservice_properties"));
             specs.getSystemProperties().put("upgrade_properties", System.getProperty("upgrade_properties"));
             specs.getSystemProperties().put("log_file", project.jmeter.jmLog);
-            specs.getSystemProperties().put("keytool.directory", System.getProperty("java.home")+ File.separator +"bin");
+            specs.getSystemProperties().put("keytool.directory", System.getProperty("java.home") + File.separator + "bin");
             specs.getSystemProperties().put("proxy.cert.directory", project.jmeter.workDir.getAbsolutePath());
             specs.getJmeterProperties().addAll(args);
             specs.setMaxHeapSize(project.jmeter.maxHeapSize.toString());
@@ -69,7 +64,6 @@ class TaskJMGui extends DefaultTask{
             throw new GradleException("Error Launching JMeter GUI", e);
         }
     }
-
 
     //TODO should probably also be in JMUtils
     private void initUserProperties(List<String> jmeterArgs) {

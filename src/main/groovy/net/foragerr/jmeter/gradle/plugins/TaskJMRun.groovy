@@ -14,7 +14,7 @@ public class TaskJMRun extends DefaultTask {
     protected final Logger log = Logging.getLogger(getClass());
 
     @TaskAction
-    jmRun(){
+    jmRun() {
 
         //Get List of test files to run
         List<File> testFiles = JMUtils.getListOfTestFiles(project)
@@ -25,7 +25,7 @@ public class TaskJMRun extends DefaultTask {
 
         //Scan for errors
         checkForErrors(resultList);
-        project.jmeter.jmResultFiles=resultList;
+        project.jmeter.jmResultFiles = resultList;
 
     }
 
@@ -45,7 +45,7 @@ public class TaskJMRun extends DefaultTask {
     private File executeJmeterTest(File testFile) {
         try {
             log.info('Executing jMeter test : ' + testFile.getCanonicalPath())
-            File resultFile = JMUtils.getResultFile(testFile,project);
+            File resultFile = JMUtils.getResultFile(testFile, project);
             resultFile.delete();
 
             //Build Jmeter command args
@@ -61,26 +61,21 @@ public class TaskJMRun extends DefaultTask {
 
             //User provided sysprops
             List<String> userSysProps = new ArrayList<String>()
-            if(project.jmeter.jmSystemPropertiesFiles!=null)
-            {
-                for(File systemPropertyFile: project.jmeter.jmSystemPropertiesFiles)
-                {
-                    if(systemPropertyFile.exists() && systemPropertyFile.isFile())
-                    {
+            if (project.jmeter.jmSystemPropertiesFiles != null) {
+                for (File systemPropertyFile : project.jmeter.jmSystemPropertiesFiles) {
+                    if (systemPropertyFile.exists() && systemPropertyFile.isFile()) {
                         args.addAll(Arrays.asList("-S", systemPropertyFile.getCanonicalPath()));
                     }
                 }
             }
-			
-			if(project.jmeter.jmSystemProperties!=null)
-			{
-				for(String systemProperty: project.jmeter.jmSystemProperties)
-				{
+
+            if (project.jmeter.jmSystemProperties != null) {
+                for (String systemProperty : project.jmeter.jmSystemProperties) {
                     userSysProps.addAll(Arrays.asList(systemProperty));
-					log.info(systemProperty);
-				}
-			}
-			
+                    log.info(systemProperty);
+                }
+            }
+
             initUserProperties(args);
 
             if (project.jmeter.remote) {
@@ -95,7 +90,7 @@ public class TaskJMRun extends DefaultTask {
             specs.getSystemProperties().put("saveservice_properties", System.getProperty("saveservice_properties"));
             specs.getSystemProperties().put("upgrade_properties", System.getProperty("upgrade_properties"));
             specs.getSystemProperties().put("log_file", project.jmeter.jmLog);
-            specs.getSystemProperties().put("jmeter.save.saveservice.output_format","xml");
+            specs.getSystemProperties().put("jmeter.save.saveservice.output_format", "xml");
             specs.getJmeterProperties().addAll(args);
             specs.setMaxHeapSize(project.jmeter.maxHeapSize.toString());
             new JMeterRunner().executeJmeterCommand(specs, project.jmeter.workDir.getAbsolutePath());
@@ -110,10 +105,6 @@ public class TaskJMRun extends DefaultTask {
             project.jmeter.jmUserProperties.each { property -> jmeterArgs.add("-J" + property) }
         }
     }
-
-
-
-
 
 
 }

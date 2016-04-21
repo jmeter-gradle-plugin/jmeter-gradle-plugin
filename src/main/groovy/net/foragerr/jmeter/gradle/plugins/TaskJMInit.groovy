@@ -12,7 +12,7 @@ import org.gradle.api.tasks.TaskAction
 /**
  * Created by foragerr@gmail.com on 7/17/2015.
  */
-class TaskJMInit extends DefaultTask{
+class TaskJMInit extends DefaultTask {
 
     protected final Logger log = Logging.getLogger(getClass());
 
@@ -21,28 +21,28 @@ class TaskJMInit extends DefaultTask{
     private String jmeterPluginsVersion
 
     @TaskAction
-    jmInit(){
+    jmInit() {
 
         project.jmeter.maxHeapSize = "512M"
         project.jmeter.reportPostfix = ""
 
         //Init plugin settings
         File buildDir = project.getBuildDir()
-        File workDir = new File (buildDir , "jmeter")
+        File workDir = new File(buildDir, "jmeter")
         project.jmeter.workDir = workDir
 
         File reportDir = new File(buildDir, project.jmeter.reportDir ?: "jmeter-report")
         project.jmeter.reportDir = reportDir
 
-        File jmLog =  new File(reportDir, project.jmeter.jmLog ?: "jmeter.log")
-        project.jmeter.jmLog =  jmLog
+        File jmLog = new File(reportDir, project.jmeter.jmLog ?: "jmeter.log")
+        project.jmeter.jmLog = jmLog
 
-        project.jmeter.testFileDir = project.jmeter.testFileDir==null ? new File(project.getProjectDir(), "src/test/jmeter") : project.jmeter.testFileDir;
+        project.jmeter.testFileDir = project.jmeter.testFileDir == null ? new File(project.getProjectDir(), "src/test/jmeter") : project.jmeter.testFileDir;
 
-        project.jmeter.ignoreErrors = project.jmeter.ignoreErrors==null ? true : project.jmeter.ignoreErrors
-        project.jmeter.ignoreFailures = project.jmeter.ignoreFailures==null ? true : project.jmeter.ignoreFailures
-        project.jmeter.enableReports = project.jmeter.enableReports==null ? false : project.jmeter.enableReports
-        project.jmeter.enableExtendedReports = project.jmeter.enableExtendedReports==null ? true : project.jmeter.enableExtendedReports
+        project.jmeter.ignoreErrors = project.jmeter.ignoreErrors == null ? true : project.jmeter.ignoreErrors
+        project.jmeter.ignoreFailures = project.jmeter.ignoreFailures == null ? true : project.jmeter.ignoreFailures
+        project.jmeter.enableReports = project.jmeter.enableReports == null ? false : project.jmeter.enableReports
+        project.jmeter.enableExtendedReports = project.jmeter.enableExtendedReports == null ? true : project.jmeter.enableExtendedReports
         LoadPluginProperties()
         project.jmeter.jmVersion = this.jmeterVersion
 
@@ -81,12 +81,12 @@ class TaskJMInit extends DefaultTask{
         File defaultJmeterProperties = new File(project.jmeter.workDir, "jmeter.properties");
         System.setProperty("default_jm_properties", "/" + defaultJmeterProperties.getName());
         tempProperties.add(defaultJmeterProperties);
-		
-		File jmPluginProperties = new File(project.jmeter.workDir, "jmeter-plugin.properties");
-		System.setProperty("default_jm_properties", "/" + jmPluginProperties.getName());
-		tempProperties.add(jmPluginProperties);
 
-		//Copy files from jar to workDir
+        File jmPluginProperties = new File(project.jmeter.workDir, "jmeter-plugin.properties");
+        System.setProperty("default_jm_properties", "/" + jmPluginProperties.getName());
+        tempProperties.add(jmPluginProperties);
+
+        //Copy files from jar to workDir
         for (File f : tempProperties) {
             try {
                 FileWriter writer = new FileWriter(f);
@@ -102,7 +102,7 @@ class TaskJMInit extends DefaultTask{
 
     protected void resolveJmeterSearchPath() {
         StringBuilder cp = new StringBuilder()
-        URL[] classPath = ((URLClassLoader)this.getClass().getClassLoader()).getURLs()
+        URL[] classPath = ((URLClassLoader) this.getClass().getClassLoader()).getURLs()
         String jmeterVersionPattern = project.jmeter.jmVersion.replaceAll("[.]", "[.]")
         String pathSeparator = ';'; //intentionally not File.PathSeparator - JMeter parses for ; on all platforms
         for (URL dep : classPath) {
@@ -113,8 +113,8 @@ class TaskJMInit extends DefaultTask{
             } else if (dep.getPath().matches("^.*bsh.*[.]jar\$")) {
                 cp.append(dep.getPath())
                 cp.append(pathSeparator)
-            //add jp@gc plugins to search_path
-            } else if(dep.getPath().matches("^.*jmeter-plugins.*\$")) {
+                //add jp@gc plugins to search_path
+            } else if (dep.getPath().matches("^.*jmeter-plugins.*\$")) {
                 cp.append(dep.getPath())
                 cp.append(pathSeparator)
             }
@@ -122,13 +122,13 @@ class TaskJMInit extends DefaultTask{
         cp.append(new File(project.jmeter.workDir, "lib" + File.separator + "ext").getCanonicalPath())
         System.setProperty("search_paths", cp.toString());
         log.debug("Search path is set to " + System.getProperty("search_paths"))
-   }
+    }
 
     private void LoadPluginProperties() {
         try {
             InputStream is = this.getClass().getClassLoader().getResourceAsStream("jmeter-plugin.properties")
-            if (is==null) {
-                log.error ("Error fetching jmeter version")
+            if (is == null) {
+                log.error("Error fetching jmeter version")
                 throw new GradleException("Error fetching jmeter version")
             }
             Properties pluginProps = new Properties()
