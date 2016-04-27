@@ -9,11 +9,9 @@ public class TaskJMClean extends DefaultTask {
 	
 	protected final Logger log = Logging.getLogger(getClass());
 
-    /**
-     * Directory in which the reports are stored.
-     * <p/>
-     * By default build/jmeter-report"
-     */
+    //TODO should probably do a better job of deleting specific file types
+    // instead of deleting the entire directory. This behavior is dangerous when
+    // reportDir is set to a pre existing directory  #65
 
 	@TaskAction
     jmClean() throws IOException{
@@ -21,5 +19,8 @@ public class TaskJMClean extends DefaultTask {
 		log.info("Cleaning out folder: " + reportDir)
 		reportDir.deleteDir()
 		reportDir.mkdirs()
+
+		//if jmeter log is in custom location, delete that as well
+        project.jmeter.jmLog.delete()
     }
 }
