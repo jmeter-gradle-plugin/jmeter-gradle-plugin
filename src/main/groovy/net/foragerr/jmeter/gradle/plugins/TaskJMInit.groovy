@@ -1,17 +1,12 @@
 package net.foragerr.jmeter.gradle.plugins
 
-import groovy.util.logging.Log4j
 import org.apache.commons.io.IOUtils
 import org.gradle.api.DefaultTask
 import org.gradle.api.GradleException
-import org.gradle.api.Task
 import org.gradle.api.logging.Logger
 import org.gradle.api.logging.Logging
 import org.gradle.api.tasks.TaskAction
 
-/**
- * Created by foragerr@gmail.com on 7/17/2015.
- */
 class TaskJMInit extends DefaultTask {
 
     protected final Logger log = Logging.getLogger(getClass());
@@ -23,19 +18,18 @@ class TaskJMInit extends DefaultTask {
     @TaskAction
     jmInit() {
 
-        project.jmeter.maxHeapSize = "512M"
+        //Init plugin settings
+        project.jmeter.maxHeapSize = project.jmeter.maxHeapSize ?: "512M"
+        project.jmeter.minHeapSize = project.jmeter.minHeapSize ?: "512M"
         project.jmeter.reportPostfix = ""
 
-        //Init plugin settings
         File buildDir = project.getBuildDir()
         File workDir = new File(buildDir, "jmeter")
         project.jmeter.workDir = workDir
 
-        File reportDir = new File(buildDir, project.jmeter.reportDir ?: "jmeter-report")
-        project.jmeter.reportDir = reportDir
+        project.jmeter.reportDir = project.jmeter.reportDir ?: new File(buildDir, "jmeter-report")
 
-        File jmLog = new File(reportDir, project.jmeter.jmLog ?: "jmeter.log")
-        project.jmeter.jmLog = jmLog
+        project.jmeter.jmLog = project.jmeter.jmLog ?:  new File(project.jmeter.reportDir, "jmeter.log")
 
         project.jmeter.testFileDir = project.jmeter.testFileDir == null ? new File(project.getProjectDir(), "src/test/jmeter") : project.jmeter.testFileDir;
 
@@ -52,7 +46,7 @@ class TaskJMInit extends DefaultTask {
 
         def jmeterExtFolder = new File(workDir, "lib/ext")
         jmeterExtFolder.mkdirs()
-        reportDir.mkdirs()
+        project.jmeter.reportDir.mkdirs()
 
         initTempProperties()
         resolveJmeterSearchPath()
