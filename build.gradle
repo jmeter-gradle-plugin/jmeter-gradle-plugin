@@ -27,12 +27,6 @@ configurations{
     gradleApi
 }
 
-task printBlah()<<{
-
-    project.configurations.getByName('lesserblah')
-            .each {println it}
-}
-
 //--- Dependencies ---
 dependencies {
     gradleApi gradleApi()
