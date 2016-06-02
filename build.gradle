@@ -173,7 +173,7 @@ dependencies {
         exclude group: 'xml-apis', module: 'xml-apis'
     }
 
-	testCompile "junit:junit:4.11"
+    testCompile 'org.spockframework:spock-core:1.0-groovy-2.3'
 }
 
 
