@@ -21,6 +21,7 @@ public class TaskJMClean extends DefaultTask {
 		reportDir.mkdirs()
 
 		//if jmeter log is in custom location, delete that as well
-        project.jmeter.jmLog.delete()
+		File logfile = project.jmeter.jmLog ?:  new File(reportDir, "jmeter.log")
+		logfile.delete()
     }
 }
