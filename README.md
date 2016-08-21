@@ -3,7 +3,10 @@
 For usage see: http://jmeter.foragerr.net/  
 or [wiki](https://github.com/jmeter-gradle-plugin/jmeter-gradle-plugin/wiki/Getting-Started)
 
-##News
+## News
+**8/21/2016**
+* [#79](https://github.com/jmeter-gradle-plugin/jmeter-gradle-plugin/issues/79) fixed
+
 **6/26/2016**
 * Version 1.0.6 released
 * [#56](https://github.com/jmeter-gradle-plugin/jmeter-gradle-plugin/issues/56) and [#77](https://github.com/jmeter-gradle-plugin/jmeter-gradle-plugin/issues/77) fixed
