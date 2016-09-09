@@ -4,9 +4,10 @@ class JMPluginExtension {
 
     File jmLog = null           //maps to -j, --jmeterlogfile
     File testFileDir = null
-    File jmPropertyFile = null //maps to -p, --propfile
-    File jmAddProp = null      //maps to -q, --addprop
+    File jmPropertyFile = null  //maps to -p, --propfile
+    File jmAddProp = null       //maps to -q, --addprop
     File customReportXslt
+    File logfile = null         //maps to -l, --logfile
 
     Boolean ignoreErrors = null
     Boolean ignoreFailures = null
@@ -23,7 +24,7 @@ class JMPluginExtension {
     List<String> jmUserProperties = null      //maps to -J, --jmeterproperty
     List<String> includes = null
     List<String> excludes = null
-    
+
     String reportPostfix
     String reportXslt = null
     String maxHeapSize

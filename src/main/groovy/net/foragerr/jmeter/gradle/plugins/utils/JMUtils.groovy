@@ -55,8 +55,12 @@ class JMUtils {
     }
 
 	static File getResultFile(File testFile, Project project) {
-		DateFormat fmt = new SimpleDateFormat("yyyyMMdd-HHmm");
-        return new File(project.jmeter.reportDir, testFile.getName() + "-" + fmt.format(new Date()) + ".xml");
+        if (project.jmeter.logfile == null) {
+            DateFormat fmt = new SimpleDateFormat("yyyyMMdd-HHmm");
+            return new File(project.jmeter.reportDir, testFile.getName() + "-" + fmt.format(new Date()) + ".xml");
+        } else {
+            return project.jmeter.logfile
+        }
     }
 
 	
