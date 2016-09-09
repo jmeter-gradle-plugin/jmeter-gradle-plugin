@@ -2,7 +2,7 @@ package net.foragerr.jmeter.gradle.plugins
 
 class JMPluginExtension {
 
-    File jmLog = null
+    File jmLog = null           //maps to -j, --jmeterlogfile
     File testFileDir = null
     File jmPropertyFile = null //maps to -p, --propfile
     File jmAddProp = null      //maps to -q, --addprop
@@ -13,6 +13,7 @@ class JMPluginExtension {
     Boolean remote = false
     Boolean enableReports = null
     Boolean enableExtendedReports = null
+    Boolean failBuildOnError = null
 
     List<File> jmTestFiles = null             //maps to -t, --testfile
     List<File> jmSystemPropertiesFiles = null //maps to -S, --systemPropertyFile
