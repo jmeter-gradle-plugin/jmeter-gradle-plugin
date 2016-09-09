@@ -24,6 +24,7 @@ class JMPluginExtension {
     Boolean ignoreFailures = null
     Boolean remote = false
     Boolean csvLogFile = null
+    Boolean showSummarizer = null
 
     // Java Properties //
     String maxHeapSize
