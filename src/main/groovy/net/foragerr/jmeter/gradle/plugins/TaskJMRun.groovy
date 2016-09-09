@@ -35,8 +35,6 @@ public class TaskJMRun extends DefaultTask {
             for (File file : results) {
                 if (scanner.scanForProblems(file)) {
                     log.warn("There were test errors.  See the jmeter logs for details");
-
-                    if (project.jmeter.failBuildOnError) throw new GradleException("Errors during JMeter test");
                 }
             }
         } catch (IOException e) {

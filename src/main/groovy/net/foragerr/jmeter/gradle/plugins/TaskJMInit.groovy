@@ -33,11 +33,10 @@ class TaskJMInit extends DefaultTask {
 
         project.jmeter.testFileDir = project.jmeter.testFileDir == null ? new File(project.getProjectDir(), "src/test/jmeter") : project.jmeter.testFileDir;
 
-        project.jmeter.ignoreErrors = project.jmeter.ignoreErrors == null ? true : project.jmeter.ignoreErrors
-        project.jmeter.ignoreFailures = project.jmeter.ignoreFailures == null ? true : project.jmeter.ignoreFailures
+        project.jmeter.ignoreErrors = project.jmeter.ignoreErrors == null ? false : project.jmeter.ignoreErrors
+        project.jmeter.ignoreFailures = project.jmeter.ignoreFailures == null ? false : project.jmeter.ignoreFailures
         project.jmeter.enableReports = project.jmeter.enableReports == null ? false : project.jmeter.enableReports
         project.jmeter.enableExtendedReports = project.jmeter.enableExtendedReports == null ? true : project.jmeter.enableExtendedReports
-        project.jmeter.failBuildOnError = project.jmeter.failBuildOnError == null ? true : project.jmeter.failBuildOnError
         LoadPluginProperties()
         project.jmeter.jmVersion = this.jmeterVersion
 

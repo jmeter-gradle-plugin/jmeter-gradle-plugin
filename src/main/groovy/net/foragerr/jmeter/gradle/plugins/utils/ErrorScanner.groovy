@@ -13,16 +13,6 @@ class ErrorScanner {
     def ignoreErrors
     def ignoreFailures
 
-    /**
-     *
-     * @param ignoreErrors
-     *            if an error is found with this scanner it will throw an
-     *            exception instead of returning true;
-     * @param ignoreFailures
-     *            if a failure is found with this scanner it will throw an
-     *            exception instead of returning true;
-     */
-
     ErrorScanner(def ignoreErrors, def ignoreFailures) {
         this.ignoreErrors = ignoreErrors
         this.ignoreFailures = ignoreFailures
@@ -39,11 +29,6 @@ class ErrorScanner {
         return result
     }
 
-    /**
-     * protected for testing
-     * @param line
-     * @return
-     */
     protected boolean lineContainsForErrors(String line) {
         if (line.contains(PAT_ERROR)) {
             if (this.ignoreErrors) {
