@@ -56,30 +56,6 @@ class JMUtils {
 
 	static File getResultFile(File testFile, Project project) {
 		DateFormat fmt = new SimpleDateFormat("yyyyMMdd-HHmm");
-		if (project.jmeter.resultFilenameTimestamp==null)
-			return new File(project.jmeter.reportDir, testFile.getName() + "-" + fmt.format(new Date()) + ".xml");
-
-		//if resultFilenameTimestamp is "none" do not use a timestamp in filename
-		if (project.jmeter.resultFilenameTimestamp.equals("none"))
-			return new File(project.jmeter.reportDir, testFile.getName() + ".xml");
-
-		//else if resultFilenameTimestamp is "useSaveServiceFormat" use saveservice.format
-		if (project.jmeter.resultFilenameTimestamp.equals("useSaveServiceFormat")){
-			String saveServiceFormat =  System.getProperty("jmeter.save.saveservice.timestamp_format");
-			if (saveServiceFormat.equals("none")) return new File(project.jmeter.reportDir, testFile.getName() + ".xml");
-			try
-			{
-				fmt = new SimpleDateFormat(saveServiceFormat);
-				return new File(project.jmeter.reportDir, testFile.getName() + "-" + fmt.format(new Date()) + ".xml");
-			}
-			catch (Exception e)
-			{
-				// jmeter.save.saveservice.timestamp_format does not contain a valid format
-				log.warn("jmeter.save.saveservice.timestamp_format Not defined, using default timestamp format");
-			}
-		}
-        //for all other unhandled conditions fallback to default:
-        fmt = new SimpleDateFormat("yyyyMMdd-HHmm");
         return new File(project.jmeter.reportDir, testFile.getName() + "-" + fmt.format(new Date()) + ".xml");
     }
 

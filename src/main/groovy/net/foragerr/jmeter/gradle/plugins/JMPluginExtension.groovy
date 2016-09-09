@@ -23,8 +23,7 @@ class JMPluginExtension {
     List<String> jmUserProperties = null      //maps to -J, --jmeterproperty
     List<String> includes = null
     List<String> excludes = null
-
-    String resultFilenameTimestamp
+    
     String reportPostfix
     String reportXslt = null
     String maxHeapSize
