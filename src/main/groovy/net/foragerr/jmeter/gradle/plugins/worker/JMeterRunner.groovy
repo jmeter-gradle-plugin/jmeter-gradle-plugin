@@ -18,6 +18,7 @@ class JMeterRunner {
         processBuilder.redirectErrorStream(true)
         processBuilder.directory(new File(workingDirectory))
         Process p = processBuilder.start()
+        p.inputStream.eachLine {println it}
         int processResult = p.waitFor()
         if (processResult != 0) {
             throw new GradleException("Something went wrong during jmeter test execution, Please see jmeter logs for more information")
