@@ -19,24 +19,26 @@ class TaskJMInit extends DefaultTask {
     jmInit() {
 
         //Init plugin settings
-        project.jmeter.maxHeapSize = project.jmeter.maxHeapSize ?: "512M"
-        project.jmeter.minHeapSize = project.jmeter.minHeapSize ?: "512M"
-        project.jmeter.reportPostfix = ""
-
         File buildDir = project.getBuildDir()
         File workDir = new File(buildDir, "jmeter")
         project.jmeter.workDir = workDir
 
-        project.jmeter.reportDir = project.jmeter.reportDir ?: new File(buildDir, "jmeter-report")
-
-        project.jmeter.jmLog = project.jmeter.jmLog ?:  new File(project.jmeter.reportDir, "jmeter.log")
-
+        // Test Files //
         project.jmeter.testFileDir = project.jmeter.testFileDir == null ? new File(project.getProjectDir(), "src/test/jmeter") : project.jmeter.testFileDir;
 
+        // Logs //
+        project.jmeter.reportDir = project.jmeter.reportDir ?: new File(buildDir, "jmeter-report")
+        project.jmeter.jmLog = project.jmeter.jmLog ?:  new File(project.jmeter.reportDir, "jmeter.log")
+
+        // Java Properties //
+        project.jmeter.maxHeapSize = project.jmeter.maxHeapSize ?: "512M"
+        project.jmeter.minHeapSize = project.jmeter.minHeapSize ?: "512M"
+
+        // Plugin Options
         project.jmeter.ignoreErrors = project.jmeter.ignoreErrors == null ? false : project.jmeter.ignoreErrors
         project.jmeter.ignoreFailures = project.jmeter.ignoreFailures == null ? false : project.jmeter.ignoreFailures
-        project.jmeter.enableReports = project.jmeter.enableReports == null ? false : project.jmeter.enableReports
-        project.jmeter.enableExtendedReports = project.jmeter.enableExtendedReports == null ? true : project.jmeter.enableExtendedReports
+        project.jmeter.csvLogFile = project.jmeter.csvLogFile == null ? true : project.jmeter.csvLogFile
+
         LoadPluginProperties()
         project.jmeter.jmVersion = this.jmeterVersion
 
