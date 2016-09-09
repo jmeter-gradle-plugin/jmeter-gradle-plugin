@@ -57,7 +57,8 @@ class JMUtils {
 	static File getResultFile(File testFile, Project project) {
         if (project.jmeter.resultsLog == null) {
             DateFormat fmt = new SimpleDateFormat("yyyyMMdd-HHmm");
-            return new File(project.jmeter.reportDir, testFile.getName() + "-" + fmt.format(new Date()) + ".xml");
+            String fileExtension = project.jmeter.csvLogFile==true ? ".csv" : ".xml"
+            return new File(project.jmeter.reportDir, testFile.getName() + "-" + fmt.format(new Date()) + fileExtension);
         } else {
             return project.jmeter.resultsLog
         }
