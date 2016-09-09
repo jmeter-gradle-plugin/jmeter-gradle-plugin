@@ -16,7 +16,7 @@ class JMPluginExtension {
     List<String> jmUserProperties = null        //maps to -J, --jmeterproperty
 
     // Logs //
-    File logfile = null                         //maps to -l, --logfile
+    File resultsLog = null                      //maps to -l, --logfile
     File jmLog = null                           //maps to -j, --jmeterlogfile
 
     // Plugin Options //
