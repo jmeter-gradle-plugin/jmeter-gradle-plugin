@@ -8,10 +8,12 @@ plugins {
 apply plugin: 'groovy'
 apply plugin: 'maven-publish'
 
+apply from: 'idea.gradle'
 
 //--- Project information ---
 group = 'net.foragerr.jmeter'
 archivesBaseName = 'jmeter-gradle-plugin'
+sourceCompatibility = 1.8 // for Spock
 
 ext.thisPluginVersion="1.0.8"
 ext.jmVersion = "2.13"
@@ -20,13 +22,28 @@ version = "$thisPluginVersion-$jmVersion-SNAPSHOT"
 
 //--- Repositories ---
 repositories {
+    mavenLocal()
     mavenCentral()
+}
+
+configurations {
+    compile.extendsFrom = []
+    testCompile.extendsFrom groovy
+    compile.exclude module:'groovy-all'
 }
 
 //--- Dependencies ---
 dependencies {
 	compile gradleApi()
-    compile	localGroovy()
+	//compile localGroovy()
+    groovy 'org.codehaus.groovy:groovy-all:2.4.7'
+	
+	testCompile(
+            'junit:junit:4.12',
+            'org.spockframework:spock-core:1.1-groovy-2.4-rc-3',
+            'org.codehaus.groovy:groovy-all:2.4.7'
+    )
+	
     compile	'org.apache.commons:commons-math3:3.4.1'
     compile	'org.apache.commons:commons-pool2:2.3'
     compile 'xml-apis:xml-apis:1.4.01'
@@ -173,13 +190,11 @@ dependencies {
         exclude group: 'xml-apis', module: 'xml-apis'
     }
 
-	testCompile "junit:junit:4.11"
 }
-
 
 //--- Tasks ---
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.11'
+    gradleVersion = '3.3'
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {

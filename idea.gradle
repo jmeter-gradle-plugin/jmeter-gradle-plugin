@@ -1,0 +1,45 @@
+apply plugin: 'idea'
+
+// Usage: 
+//  gradle cleanIdea idea
+//  gradle cleanIdeaModule ideaModule
+
+tasks.idea.dependsOn(cleanIdea)
+
+idea {
+    project {
+        jdkName = 1.8
+        languageLevel = 1.8
+    }
+}
+
+idea.module.iml {
+    beforeMerged { module ->
+        module.dependencies.clear()
+    }
+}
+
+idea.project.ipr {
+    beforeMerged { project ->
+        project.modulePaths.clear()
+    }
+}
+
+idea.module.iml {
+    whenMerged { module ->
+        module.dependencies*.exported = true
+    }
+}
+
+idea.project.ipr {
+    withXml { provider ->
+        provider.node.component
+                .find { it.@name == 'VcsDirectoryMappings' }
+                .mapping.@vcs = 'Git'
+    }
+}
+
+//task collectJars(type: Copy) {
+//    into "$buildDir/output/lib"
+//    from configurations.testRuntime
+//}
