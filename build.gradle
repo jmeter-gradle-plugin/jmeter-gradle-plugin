@@ -25,7 +25,8 @@ repositories {
 }
 configurations{
     gradleApi
-}
+	all*.exclude group: 'org.codehaus.groovy', module: 'groovy-all'
+	}
 
 //--- Dependencies ---
 dependencies {
