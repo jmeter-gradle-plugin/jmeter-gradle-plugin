@@ -14,7 +14,7 @@ group = 'net.foragerr.jmeter'
 archivesBaseName = 'jmeter-gradle-plugin'
 
 ext.thisPluginVersion="1.0.8"
-ext.jmVersion = "3.0"
+ext.jmVersion = "3.3"
 ext.jmPluginVersion = "1.4.0"
 version = "$thisPluginVersion-$jmVersion-SNAPSHOT"
 
@@ -82,16 +82,13 @@ dependencies {
     compile("org.apache.jmeter:ApacheJMeter_ldap:${jmVersion}")
     compile("org.apache.jmeter:ApacheJMeter_ftp:${jmVersion}")
     compile("org.apache.jmeter:ApacheJMeter_functions:${jmVersion}")
-    compile("org.apache.jmeter:ApacheJMeter_monitors:${jmVersion}")
     compile("org.apache.jmeter:ApacheJMeter_jms:${jmVersion}")
-    compile("org.apache.jmeter:ApacheJMeter_config:${jmVersion}")
-    compile("org.apache.jmeter:ApacheJMeter_junit:${jmVersion}")
-    compile("org.apache.jmeter:ApacheJMeter_components:${jmVersion}")
     compile("org.apache.jmeter:ApacheJMeter_config:${jmVersion}")
     compile("org.apache.jmeter:ApacheJMeter_junit-test:${jmVersion}")
     compile("org.apache.jmeter:ApacheJMeter_mongodb:${jmVersion}")
     compile("org.apache.jmeter:ApacheJMeter_native:${jmVersion}")
     compile("org.apache.jmeter:ApacheJMeter:${jmVersion}")
+    compile("org.apache.jmeter:jorphan:${jmVersion}")
 
 	testCompile "junit:junit:4.11"
 }
