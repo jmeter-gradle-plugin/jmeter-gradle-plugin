@@ -30,11 +30,14 @@ public class TaskJMRun extends DefaultTask {
     }
 
     private void checkForErrors(List<File> results) {
-        ErrorScanner scanner = new ErrorScanner(project.jmeter.ignoreErrors, project.jmeter.ignoreFailures);
+        ErrorScanner scanner = new ErrorScanner(project.jmeter.ignoreErrors, project.jmeter.ignoreFailures, project.jmeter.failBuildOnError);
         try {
             for (File file : results) {
                 if (scanner.scanForProblems(file)) {
                     log.warn("There were test errors.  See the jmeter logs for details");
+
+					if (project.jmeter.failBuildOnError) 
+						throw new GradleException("Errors during JMeter test");             
                 }
             }
         } catch (IOException e) {
@@ -97,8 +100,10 @@ public class TaskJMRun extends DefaultTask {
             specs.getSystemProperties().put("upgrade_properties", System.getProperty("upgrade_properties"));
             specs.getSystemProperties().put("log_file", project.jmeter.jmLog);
 
-            if ( project.jmeter.csvLogFile == true) specs.getSystemProperties().put("jmeter.save.saveservice.output_format", "csv");
-            else specs.getSystemProperties().put("jmeter.save.saveservice.output_format", "xml");
+            if ( project.jmeter.csvLogFile == true) 
+            	specs.getSystemProperties().put("jmeter.save.saveservice.output_format", "csv");
+            else 
+            	specs.getSystemProperties().put("jmeter.save.saveservice.output_format", "xml");
 
             //enable summarizer
             if (project.jmeter.showSummarizer == true){

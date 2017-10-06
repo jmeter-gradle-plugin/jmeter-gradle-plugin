@@ -39,7 +39,8 @@ class TaskJMInit extends DefaultTask {
         project.jmeter.ignoreFailures = project.jmeter.ignoreFailures == null ? false : project.jmeter.ignoreFailures
         project.jmeter.csvLogFile = project.jmeter.csvLogFile == null ? true : project.jmeter.csvLogFile
         project.jmeter.showSummarizer = project.jmeter.showSummarizer == null ? true : project.jmeter.showSummarizer
-
+		project.jmeter.failBuildOnError = project.jmeter.failBuildOnError == null ? true : project.jmeter.failBuildOnError
+        
         LoadPluginProperties()
         project.jmeter.jmVersion = this.jmeterVersion
 
