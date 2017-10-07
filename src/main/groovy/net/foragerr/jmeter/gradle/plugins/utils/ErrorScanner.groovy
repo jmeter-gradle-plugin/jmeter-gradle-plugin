@@ -9,23 +9,16 @@ class ErrorScanner {
     private static final String PAT_ERROR = "<error>true</error>"
     private static final String PAT_FAILURE_REQUEST = "s=\"false\""
     private static final String PAT_FAILURE = "<failure>true</failure>"
-
+    private static final String PAT_FALSE = ",false,"
+    
     def ignoreErrors
     def ignoreFailures
+    def failBuildOnError
 
-    /**
-     *
-     * @param ignoreErrors
-     *            if an error is found with this scanner it will throw an
-     *            exception instead of returning true;
-     * @param ignoreFailures
-     *            if a failure is found with this scanner it will throw an
-     *            exception instead of returning true;
-     */
-
-    ErrorScanner(def ignoreErrors, def ignoreFailures) {
+    ErrorScanner(def ignoreErrors, def ignoreFailures, def failBuildOnError) {
         this.ignoreErrors = ignoreErrors
         this.ignoreFailures = ignoreFailures
+        this.failBuildOnError = failBuildOnError
     }
 
     public boolean scanForProblems(File file) throws IOException {
@@ -39,12 +32,16 @@ class ErrorScanner {
         return result
     }
 
-    /**
-     * protected for testing
-     * @param line
-     * @return
-     */
     protected boolean lineContainsForErrors(String line) {
+    
+        if (line.contains(PAT_FALSE)) {
+            if (failBuildOnError) {
+                throw new GradleException("There were test errors.  See the jmeter logs for details.")
+            } else {
+                return true
+            }
+        }
+
         if (line.contains(PAT_ERROR)) {
             if (this.ignoreErrors) {
                 return true
@@ -52,13 +49,14 @@ class ErrorScanner {
                 throw new GradleException("There were test errors.  See the jmeter logs for details.")
             }
         }
-        if (line.contains(PAT_FAILURE) || line.contains(PAT_FAILURE_REQUEST)) {
+        if (line.contains(PAT_FAILURE)) {
             if (this.ignoreFailures) {
                 return true
             } else {
                 throw new GradleException("There were test failures.  See the jmeter logs for details.")
             }
         }
+       
         return false
     }
 

@@ -30,11 +30,14 @@ public class TaskJMRun extends DefaultTask {
     }
 
     private void checkForErrors(List<File> results) {
-        ErrorScanner scanner = new ErrorScanner(project.jmeter.ignoreErrors, project.jmeter.ignoreFailures);
+        ErrorScanner scanner = new ErrorScanner(project.jmeter.ignoreErrors, project.jmeter.ignoreFailures, project.jmeter.failBuildOnError);
         try {
             for (File file : results) {
                 if (scanner.scanForProblems(file)) {
                     log.warn("There were test errors.  See the jmeter logs for details");
+
+					if (project.jmeter.failBuildOnError) 
+						throw new GradleException("Errors during JMeter test");             
                 }
             }
         } catch (IOException e) {
@@ -56,6 +59,7 @@ public class TaskJMRun extends DefaultTask {
                     "-p", JMUtils.getJmeterPropsFile(project).getCanonicalPath()
             ));
 
+            // additional properties from file
             if (project.jmeter.jmAddProp)
                 args.addAll(Arrays.asList("-q", project.jmeter.jmAddProp.getCanonicalPath()))
 
@@ -69,6 +73,7 @@ public class TaskJMRun extends DefaultTask {
                 }
             }
 
+            // jmSystemProperties
             if (project.jmeter.jmSystemProperties != null) {
                 for (String systemProperty : project.jmeter.jmSystemProperties) {
                     userSysProps.addAll(Arrays.asList(systemProperty));
@@ -76,7 +81,11 @@ public class TaskJMRun extends DefaultTask {
                 }
             }
 
-            initUserProperties(args);
+            //jmUserProperties
+            if (project.jmeter.jmUserProperties != null) {
+                project.jmeter.jmUserProperties.each { property -> args.add("-J" + property) }
+            }
+
 
             if (project.jmeter.remote) {
                 args.add("-r");
@@ -90,7 +99,20 @@ public class TaskJMRun extends DefaultTask {
             specs.getSystemProperties().put("saveservice_properties", System.getProperty("saveservice_properties"));
             specs.getSystemProperties().put("upgrade_properties", System.getProperty("upgrade_properties"));
             specs.getSystemProperties().put("log_file", project.jmeter.jmLog);
-            specs.getSystemProperties().put("jmeter.save.saveservice.output_format", "xml");
+
+            if ( project.jmeter.csvLogFile == true) 
+            	specs.getSystemProperties().put("jmeter.save.saveservice.output_format", "csv");
+            else 
+            	specs.getSystemProperties().put("jmeter.save.saveservice.output_format", "xml");
+
+            //enable summarizer
+            if (project.jmeter.showSummarizer == true){
+                specs.getSystemProperties().put('summariser.name','summary')
+                specs.getSystemProperties().put('summariser.interval','30')
+                specs.getSystemProperties().put('summariser.log','true')
+                specs.getSystemProperties().put('summariser.out','true')
+            }
+
             specs.getJmeterProperties().addAll(args);
             specs.setMaxHeapSize(project.jmeter.maxHeapSize.toString());
             specs.setMinHeapSize(project.jmeter.minHeapSize.toString());
@@ -100,12 +122,4 @@ public class TaskJMRun extends DefaultTask {
             throw new GradleException("Can't execute test", e);
         }
     }
-
-    private void initUserProperties(List<String> jmeterArgs) {
-        if (project.jmeter.jmUserProperties != null) {
-            project.jmeter.jmUserProperties.each { property -> jmeterArgs.add("-J" + property) }
-        }
-    }
-
-
 }

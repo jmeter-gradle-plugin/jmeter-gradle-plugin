@@ -19,24 +19,28 @@ class TaskJMInit extends DefaultTask {
     jmInit() {
 
         //Init plugin settings
-        project.jmeter.maxHeapSize = project.jmeter.maxHeapSize ?: "512M"
-        project.jmeter.minHeapSize = project.jmeter.minHeapSize ?: "512M"
-        project.jmeter.reportPostfix = ""
-
         File buildDir = project.getBuildDir()
         File workDir = new File(buildDir, "jmeter")
         project.jmeter.workDir = workDir
 
-        project.jmeter.reportDir = project.jmeter.reportDir ?: new File(buildDir, "jmeter-report")
-
-        project.jmeter.jmLog = project.jmeter.jmLog ?:  new File(project.jmeter.reportDir, "jmeter.log")
-
+        // Test Files //
         project.jmeter.testFileDir = project.jmeter.testFileDir == null ? new File(project.getProjectDir(), "src/test/jmeter") : project.jmeter.testFileDir;
 
-        project.jmeter.ignoreErrors = project.jmeter.ignoreErrors == null ? true : project.jmeter.ignoreErrors
-        project.jmeter.ignoreFailures = project.jmeter.ignoreFailures == null ? true : project.jmeter.ignoreFailures
-        project.jmeter.enableReports = project.jmeter.enableReports == null ? false : project.jmeter.enableReports
-        project.jmeter.enableExtendedReports = project.jmeter.enableExtendedReports == null ? true : project.jmeter.enableExtendedReports
+        // Logs //
+        project.jmeter.reportDir = project.jmeter.reportDir ?: new File(buildDir, "jmeter-report")
+        project.jmeter.jmLog = project.jmeter.jmLog ?:  new File(project.jmeter.reportDir, "jmeter.log")
+
+        // Java Properties //
+        project.jmeter.maxHeapSize = project.jmeter.maxHeapSize ?: "512M"
+        project.jmeter.minHeapSize = project.jmeter.minHeapSize ?: "512M"
+
+        // Plugin Options
+        project.jmeter.ignoreErrors = project.jmeter.ignoreErrors == null ? false : project.jmeter.ignoreErrors
+        project.jmeter.ignoreFailures = project.jmeter.ignoreFailures == null ? false : project.jmeter.ignoreFailures
+        project.jmeter.csvLogFile = project.jmeter.csvLogFile == null ? true : project.jmeter.csvLogFile
+        project.jmeter.showSummarizer = project.jmeter.showSummarizer == null ? true : project.jmeter.showSummarizer
+		project.jmeter.failBuildOnError = project.jmeter.failBuildOnError == null ? true : project.jmeter.failBuildOnError
+        
         LoadPluginProperties()
         project.jmeter.jmVersion = this.jmeterVersion
 
