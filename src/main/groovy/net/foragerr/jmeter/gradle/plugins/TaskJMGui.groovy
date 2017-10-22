@@ -72,4 +72,10 @@ class TaskJMGui extends DefaultTask {
             project.jmeter.jmUserProperties.each { property -> jmeterArgs.add("-J" + property) }
         }
     }
+
+    private void initGLobalProperties(List<String> jmeterArgs) {
+        if (project.jmeter.jmGlobalProperties != null) {
+            project.jmeter.jmGlobalProperties.each { property -> jmeterArgs.add("-G" + property) }
+        }
+    }
 }
