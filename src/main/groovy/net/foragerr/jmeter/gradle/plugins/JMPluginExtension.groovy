@@ -14,6 +14,7 @@ class JMPluginExtension {
     List<File> jmSystemPropertiesFiles = null   //maps to -S, --systemPropertyFile
     List<String> jmSystemProperties = null      //maps to -D, --systemproperty
     List<String> jmUserProperties = null        //maps to -J, --jmeterproperty
+    List<String> jmGlobalProperties = null        //maps to -G, --globalproperty
 
     // Logs //
     File resultsLog = null                      //maps to -l, --logfile

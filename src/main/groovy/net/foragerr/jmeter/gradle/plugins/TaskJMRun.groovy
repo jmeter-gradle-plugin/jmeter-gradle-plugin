@@ -86,6 +86,10 @@ public class TaskJMRun extends DefaultTask {
                 project.jmeter.jmUserProperties.each { property -> args.add("-J" + property) }
             }
 
+            //jmGlobalProperties
+            if (project.jmeter.jmGLobalProperties != null) {
+                project.jmeter.jmGlobalProperties.each { property -> args.add("-G" + property) }
+            }
 
             if (project.jmeter.remote) {
                 args.add("-r");
