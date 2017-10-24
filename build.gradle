@@ -13,10 +13,10 @@ apply plugin: 'maven-publish'
 group = 'net.foragerr.jmeter'
 archivesBaseName = 'jmeter-gradle-plugin'
 
-ext.thisPluginVersion="1.0.9"
+ext.thisPluginVersion="1.0.10"
 ext.jmVersion = "3.3"
 ext.jmPluginVersion = "1.4.0"
-version = "$thisPluginVersion-$jmVersion"
+version = "$thisPluginVersion-$jmVersion-SNAPSHOT"
 
 //--- Repositories ---
 repositories {
