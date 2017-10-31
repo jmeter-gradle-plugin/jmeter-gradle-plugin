@@ -87,7 +87,7 @@ public class TaskJMRun extends DefaultTask {
             }
 
             //jmGlobalProperties
-            if (project.jmeter.jmGLobalProperties != null) {
+            if (project.jmeter.jmGlobalProperties != null) {
                 project.jmeter.jmGlobalProperties.each { property -> args.add("-G" + property) }
             }
 
