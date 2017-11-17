@@ -1,5 +1,5 @@
 ## Gradle plugin to execute JMeter tests.  
-[![Build Status](https://travis-ci.org/jmeter-gradle-plugin/jmeter-gradle-plugin.svg?branch=master)](https://travis-ci.org/jmeter-gradle-plugin/jmeter-gradle-plugin)
+[![Build Status](https://travis-ci.org/jmeter-gradle-plugin/jmeter-gradle-plugin.svg?branch=master)](https://travis-ci.org/jmeter-gradle-plugin/jmeter-gradle-plugin) [ ![LatestVersion](https://api.bintray.com/packages/jmeter-gradle-plugin/jmeter/jmeter-gradle-plugin/images/download.svg?version=1.0.10-3.3) ](https://bintray.com/jmeter-gradle-plugin/jmeter/jmeter-gradle-plugin/1.0.10-3.3/link)
 
 For usage see: http://jmeter.foragerr.net/  
 or [wiki](https://github.com/jmeter-gradle-plugin/jmeter-gradle-plugin/wiki/Getting-Started)
