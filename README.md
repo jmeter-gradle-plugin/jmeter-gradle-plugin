@@ -1,10 +1,11 @@
-##Gradle plugin to execute JMeter tests.  [![Build Status](https://travis-ci.org/jmeter-gradle-plugin/jmeter-gradle-plugin.svg?branch=master)](https://travis-ci.org/jmeter-gradle-plugin/jmeter-gradle-plugin)
+## Gradle plugin to execute JMeter tests.  
+[![Build Status](https://travis-ci.org/jmeter-gradle-plugin/jmeter-gradle-plugin.svg?branch=master)](https://travis-ci.org/jmeter-gradle-plugin/jmeter-gradle-plugin)
 
 For usage see: http://jmeter.foragerr.net/  
 or [wiki](https://github.com/jmeter-gradle-plugin/jmeter-gradle-plugin/wiki/Getting-Started)
 
 ## News
-**11/16/2017
+**11/16/2017**
 * Version 1.0.10 release with support for Jmeter 3.3
 * Note that 1.0.9 and 1.0.8 are broken
 
