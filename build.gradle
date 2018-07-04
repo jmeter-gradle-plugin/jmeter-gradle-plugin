@@ -1,8 +1,9 @@
 //--- Plugins ---
 plugins {
-    id "com.jfrog.bintray" version "1.2"
-	id "com.jfrog.artifactory" version "3.1.1"
-	id "com.gradle.plugin-publish" version "0.9.9"
+    id "com.jfrog.bintray" version "1.8.3"
+	id "com.jfrog.artifactory" version "4.7.5"
+	id "com.gradle.plugin-publish" version "0.9.10"
+    id 'com.github.ben-manes.versions' version '0.20.0'
 }
 
 apply plugin: 'groovy'
@@ -14,7 +15,7 @@ group = 'net.foragerr.jmeter'
 archivesBaseName = 'jmeter-gradle-plugin'
 
 ext.thisPluginVersion="1.1.0"
-ext.jmVersion = "3.3"
+ext.jmVersion = "4.0"
 ext.jmPluginVersion = "1.4.0"
 version = "$thisPluginVersion-$jmVersion-SNAPSHOT"
 
@@ -23,20 +24,18 @@ repositories {
     maven{ url 'https://repository.apache.org/content/repositories/releases'}
     jcenter()
 }
-configurations{
-    gradleApi
-	all*.exclude group: 'org.codehaus.groovy', module: 'groovy-all'
-	}
 
 //--- Dependencies ---
+configurations.all {
+    resolutionStrategy {
+        force "org.codehaus.groovy:groovy-all:2.4.12"
+    }
+}
 dependencies {
-    gradleApi gradleApi()
-    compile project.configurations.getByName('gradleApi')
-            .filter {it.name != 'groovy-all-2.4.4.jar'}
-    compile	'org.codehaus.groovy:groovy-all:2.4.6'
+    compile gradleApi()
     compile 'xml-apis:xml-apis:1.4.01'
-    compile	'org.apache.ant:ant:1.8.4'
-    compile	'org.rendersnake:rendersnake:1.8'
+    compile	'org.apache.ant:ant:1.10.4'
+    compile	'org.rendersnake:rendersnake:1.9.0'
     compile	'org.beanshell:bsh-core:2.0b4'
 		
     //jm-plugins dependencies
@@ -94,13 +93,13 @@ dependencies {
     compile("org.apache.jmeter:ApacheJMeter:${jmVersion}")
     compile("org.apache.jmeter:jorphan:${jmVersion}")
 
-	testCompile "junit:junit:4.11"
+	testCompile "junit:junit:4.12"
 }
 
 
 //--- Tasks ---
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.12'
+    gradleVersion = '4.8.1'
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
@@ -228,7 +227,7 @@ bintray {
                 sync = false //true by default
                 user = 'userToken' //OSS user token
                 password = 'paasword' //OSS user password
-                close = '0' //Optional property. By default the staging repository is closed and artifacts are released to Maven Central. You can optionally turn this behaviour off (by puting 0 as value) and release the version manually.
+                close = '0' //Optional property. By default the staging repository is closed and artifacts are released to Maven Central. You can optionally turn this behaviour off (by putting 0 as value) and release the version manually.
             }            
         }
     }
