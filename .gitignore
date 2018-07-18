@@ -11,6 +11,3 @@
 bin/
 .settings/
 *.bak
-gradlew
-gradlew.bat
-gradle/wrapper/
