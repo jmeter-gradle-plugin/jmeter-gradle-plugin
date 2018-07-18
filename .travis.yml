@@ -4,11 +4,14 @@ install:
   - chmod +x shscripts/*
   - shscripts/env.sh
 
+script:
+  - ./gradlew -s check
+
 after_success:
-  - gradle -s artifactoryPublish
-  - gradle -s bintrayUpload
-  - gradle -s publishPlugins
- 
+  - ./gradlew -s artifactoryPublish
+  - ./gradlew -s bintrayUpload
+  - ./gradlew -s publishPlugins
+
 branches:
   only:
     - master
