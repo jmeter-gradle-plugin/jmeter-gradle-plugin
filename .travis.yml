@@ -5,9 +5,9 @@ install:
   - shscripts/env.sh
 
 after_success:
-  - gradle artifactoryPublish
-  - gradle bintrayUpload
-  - gradle publishPlugins
+  - gradle -s artifactoryPublish
+  - gradle -s bintrayUpload
+  - gradle -s publishPlugins
  
 branches:
   only:
