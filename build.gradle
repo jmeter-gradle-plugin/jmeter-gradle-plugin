@@ -17,7 +17,7 @@ archivesBaseName = 'jmeter-gradle-plugin'
 ext.thisPluginVersion="1.1.0"
 ext.jmVersion = "4.0"
 ext.jmPluginVersion = "1.4.0"
-version = "$thisPluginVersion-$jmVersion-SNAPSHOT"
+version = "$thisPluginVersion-$jmVersion"
 
 //--- Repositories ---
 repositories {
