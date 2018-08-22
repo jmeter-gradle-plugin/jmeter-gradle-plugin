@@ -84,6 +84,9 @@ class TaskJMInit extends DefaultTask {
         System.setProperty("default_jm_properties", "/" + jmPluginProperties.getName());
         tempProperties.add(jmPluginProperties);
 
+        File log4j2Xml = new File(project.jmeter.workDir, "log4j2.xml");
+        tempProperties.add(log4j2Xml)
+
         //Copy files from jar to workDir
         for (File f : tempProperties) {
             try {
