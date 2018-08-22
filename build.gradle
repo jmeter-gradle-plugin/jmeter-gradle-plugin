@@ -14,15 +14,15 @@ apply plugin: 'maven-publish'
 group = 'net.foragerr.jmeter'
 archivesBaseName = 'jmeter-gradle-plugin'
 
-ext.thisPluginVersion="1.1.1"
+ext.thisPluginVersion="1.1.0"
 ext.jmVersion = "4.0"
 ext.jmPluginVersion = "1.4.0"
-version = "$thisPluginVersion-$jmVersion-SNAPSHOT"
+version = "$thisPluginVersion-$jmVersion"
 
 //--- Repositories ---
 repositories {
-    maven{ url 'https://repository.apache.org/content/repositories/releases'}
     jcenter()
+    maven{ url 'https://repository.apache.org/content/repositories/releases'}
 }
 
 //--- Dependencies ---
