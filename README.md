@@ -5,6 +5,10 @@ For usage see: http://jmeter.foragerr.net/
 or [wiki](https://github.com/jmeter-gradle-plugin/jmeter-gradle-plugin/wiki/Getting-Started)
 
 ## News
+**8/22/2018**
+* Version 1.1.0 released with support for Jmeter 4.0
+* I have not extensively tested this release, caveat emptor
+
 **11/16/2017**
 * Version 1.0.10 release with support for Jmeter 3.3
 * Note that 1.0.9 and 1.0.8 are broken
