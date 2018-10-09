@@ -33,11 +33,12 @@ configurations.all {
 }
 dependencies {
     compile gradleApi()
-    compile 'xml-apis:xml-apis:2.0.2'
+    compile 'xml-apis:xml-apis:1.4.01'
     compile	'org.apache.ant:ant:1.10.5'
     compile	'org.rendersnake:rendersnake:1.9.0'
     compile	'org.beanshell:bsh-core:2.0b4'
-		
+    compile 'commons-httpclient:commons-httpclient:3.1'
+
     //jm-plugins dependencies
     compile("kg.apc:jmeter-plugins:${jmPluginVersion}"){
         exclude group: 'commons-math3', module: 'commons-math3'

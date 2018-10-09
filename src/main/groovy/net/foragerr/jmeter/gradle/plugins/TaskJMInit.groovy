@@ -21,7 +21,9 @@ class TaskJMInit extends DefaultTask {
         //Init plugin settings
         File buildDir = project.getBuildDir()
         File workDir = new File(buildDir, "jmeter")
+        File binDir = new File(workDir, "bin")
         project.jmeter.workDir = workDir
+        project.jmeter.binDir = binDir
 
         // Test Files //
         project.jmeter.testFileDir = project.jmeter.testFileDir == null ? new File(project.getProjectDir(), "src/test/jmeter") : project.jmeter.testFileDir;
@@ -45,6 +47,8 @@ class TaskJMInit extends DefaultTask {
         project.jmeter.jmVersion = this.jmeterVersion
 
         //Create required folders
+        binDir.mkdirs()
+
         def jmeterJUnitFolder = new File(workDir, "lib/junit")
         jmeterJUnitFolder.mkdirs()
 
@@ -67,7 +71,7 @@ class TaskJMInit extends DefaultTask {
     protected void initTempProperties() throws IOException {
         List<File> tempProperties = new ArrayList<File>();
 
-        File saveServiceProperties = new File(project.jmeter.workDir, "saveservice.properties");
+        File saveServiceProperties = new File(project.jmeter.binDir, "saveservice.properties");
         System.setProperty("saveservice_properties", "/" + saveServiceProperties.getName());
         tempProperties.add(saveServiceProperties);
         log.debug("saveservice_properties location is " + System.getProperty("saveservice_properties"))
@@ -76,7 +80,7 @@ class TaskJMInit extends DefaultTask {
         System.setProperty("upgrade_properties", "/" + upgradeProperties.getName());
         tempProperties.add(upgradeProperties);
 
-        File defaultJmeterProperties = new File(project.jmeter.workDir, "jmeter.properties");
+        File defaultJmeterProperties = new File(project.jmeter.binDir, "jmeter.properties");
         System.setProperty("default_jm_properties", "/" + defaultJmeterProperties.getName());
         tempProperties.add(defaultJmeterProperties);
 
@@ -84,7 +88,7 @@ class TaskJMInit extends DefaultTask {
         System.setProperty("default_jm_properties", "/" + jmPluginProperties.getName());
         tempProperties.add(jmPluginProperties);
 
-        File log4j2Xml = new File(project.jmeter.workDir, "log4j2.xml");
+        File log4j2Xml = new File(project.jmeter.binDir, "log4j2.xml");
         tempProperties.add(log4j2Xml)
 
         //Copy files from jar to workDir
@@ -95,7 +99,7 @@ class TaskJMInit extends DefaultTask {
                 writer.flush();
                 writer.close();
             } catch (IOException ioe) {
-                throw new GradleException("Couldn't create temporary property file " + f.getName() + " in directory " + workDir.getPath(), ioe);
+                throw new GradleException("Couldn't create temporary property file " + f.getName() + " in directory " + project.jmeter.workDir.getPath(), ioe);
             }
 
         }

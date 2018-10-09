@@ -54,6 +54,8 @@ class JMeterRunner {
     /**
      * As a workaround for the command argument length being too long for Windows, more than 8K chars, generate
      *   a tmp .jar as a path container for the long classpath.
+     * To get a list of the contents of the pather.jar:
+     * `unzip -p build/jmeter/pather.jar META-INF/MANIFEST.MF | sed -e 's/^ //' -e 's/  $//' | tr -d '\r\n' | tr ' ' '\n'`
      *
      * @param workDir working directory of executed build
     */
