@@ -5,6 +5,7 @@ import net.foragerr.jmeter.gradle.plugins.JMSpecs
 import org.gradle.api.GradleException
 import org.gradle.api.logging.Logger
 import org.gradle.api.logging.Logging
+import org.gradle.internal.os.OperatingSystem
 
 import java.util.jar.Attributes
 import java.util.jar.JarOutputStream
@@ -78,7 +79,16 @@ class JMeterRunner {
             cpBuilder.append(" ")
         }
 
-        URL[] classPath = ((URLClassLoader)this.getClass().getClassLoader()).getURLs()
+        List<URL> classPath = ((URLClassLoader)this.getClass().getClassLoader()).getURLs() as List
+
+        // openjfx for non-Oracle JDK
+        def openjfxPattern = ~/\/javafx-.*\.jar/
+        def openjfxOSPattern = ~/\/javafx-.*-${operatingSystemClassifier()}\.jar/
+        classPath.removeIf { URL url ->
+            String file = url.getFile()
+            file.find(openjfxPattern) && !file.find(openjfxOSPattern)
+        }
+
         classPath.each {u ->
             cpBuilder.append(u.getPath())
             cpBuilder.append(" ")
@@ -87,5 +97,22 @@ class JMeterRunner {
         JarOutputStream target = new JarOutputStream(new FileOutputStream(patherJar.getCanonicalPath()), manifest);
         target.close();
         return patherJar
+    }
+
+    private String operatingSystemClassifier() {
+        String platform = 'unsupported'
+        int javaMajorVersion = System.properties['java.runtime.version'].split('[^0-9]+')[0] as int
+        if (javaMajorVersion < 11) {
+            return platform
+        }
+        OperatingSystem currentOS = org.gradle.internal.os.OperatingSystem.current()
+        if (currentOS.isWindows()) {
+            platform = 'win'
+        } else if (currentOS.isLinux()) {
+            platform = 'linux'
+        } else if (currentOS.isMacOsX()) {
+            platform = 'mac'
+        }
+        platform
     }
 }
