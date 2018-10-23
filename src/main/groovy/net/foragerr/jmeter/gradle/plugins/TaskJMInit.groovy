@@ -99,7 +99,7 @@ class TaskJMInit extends DefaultTask {
                 writer.flush();
                 writer.close();
             } catch (IOException ioe) {
-                throw new GradleException("Couldn't create temporary property file " + f.getName() + " in directory " + project.jmeter.workDir.getPath(), ioe);
+                throw new GradleException("Couldn't create temporary property file " + f.getName() + " in directory " + f.getParent(), ioe);
             }
 
         }
