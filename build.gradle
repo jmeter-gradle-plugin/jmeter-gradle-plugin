@@ -2,7 +2,7 @@
 plugins {
     id "com.jfrog.bintray" version "1.8.4"
 	id "com.jfrog.artifactory" version "4.7.5"
-	id "com.gradle.plugin-publish" version "0.9.10"
+	id "com.gradle.plugin-publish" version "0.10.0"
     id 'com.github.ben-manes.versions' version '0.20.0'
 }
 
@@ -15,7 +15,7 @@ group = 'net.foragerr.jmeter'
 archivesBaseName = 'jmeter-gradle-plugin'
 
 ext.thisPluginVersion="1.1.1"
-ext.jmVersion = "4.0"
+ext.jmVersion = "5.0"
 ext.jmPluginVersion = "1.4.0"
 version = "$thisPluginVersion-$jmVersion-SNAPSHOT"
 
@@ -28,16 +28,24 @@ repositories {
 //--- Dependencies ---
 configurations.all {
     resolutionStrategy {
-        force "org.codehaus.groovy:groovy-all:2.4.12"
+        force "org.codehaus.groovy:groovy-all:2.4.15"
     }
 }
 dependencies {
     compile gradleApi()
     compile 'xml-apis:xml-apis:1.4.01'
-    compile	'org.apache.ant:ant:1.10.4'
+    compile	'org.apache.ant:ant:1.10.5'
     compile	'org.rendersnake:rendersnake:1.9.0'
     compile	'org.beanshell:bsh-core:2.0b4'
-		
+    compile 'commons-httpclient:commons-httpclient:3.1'
+
+    ['win', 'linux', 'mac'].each { platform ->
+        compile "org.openjfx:javafx-base:11:${platform}"
+        compile "org.openjfx:javafx-graphics:11:${platform}"
+        compile "org.openjfx:javafx-controls:11:${platform}"
+        compile "org.openjfx:javafx-swing:11:${platform}"
+    }
+
     //jm-plugins dependencies
     compile("kg.apc:jmeter-plugins:${jmPluginVersion}"){
         exclude group: 'commons-math3', module: 'commons-math3'
@@ -64,7 +72,7 @@ dependencies {
         exclude group: 'commons-pool2', module: 'commons-pool2'
         exclude group: 'xml-apis', module: 'xml-apis'
     }
-    compile("kg.apc:jmeter-plugins-webdriver:${jmPluginVersion}"){
+    compile("kg.apc:jmeter-plugins-webdriver:2.3"){
         exclude group: 'commons-math3', module: 'commons-math3'
         exclude group: 'commons-pool2', module: 'commons-pool2'
         exclude group: 'xml-apis', module: 'xml-apis'
@@ -99,7 +107,7 @@ dependencies {
 
 //--- Tasks ---
 task wrapper(type: Wrapper) {
-    gradleVersion = '4.8.1'
+    gradleVersion = '4.10.2'
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {

@@ -43,6 +43,7 @@ class JMPluginExtension {
     String jmVersion
     String jmPluginVersion
     File workDir = null
+    File binDir = null
     File reportDir = null
     List<File> jmResultFiles = null
 
