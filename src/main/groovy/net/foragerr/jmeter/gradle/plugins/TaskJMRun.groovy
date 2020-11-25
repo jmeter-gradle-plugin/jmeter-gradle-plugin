@@ -30,7 +30,12 @@ public class TaskJMRun extends DefaultTask {
     }
 
     private void checkForErrors(List<File> results) {
-        ErrorScanner scanner = new ErrorScanner(project.jmeter.ignoreErrors, project.jmeter.ignoreFailures, project.jmeter.failBuildOnError);
+        ErrorScanner scanner = new ErrorScanner(
+                project.jmeter.ignoreErrors,
+                project.jmeter.ignoreFailures,
+                project.jmeter.failBuildOnError,
+                project.jmeter.csvLogFile,
+                project.jmeter.errorThreshold)
         try {
             for (File file : results) {
                 if (scanner.scanForProblems(file)) {

@@ -27,6 +27,7 @@ class JMPluginExtension {
     Boolean csvLogFile = null
     Boolean showSummarizer = null
 	Boolean failBuildOnError = null
+    Double errorThreshold = null
 
     // Report Options //
     Boolean enableReports = true
